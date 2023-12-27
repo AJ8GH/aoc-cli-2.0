@@ -2,8 +2,12 @@ plugins {
   id 'org.jetbrains.kotlin.jvm' version '1.9.21'
 }
 
+apply plugin: 'application'
+
 group = 'com.github.aj8gh'
 version = '1.0-SNAPSHOT'
+
+mainClassName = "com.github.aj8gh.aoc.AocKt"
 
 allprojects {
   repositories {
@@ -14,6 +18,7 @@ allprojects {
 
 ext {
   jUnitVersion = '5.10.1'
+  kotlinxCliJvmVersion = '0.3.6'
 }
 
 subprojects {
@@ -24,6 +29,7 @@ subprojects {
   }
 
   dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-cli-jvm:${kotlinxCliJvmVersion}"
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
   }
