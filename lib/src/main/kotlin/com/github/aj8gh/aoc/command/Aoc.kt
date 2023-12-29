@@ -1,6 +1,7 @@
 package com.github.aj8gh.aoc.command
 
-import com.github.aj8gh.aoc.handler.set
+import com.github.aj8gh.aoc.command.handler.next
+import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.util.*
 import com.github.ajalt.clikt.completion.CompletionCandidates.Fixed
 import com.github.ajalt.clikt.core.CliktCommand
@@ -65,9 +66,12 @@ class Aoc : CliktCommand(
     )
 
     set(year = year, day = day, level = level)
+    next()
   }
 }
 
-private fun rangeOf(start: Int, end: Int) = Fixed((start..end)
-  .map(Int::toString)
-  .toSet())
+private fun rangeOf(start: Int, end: Int) = Fixed(
+  (start..end)
+    .map(Int::toString)
+    .toSet()
+)

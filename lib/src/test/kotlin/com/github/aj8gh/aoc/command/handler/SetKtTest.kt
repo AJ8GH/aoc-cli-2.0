@@ -1,5 +1,6 @@
-package com.github.aj8gh.aoc.handler
+package com.github.aj8gh.aoc.command.handler
 
+import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.properties.Properties
 import com.github.aj8gh.aoc.properties.aocPropertiesFile
 import com.github.aj8gh.aoc.properties.updateProperties
