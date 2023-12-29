@@ -17,7 +17,7 @@ class Aoc : CliktCommand(
   private val year by option(
     names = arrayOf("-y", "--year"),
     help = "New year value to set, must be between 15 and current year",
-    completionCandidates = rangeOf(FIRST_YEAR, latestYear(CLOCK))
+    completionCandidates = rangeOf(FIRST_YEAR, latestYear())
   ).int()
 
   private val day by option(
@@ -66,7 +66,7 @@ class Aoc : CliktCommand(
     )
 
     set(year = year, day = day, level = level)
-    next()
+    next(next)
   }
 }
 

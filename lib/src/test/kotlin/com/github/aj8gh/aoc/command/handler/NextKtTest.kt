@@ -44,6 +44,7 @@ class NextKtTest {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun nextTest(
+    next: Boolean,
     year: Int,
     day: Int,
     level: Int,
@@ -56,7 +57,7 @@ class NextKtTest {
     set(year = year, day = day, level = level)
 
     // When
-    next()
+    next(next)
 
     // Then
     val actual = readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
@@ -70,18 +71,27 @@ class NextKtTest {
     @JvmStatic
     private fun inputProvider() = listOf(
       Arguments.of(
+        true,
         FIRST_YEAR, FIRST_DAY, LEVEL_1,
         FIRST_YEAR, FIRST_DAY, LEVEL_2
       ),
       Arguments.of(
+        false,
+        FIRST_YEAR, FIRST_DAY, LEVEL_1,
+        FIRST_YEAR, FIRST_DAY, LEVEL_1
+      ),
+      Arguments.of(
+        true,
         FIRST_YEAR, FIRST_DAY, LEVEL_2,
         FIRST_YEAR, SECOND_DAY, LEVEL_1
       ),
       Arguments.of(
+        true,
         FIRST_YEAR, LAST_DAY, LEVEL_2,
         SECOND_YEAR, FIRST_DAY, LEVEL_1
       ),
       Arguments.of(
+        true,
         LATEST_YEAR, LAST_DAY, LEVEL_2,
         LATEST_YEAR, LAST_DAY, LEVEL_2
       ),
