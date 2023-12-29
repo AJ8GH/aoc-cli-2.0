@@ -1,12 +1,9 @@
 package com.github.aj8gh.aoc.handler
 
 import com.github.aj8gh.aoc.config.Properties
-import com.github.aj8gh.aoc.config.aocConfigFile
+import com.github.aj8gh.aoc.config.aocPropertiesFile
 import com.github.aj8gh.aoc.config.updateProperties
 import com.github.aj8gh.aoc.io.readYaml
-import com.github.aj8gh.aoc.io.write
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -25,12 +22,12 @@ class SetKtTest {
 
   @BeforeTest
   fun setUp() {
-    aocConfigFile = AOC_CONFIG_FILE
+    aocPropertiesFile = AOC_CONFIG_FILE
   }
 
   @AfterTest
   fun tearDown() {
-    aocConfigFile = AOC_CONFIG_FILE
+    aocPropertiesFile = AOC_CONFIG_FILE
     updateProperties(readYaml(TEMPLATE_CONFIG_FILE, Properties::class.java))
   }
 
