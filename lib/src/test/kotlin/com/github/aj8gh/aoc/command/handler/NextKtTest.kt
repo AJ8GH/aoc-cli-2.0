@@ -1,9 +1,7 @@
 package com.github.aj8gh.aoc.command.handler
 
 import com.github.aj8gh.aoc.io.readYaml
-import com.github.aj8gh.aoc.properties.Properties
-import com.github.aj8gh.aoc.properties.aocPropertiesFile
-import com.github.aj8gh.aoc.properties.updateProperties
+import com.github.aj8gh.aoc.properties.*
 import com.github.aj8gh.aoc.util.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -15,9 +13,10 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 
-private const val ACTIVE_CONFIG_FILE = "src/test/resources/current-test.yaml"
-private const val TEMPLATE_CONFIG_FILE = "src/test/resources/templates/current-test-template.yaml"
-private const val AOC_CONFIG_FILE = "src/test/resources/aoc-test.yaml"
+private const val AOC_HOME = "src/test/resources/"
+private const val ACTIVE_CONFIG_FILE = "${AOC_HOME}current-test.yaml"
+private const val AOC_CONFIG_FILE = "aoc-test.yaml"
+private const val TEMPLATE_CONFIG_FILE = "${AOC_HOME}templates/current-test-template.yaml"
 private const val SECOND_YEAR = FIRST_YEAR + 1
 private const val SECOND_DAY = FIRST_DAY + 1
 
@@ -32,12 +31,13 @@ class NextKtTest {
 
   @BeforeTest
   fun setUp() {
-    aocPropertiesFile = AOC_CONFIG_FILE
+    aocOverride = "${AOC_HOME}${AOC_CONFIG_FILE}"
+    homeOverride = AOC_HOME
+    getAocProperties()
   }
 
   @AfterTest
   fun tearDown() {
-    aocPropertiesFile = AOC_CONFIG_FILE
     updateProperties(readYaml(TEMPLATE_CONFIG_FILE, Properties::class.java))
   }
 

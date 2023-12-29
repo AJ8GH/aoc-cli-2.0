@@ -6,6 +6,4 @@ import java.io.File
 
 fun write(properties: Properties) = mapper.writeValue(getFile(), properties)
 
-private fun currentConfigFileName() = getActivePropertiesFile()
-
-private fun getFile() = File(currentConfigFileName())
+private fun getFile() = File(getActivePropertiesFile())

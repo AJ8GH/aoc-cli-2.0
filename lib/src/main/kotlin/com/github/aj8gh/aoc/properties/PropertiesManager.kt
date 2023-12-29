@@ -3,20 +3,19 @@ package com.github.aj8gh.aoc.properties
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
 
-private val HOME = System.getProperty("user.home")
-private val AOC_PROPERTIES_HOME = "$HOME/.config/.aoc/"
-private val AOC_PROPERTIES_FILE = "$AOC_PROPERTIES_HOME/aoc.yaml"
+private const val AOC_PROPERTIES_FILE = "aoc.yaml"
 
+private val aocHome = "${System.getProperty("user.home")}/.config/.aoc/"
 private var aocProperties: AocProperties? = null
 private var properties: Properties? = null
 
-var aocPropertiesFile = AOC_PROPERTIES_FILE
+var aocOverride: String? = null
+var homeOverride: String? = null
 
 fun getActiveProperties() = properties ?: readAndSetActiveProperties()
-
 fun getAocProperties() = aocProperties ?: readAndSetAocProperties()
-
-fun getActivePropertiesFile() = "$AOC_PROPERTIES_HOME${getAocProperties().active}"
+fun getAocPropertiesFile() = aocOverride ?: "${aocHome}${AOC_PROPERTIES_FILE}"
+fun getActivePropertiesFile() = "${homeOverride ?: aocHome}${getAocProperties().active}"
 
 fun updateProperties(newProperties: Properties) {
   properties = newProperties
@@ -24,7 +23,7 @@ fun updateProperties(newProperties: Properties) {
 }
 
 private fun readAndSetAocProperties() = readYaml(
-  aocPropertiesFile,
+  getAocPropertiesFile(),
   AocProperties::class.java
 )
 
