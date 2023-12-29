@@ -1,4 +1,4 @@
-package com.github.aj8gh.aoc.config
+package com.github.aj8gh.aoc.properties
 
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
@@ -12,11 +12,11 @@ private var properties: Properties? = null
 
 var aocPropertiesFile = AOC_PROPERTIES_FILE
 
-fun getCurrentProperties() = properties ?: readAndSetCurrentProperties()
+fun getActiveProperties() = properties ?: readAndSetActiveProperties()
 
 fun getAocProperties() = aocProperties ?: readAndSetAocProperties()
 
-fun getCurrentPropertiesFile() = "$AOC_PROPERTIES_HOME${getAocProperties().current}"
+fun getActivePropertiesFile() = "$AOC_PROPERTIES_HOME${getAocProperties().active}"
 
 fun updateProperties(newProperties: Properties) {
   properties = newProperties
@@ -28,7 +28,7 @@ private fun readAndSetAocProperties() = readYaml(
   AocProperties::class.java
 )
 
-private fun readAndSetCurrentProperties() = readYaml(
-  getCurrentPropertiesFile(),
+private fun readAndSetActiveProperties() = readYaml(
+  getActivePropertiesFile(),
   Properties::class.java
 )

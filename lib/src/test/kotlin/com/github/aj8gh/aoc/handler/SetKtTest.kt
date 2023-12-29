@@ -1,8 +1,8 @@
 package com.github.aj8gh.aoc.handler
 
-import com.github.aj8gh.aoc.config.Properties
-import com.github.aj8gh.aoc.config.aocPropertiesFile
-import com.github.aj8gh.aoc.config.updateProperties
+import com.github.aj8gh.aoc.properties.Properties
+import com.github.aj8gh.aoc.properties.aocPropertiesFile
+import com.github.aj8gh.aoc.properties.updateProperties
 import com.github.aj8gh.aoc.io.readYaml
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
