@@ -1,7 +1,8 @@
 package com.github.aj8gh.aoc.command
 
 import com.github.aj8gh.aoc.handler.set
-import com.github.ajalt.clikt.completion.CompletionCandidates
+import com.github.aj8gh.aoc.util.*
+import com.github.ajalt.clikt.completion.CompletionCandidates.Fixed
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
@@ -15,19 +16,19 @@ class Aoc : CliktCommand(
   private val year by option(
     names = arrayOf("-y", "--year"),
     help = "New year value to set, must be between 15 and current year",
-    completionCandidates = CompletionCandidates.Fixed((15..23).map(Int::toString).toSet())
+    completionCandidates = rangeOf(FIRST_YEAR, latestYear(CLOCK))
   ).int()
 
   private val day by option(
     names = arrayOf("-d", "--day"),
     help = "New day value to set, must be between 1 and 25",
-    completionCandidates = CompletionCandidates.Fixed((1..2).map(Int::toString).toSet()),
+    completionCandidates = rangeOf(FIRST_DAY, LAST_DAY)
   ).int()
 
   private val level by option(
     names = arrayOf("-l", "--level"),
     help = "New level value to set, must be 1 or 2",
-    completionCandidates = CompletionCandidates.Fixed(setOf("1", "2"))
+    completionCandidates = rangeOf(LEVEL_1, LEVEL_2)
   ).int()
 
   private val create by option(
@@ -63,10 +64,10 @@ class Aoc : CliktCommand(
     """
     )
 
-    set(
-      year = year,
-      day = day,
-      level = level
-    )
+    set(year = year, day = day, level = level)
   }
 }
+
+private fun rangeOf(start: Int, end: Int) = Fixed((start..end)
+  .map(Int::toString)
+  .toSet())
