@@ -1,6 +1,7 @@
 package com.github.aj8gh.aoc.io
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import java.io.File
 
 private const val AOC_SESSION = "/session.txt"
 
@@ -11,6 +12,6 @@ fun <T> readYaml(name: String, type: Class<T>): T {
   return mapper.readValue(read(name), type)
 }
 
-fun readSession() = read(AOC_SESSION)!!.readText()
+fun readSession() = read(AOC_SESSION)
 
-private fun read(name: String) = object {}.javaClass.getResource(name)
+private fun read(name: String) = File(name).readText(Charsets.UTF_8)

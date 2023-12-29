@@ -1,4 +1,5 @@
 ---
+name: "current-test"
 language: "kt"
 ide: "idea"
 files:

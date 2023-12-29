@@ -1,2 +1,2 @@
-current: /config/current-test.yaml
+current: src/test/resources/current-test.yaml
 url: http://localhost
