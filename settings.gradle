@@ -10,6 +10,4 @@ plugins {
 }
 
 rootProject.name = 'aoc-cli'
-include(
-    ':lib'
-)
+include(':lib')
