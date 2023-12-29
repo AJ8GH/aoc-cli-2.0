@@ -5,3 +5,17 @@ plugins {
 kotlin {
   jvmToolchain(17)
 }
+
+jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+  manifest {
+    attributes 'Main-Class': 'com.github.aj8gh.aoc.MainKt'
+  }
+
+  from {
+    configurations.compileClasspath.collect {
+      it.isDirectory() ? it : zipTree(it)
+    }
+  }
+}

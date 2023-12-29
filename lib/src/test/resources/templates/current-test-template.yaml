@@ -1,5 +1,4 @@
 ---
-name: kt
 language: "kt"
 ide: "idea"
 files:
@@ -11,6 +10,6 @@ files:
   yearPrefix: "y"
   dayPrefix: "d"
 current:
-  year: 22
-  day: 2
+  year: 15
+  day: 1
   level: 1

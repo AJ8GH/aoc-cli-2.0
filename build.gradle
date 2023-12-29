@@ -1,13 +1,14 @@
 plugins {
   id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+  id 'application'
+  id 'java'
 }
 
-apply plugin: 'application'
 
 group = 'com.github.aj8gh'
 version = '1.0-SNAPSHOT'
 
-mainClassName = "com.github.aj8gh.aoc.AocKt"
+mainClassName = "com.github.aj8gh.aoc.MainKt"
 
 allprojects {
   repositories {
@@ -20,10 +21,14 @@ ext {
   jUnitVersion = '5.10.1'
   cliktVersion = '4.2.1'
   jacksonVersion = '2.16.+'
+  jnaVersion = '5.14.0'
+  kotlinLoggingVersion = '5.1.0'
+  slf4jVersion = '2.0.9'
 }
 
 subprojects {
   apply plugin: 'java'
+  apply plugin: 'application'
 
   test {
     useJUnitPlatform()
@@ -33,6 +38,11 @@ subprojects {
     implementation "com.github.ajalt.clikt:clikt:${cliktVersion}"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
+    implementation "net.java.dev.jna:jna:${jnaVersion}"
+    implementation "net.java.dev.jna:jna-platform:${jnaVersion}"
+    implementation "io.github.oshai:kotlin-logging-jvm:${kotlinLoggingVersion}"
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-params'
