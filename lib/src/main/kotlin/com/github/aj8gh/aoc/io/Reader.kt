@@ -3,7 +3,7 @@ package com.github.aj8gh.aoc.io
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
 
-private const val AOC_SESSION = "/session.txt"
+private const val AOC_SESSION = "/config/session.txt"
 
 private val logger = KotlinLogging.logger {}
 

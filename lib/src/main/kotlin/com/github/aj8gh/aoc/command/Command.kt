@@ -8,7 +8,6 @@ enum class Command(
   val help: String,
   val completion: CompletionCandidates.Fixed? = null,
 ) {
-
   YEAR(
     arrayOf("-y", "--year"),
     "New year value to set, must be between 15 and current year",

@@ -1,2 +1,3 @@
 active: current-test.yaml
 url: http://localhost
+session: token

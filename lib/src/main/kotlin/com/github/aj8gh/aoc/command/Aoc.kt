@@ -1,6 +1,7 @@
 package com.github.aj8gh.aoc.command
 
 import com.github.aj8gh.aoc.command.Command.*
+import com.github.aj8gh.aoc.command.handler.answer
 import com.github.aj8gh.aoc.command.handler.next
 import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.properties.getActiveProperties
@@ -24,6 +25,7 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
     set(year = year, day = day, level = level)
     next(next)
     echo(echo)
+    answer(answer)
   }
 
   private fun toOption(

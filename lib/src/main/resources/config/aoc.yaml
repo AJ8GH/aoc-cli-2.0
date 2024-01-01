@@ -1,2 +1,3 @@
 active: kt.yaml
 url: https://adventofcode.com
+session: token
