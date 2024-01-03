@@ -12,7 +12,12 @@ private const val COOKIE = "Cookie"
 
 private val client = OkHttpClient()
 
-fun answer(answer: String, level: String, url: String, session: String): String {
+fun submitAnswer(
+  answer: String,
+  level: String,
+  url: String,
+  session: String
+): String {
   val request = Request.Builder()
     .post(answerForm(answer, level))
     .url(url)

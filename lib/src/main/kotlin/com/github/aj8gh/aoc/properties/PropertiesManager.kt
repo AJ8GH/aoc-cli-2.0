@@ -13,6 +13,7 @@ var aocOverride: String? = null
 var homeOverride: String? = null
 
 fun getActiveProperties() = properties ?: readAndSetActiveProperties()
+fun getCurrent() = getActiveProperties().current
 fun getAocProperties() = aocProperties ?: readAndSetAocProperties()
 fun getAocPropertiesFile() = aocOverride ?: "${AOC_HOME}${AOC_PROPERTIES_FILE}"
 fun getActivePropertiesFile() = "${homeOverride ?: AOC_HOME}${getAocProperties().active}"

@@ -8,9 +8,12 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
+fun next() = next(true)
+
 fun next(next: Boolean) {
   if (next) {
     updateProperties(updateCurrentProperties())
+    echoCurrent()
   }
 }
 
