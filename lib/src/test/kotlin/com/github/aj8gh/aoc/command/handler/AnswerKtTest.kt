@@ -1,6 +1,7 @@
 package com.github.aj8gh.aoc.command.handler
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
+import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
@@ -43,14 +44,25 @@ class AnswerKtTest : BaseTest() {
     thenTheFollowingMessagesAreEchoed(
       CORRECT,
       getEchoMessage(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1))
+
+    resetAllRequests()
+
+    // Answer should now be cached
+    givenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL)
+    whenAnswerIsCalledWith(ANSWER)
+    thenNoRequestsWereMadeForUrl(expectedUrl)
+    thenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1)
+    thenTheFollowingMessagesAreEchoed(
+      CORRECT,
+      getEchoMessage(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1))
   }
 
   @Test
   fun answer_HappyPath_Cached() {
-    // Given
     val year = 16
     val day = 1
     val level = 1
+
     givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
     givenTheFollowingRequestStub(
       post(urlPathEqualTo(expectedUrl(year, day)))
@@ -62,10 +74,8 @@ class AnswerKtTest : BaseTest() {
             .withStatus(200)
             .withResponseBody(Body(CORRECT))))
 
-    // When
     whenAnswerIsCalledWith(ANSWER)
 
-    // Then
     thenNoRequestsWereMadeForUrl(expectedUrl(year, day))
     thenCurrentYearDayAndLevelAre(year, day, level + 1)
     thenTheFollowingMessagesAreEchoed(

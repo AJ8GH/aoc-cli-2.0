@@ -6,4 +6,6 @@ import java.io.File
 
 fun write(properties: Properties) = mapper.writeValue(getFile(), properties)
 
+fun <T> write(file: File, t: T) = mapper.writeValue(file, t)
+
 private fun getFile() = File(getActivePropertiesFile())

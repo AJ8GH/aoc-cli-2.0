@@ -1,12 +1,14 @@
 package com.github.aj8gh.aoc.command.handler
 
 import com.github.aj8gh.aoc.io.readYaml
+import com.github.aj8gh.aoc.io.write
 import com.github.aj8gh.aoc.properties.*
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.PrintStream
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -19,8 +21,9 @@ const val HTTP_PORT = 80
 const val EMPTY_MESSAGE = ""
 const val SESSION = "session"
 const val AOC_HOME = "src/test/resources/"
-const val ACTIVE_CONFIG_FILE = "${AOC_HOME}current-test.yaml"
-const val TEMPLATE_CONFIG_FILE = "${AOC_HOME}templates/current-test-template.yaml"
+const val ACTIVE_PROPERTIES_FILE = "${AOC_HOME}current-test.yaml"
+const val TEMPLATE_PROPERTIES_FILE = "${AOC_HOME}templates/current-test-template.yaml"
+const val TEMPLATE_ANSWERS_FILE = "${AOC_HOME}templates/test-answer-cache-template.yaml"
 const val AOC_CONFIG_FILE = "aoc-test.yaml"
 
 private val originalOut = System.out
@@ -37,7 +40,8 @@ open class BaseTest {
 
   @AfterTest
   fun tearDown() {
-    updateProperties(readYaml(TEMPLATE_CONFIG_FILE, Properties::class.java))
+    updateProperties(readYaml(TEMPLATE_PROPERTIES_FILE, Properties::class.java))
+    write(File("${AOC_HOME}/cache/answer/real.yaml"), readYaml(TEMPLATE_ANSWERS_FILE, Map::class.java))
     System.setOut(originalOut)
   }
 
@@ -89,7 +93,7 @@ open class BaseTest {
     "You are on year $year day $day level $level"
 
   private fun activeProperties() =
-    readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
+    readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
 
   private fun resetOutStream() {
     outContent = ByteArrayOutputStream()
