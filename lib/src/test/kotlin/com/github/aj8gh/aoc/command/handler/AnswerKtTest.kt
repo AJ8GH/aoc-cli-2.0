@@ -46,7 +46,10 @@ class AnswerKtTest : BaseTest() {
         .withFormParam("answer", equalTo(ANSWER))
     )
 
-    assertMessage(CORRECT)
+    assertMessages(
+      CORRECT,
+      "You are on year $DEFAULT_YEAR day $DEFAULT_DAY level ${DEFAULT_LEVEL + 1}"
+    )
   }
 
   @Test

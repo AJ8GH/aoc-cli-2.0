@@ -39,6 +39,15 @@ open class BaseTest {
   protected fun assertMessage(expected: String) =
     assertEquals(expected, outContent.toString().trim())
 
+  protected fun assertMessages(vararg expected: String) {
+    val actual = outContent.toString().trim().lines()
+    assertEquals(expected.size, actual.size, "Found mismatched number of expected and actual messages")
+    for (i in expected.indices) {
+      assertEquals(expected[i], actual[i].trim())
+    }
+  }
+
+
   protected fun activeProperties() =
     readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
 }

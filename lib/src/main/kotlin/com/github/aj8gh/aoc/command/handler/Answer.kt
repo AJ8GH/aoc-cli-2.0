@@ -10,7 +10,6 @@ private const val TOO_HIGH = "That's not the right answer; your answer is too hi
 private const val TOO_LOW = "That's not the right answer; your answer is too low."
 private const val WRONG_LEVEL = "You don't seem to be solving the right level.  Did you already complete it?"
 private const val CORRECT = "Congratulations, that's the correct answer!"
-private const val NOT_CACHED = "Answer not found in cache"
 
 fun answer(answer: String?) =
   answer?.let { checkCache(it) }
@@ -35,7 +34,7 @@ private fun handle(response: String, answer: String) {
       contains(WRONG_LEVEL) -> println(WRONG_LEVEL)
       contains(TOO_HIGH) -> println(TOO_HIGH)
       contains(TOO_LOW) -> println(TOO_LOW)
-      contains(NOT_CACHED) -> submitAnswer(answer)
+      else -> submitAnswer(answer)
     }
   }
 }
