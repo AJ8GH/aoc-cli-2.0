@@ -7,11 +7,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
-private const val ACTIVE_CONFIG_FILE = "${AOC_HOME}current-test.yaml"
-private const val DEFAULT_YEAR = 15
-private const val DEFAULT_DAY = 1
-private const val DEFAULT_LEVEL = 1
-
 class SetKtTest : BaseTest() {
 
   @ParameterizedTest

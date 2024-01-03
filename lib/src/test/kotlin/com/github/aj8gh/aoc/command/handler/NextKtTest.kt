@@ -11,7 +11,6 @@ import java.time.Instant
 import java.time.ZoneId
 import kotlin.test.assertEquals
 
-private const val ACTIVE_CONFIG_FILE = "${AOC_HOME}current-test.yaml"
 private const val SECOND_YEAR = FIRST_YEAR + 1
 private const val SECOND_DAY = FIRST_DAY + 1
 

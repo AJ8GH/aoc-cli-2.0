@@ -4,7 +4,6 @@ import com.github.aj8gh.aoc.command.Command.*
 import com.github.aj8gh.aoc.command.handler.answer
 import com.github.aj8gh.aoc.command.handler.next
 import com.github.aj8gh.aoc.command.handler.set
-import com.github.aj8gh.aoc.properties.getActiveProperties
 import com.github.ajalt.clikt.completion.CompletionCandidates.Fixed
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.flag
@@ -33,11 +32,4 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
     help: String,
     completion: Fixed? = null
   ) = option(names = names, help = help, completionCandidates = completion)
-
-  private fun echo(echo: Boolean) {
-    if (echo) {
-      val env = getActiveProperties().current
-      echo("You are on year ${env.year} day ${env.day} level ${env.level}")
-    }
-  }
 }
