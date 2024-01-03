@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
-import kotlin.test.assertEquals
 
 private const val SECOND_YEAR = FIRST_YEAR + 1
 private const val SECOND_DAY = FIRST_DAY + 1
@@ -32,19 +31,15 @@ class NextKtTest : BaseTest() {
     expectedDay: Int,
     expectedLevel: Int,
   ) {
-
-    // Given
-    set(year = year, day = day, level = level)
-
-    // When
-    next(next)
-
-    // Then
-    val actual = activeProperties()
-    assertEquals(expectedYear, actual.current.year)
-    assertEquals(expectedDay, actual.current.day)
-    assertEquals(expectedLevel, actual.current.level)
+    givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
+    whenNextIsCalledFor(next)
+    thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
+    thenTheFollowingMessageIsEchoed(
+      expectedMessage(next, expectedYear, expectedDay, expectedLevel))
   }
+
+  private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =
+    EMPTY_MESSAGE.takeUnless { next } ?: getEchoMessage(year, day, level)
 
   companion object {
 

@@ -3,26 +3,20 @@ package com.github.aj8gh.aoc.command.handler
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import kotlin.test.assertEquals
 
 class SetKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun setTest(year: Int?, day: Int?, level: Int?) {
-    // Given
     val expectedYear = year ?: DEFAULT_YEAR
     val expectedDay = day ?: DEFAULT_DAY
     val expectedLevel = level ?: DEFAULT_LEVEL
 
-    // When
-    set(year = year, day = day, level = level)
-
-    // Then
-    val actual = activeProperties()
-    assertEquals(expectedYear, actual.current.year)
-    assertEquals(expectedDay, actual.current.day)
-    assertEquals(expectedLevel, actual.current.level)
+    whenSetIsCalledFor(year = year, day = day, level = level)
+    thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
+    thenTheFollowingMessageIsEchoed(
+      getEchoMessage(expectedYear, expectedDay, expectedLevel))
   }
 
   companion object {

@@ -9,8 +9,8 @@ class EchoKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun echoTest(echo: Boolean, expected: String) {
-    echoCurrent(echo)
-    assertMessage(expected)
+    whenEchoCurrentIsCalledFor(echo)
+    thenTheFollowingMessageIsEchoed(expected)
   }
 
   companion object {

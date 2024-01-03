@@ -20,10 +20,8 @@ class AnswerKtTest : BaseTest() {
 
   @Test
   fun answer_HappyPath_NoCache() {
-    // Given
     val expectedUrl = expectedUrl(DEFAULT_YEAR, DEFAULT_DAY)
-
-    stubFor(
+    givenTheFollowingRequestStub(
       post(urlPathEqualTo(expectedUrl))
         .withCookie(SESSION_KEY, matching(SESSION))
         .withFormParam(LEVEL_KEY, equalTo(DEFAULT_LEVEL.toString()))
@@ -31,25 +29,20 @@ class AnswerKtTest : BaseTest() {
         .willReturn(
           responseDefinition()
             .withStatus(200)
-            .withResponseBody(Body(CORRECT))
-        )
-    )
+            .withResponseBody(Body(CORRECT))))
 
-    // When
-    answer(ANSWER)
+    whenAnswerIsCalledWith(ANSWER)
 
-    // Then
-    verify(
+    thenTheFollowingRequestWasMade(
       postRequestedFor(urlPathEqualTo(expectedUrl))
         .withCookie("session", matching(SESSION))
         .withFormParam("level", equalTo(DEFAULT_LEVEL.toString()))
-        .withFormParam("answer", equalTo(ANSWER))
-    )
+        .withFormParam("answer", equalTo(ANSWER)))
 
-    assertMessages(
+    thenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1)
+    thenTheFollowingMessagesAreEchoed(
       CORRECT,
-      "You are on year $DEFAULT_YEAR day $DEFAULT_DAY level ${DEFAULT_LEVEL + 1}"
-    )
+      getEchoMessage(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1))
   }
 
   @Test
@@ -58,9 +51,8 @@ class AnswerKtTest : BaseTest() {
     val year = 16
     val day = 1
     val level = 1
-    set(year = year, day = day, level = level)
-
-    stubFor(
+    givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
+    givenTheFollowingRequestStub(
       post(urlPathEqualTo(expectedUrl(year, day)))
         .withCookie("session", matching(SESSION))
         .withFormParam("level", equalTo(DEFAULT_LEVEL.toString()))
@@ -68,16 +60,17 @@ class AnswerKtTest : BaseTest() {
         .willReturn(
           responseDefinition()
             .withStatus(200)
-            .withResponseBody(Body(CORRECT))
-        )
-    )
+            .withResponseBody(Body(CORRECT))))
 
     // When
-    answer(ANSWER)
+    whenAnswerIsCalledWith(ANSWER)
 
     // Then
-    verify(exactly(0), postRequestedFor(urlPathEqualTo(expectedUrl(year, day))))
-    assertMessage(CORRECT)
+    thenNoRequestsWereMadeForUrl(expectedUrl(year, day))
+    thenCurrentYearDayAndLevelAre(year, day, level + 1)
+    thenTheFollowingMessagesAreEchoed(
+      CORRECT,
+      getEchoMessage(year, day, level + 1))
   }
 
   private fun expectedUrl(year: Int, day: Int) = "/20$year/day/$day/answer"
