@@ -2,7 +2,10 @@ package com.github.aj8gh.aoc.command.handler
 
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
-import com.github.aj8gh.aoc.properties.*
+import com.github.aj8gh.aoc.properties.Properties
+import com.github.aj8gh.aoc.properties.getAocProperties
+import com.github.aj8gh.aoc.properties.homeOverride
+import com.github.aj8gh.aoc.properties.updateProperties
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
@@ -24,7 +27,6 @@ const val AOC_HOME = "src/test/resources/"
 const val ACTIVE_PROPERTIES_FILE = "${AOC_HOME}current-test.yaml"
 const val TEMPLATE_PROPERTIES_FILE = "${AOC_HOME}templates/current-test-template.yaml"
 const val TEMPLATE_ANSWERS_FILE = "${AOC_HOME}templates/test-answer-cache-template.yaml"
-const val AOC_CONFIG_FILE = "aoc-test.yaml"
 
 private val originalOut = System.out
 private lateinit var outContent: ByteArrayOutputStream
@@ -32,7 +34,6 @@ private lateinit var outContent: ByteArrayOutputStream
 open class BaseTest {
   @BeforeTest
   fun setUp() {
-    aocOverride = "${AOC_HOME}${AOC_CONFIG_FILE}"
     homeOverride = AOC_HOME
     getAocProperties()
     resetOutStream()

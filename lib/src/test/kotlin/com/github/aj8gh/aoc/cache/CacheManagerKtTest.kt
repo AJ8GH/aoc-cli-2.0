@@ -25,9 +25,9 @@ class CacheManagerKtTest : BaseTest() {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(15, 1, 2),
-      Arguments.of(16, 1, 1),
-      Arguments.of(17, 1, 1),
+        Arguments.of(15, 1, 2),
+        Arguments.of(16, 1, 1),
+        Arguments.of(17, 1, 1),
     )
   }
 }

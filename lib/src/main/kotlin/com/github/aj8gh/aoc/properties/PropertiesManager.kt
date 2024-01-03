@@ -9,13 +9,12 @@ private val AOC_HOME = "${System.getProperty("user.home")}/.config/.aoc/"
 private var aocProperties: AocProperties? = null
 private var properties: Properties? = null
 
-var aocOverride: String? = null
 var homeOverride: String? = null
 
 fun getActiveProperties() = properties ?: readAndSetActiveProperties()
 fun getCurrent() = getActiveProperties().current
 fun getAocProperties() = aocProperties ?: readAndSetAocProperties()
-fun getAocPropertiesFile() = aocOverride ?: "${AOC_HOME}${AOC_PROPERTIES_FILE}"
+fun getAocPropertiesFile() = "${getAocHome()}${AOC_PROPERTIES_FILE}"
 fun getActivePropertiesFile() = "${getAocHome()}${getAocProperties().active}"
 fun getAocHome() = homeOverride ?: AOC_HOME
 
@@ -24,12 +23,12 @@ fun updateProperties(newProperties: Properties) {
   write(newProperties)
 }
 
-private fun readAndSetAocProperties() = readYaml(
-  getAocPropertiesFile(),
-  AocProperties::class.java
-)
+private fun readAndSetAocProperties(): AocProperties {
+  aocProperties = readYaml(getAocPropertiesFile(), AocProperties::class.java)
+  return aocProperties!!
+}
 
-private fun readAndSetActiveProperties() = readYaml(
-  getActivePropertiesFile(),
-  Properties::class.java
-)
+private fun readAndSetActiveProperties(): Properties {
+  properties = readYaml(getActivePropertiesFile(), Properties::class.java)
+  return properties!!
+}
