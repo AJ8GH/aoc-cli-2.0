@@ -9,7 +9,7 @@ class EchoKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun echoTest(echo: Boolean, expected: String) {
-    echo(echo)
+    echoCurrent(echo)
     assertMessage(expected)
   }
 

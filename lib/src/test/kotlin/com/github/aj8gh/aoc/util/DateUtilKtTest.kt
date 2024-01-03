@@ -12,7 +12,7 @@ class DateUtilKtTest {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
-  fun test(date: String , expected: Int) {
+  fun test(date: String, expected: Int) {
     val clock = Clock.fixed(Instant.parse(date), ZoneId.systemDefault())
     val actual = latestYear(clock)
     assertEquals(expected, actual)

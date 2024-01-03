@@ -37,4 +37,7 @@ open class BaseTest {
 
   protected fun assertMessage(expected: String) =
     assertEquals(expected, outContent.toString().trim())
+
+  protected fun activeProperties() =
+    readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
 }

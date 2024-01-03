@@ -10,6 +10,8 @@ private const val WRONG_LEVEL = "You don't seem to be solving the right level.  
 private const val CORRECT = "Congratulations, that's the correct answer!"
 
 fun answer(answer: String?) {
+  if (answer == null) return
+
   val year = getActiveProperties().current.year
   val day = getActiveProperties().current.day
   val level = getActiveProperties().current.level
@@ -19,8 +21,8 @@ fun answer(answer: String?) {
   val url = "${getAocProperties().url}/20$year/day/$day/answer"
   val session = getAocProperties().session
 
-  val response = answer?.let { answer(answer, level.toString(), url, session) }
-  handle(response!!)
+  val response = answer(answer, level.toString(), url, session)
+  handle(response)
 }
 
 private fun handle(response: String) {
@@ -33,17 +35,6 @@ private fun handle(response: String) {
     }
   }
 }
-
-
-private fun printMessage(message: String) =
-  with(message) {
-    when {
-      contains(CORRECT) -> println(CORRECT)
-      contains(WRONG_LEVEL) -> println(WRONG_LEVEL)
-      contains(TOO_HIGH) -> println(TOO_HIGH)
-      contains(TOO_LOW) -> println(TOO_LOW)
-    }
-  }
 
 private fun handleCorrect() {
   // cache()

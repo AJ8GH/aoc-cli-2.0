@@ -2,9 +2,6 @@ package com.github.aj8gh.aoc.command.handler
 
 import com.github.aj8gh.aoc.properties.getActiveProperties
 import com.github.aj8gh.aoc.properties.updateProperties
-import io.github.oshai.kotlinlogging.KotlinLogging
-
-private val logger = KotlinLogging.logger {}
 
 fun set(year: Int?, day: Int?, level: Int?) {
   val properties = getActiveProperties()
@@ -14,5 +11,5 @@ fun set(year: Int?, day: Int?, level: Int?) {
   level?.let { properties.current.level = it }
 
   updateProperties(properties)
-  logger.info { getActiveProperties() }
+  echoCurrent()
 }

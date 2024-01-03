@@ -1,7 +1,5 @@
 package com.github.aj8gh.aoc.command.handler
 
-import com.github.aj8gh.aoc.io.readYaml
-import com.github.aj8gh.aoc.properties.Properties
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -21,7 +19,7 @@ class SetKtTest : BaseTest() {
     set(year = year, day = day, level = level)
 
     // Then
-    val actual = readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
+    val actual = activeProperties()
     assertEquals(expectedYear, actual.current.year)
     assertEquals(expectedDay, actual.current.day)
     assertEquals(expectedLevel, actual.current.level)

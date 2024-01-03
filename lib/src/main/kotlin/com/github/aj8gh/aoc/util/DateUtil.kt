@@ -1,14 +1,17 @@
 package com.github.aj8gh.aoc.util
 
 import java.time.Clock
+import java.time.Clock.systemUTC
 import java.time.LocalDate
 
-val CLOCK: Clock = Clock.systemUTC()
+private const val YEAR_2000 = 2000
+private const val DECEMBER = 12
+private const val ONE_YEAR = 1
 
-fun latestYear() = latestYear(CLOCK)
+fun latestYear() = latestYear(systemUTC())
 
-fun latestYear(clock: Clock) = year(LocalDate.now(clock)) % 2000
+fun latestYear(clock: Clock) = year(LocalDate.now(clock)) % YEAR_2000
 
-private fun year(today: LocalDate) = today.year.takeIf {
-  today.monthValue == 12
-} ?: (today.year - 1)
+private fun year(today: LocalDate) = today.year
+  .takeIf { today.monthValue == DECEMBER }
+  ?: (today.year - ONE_YEAR)

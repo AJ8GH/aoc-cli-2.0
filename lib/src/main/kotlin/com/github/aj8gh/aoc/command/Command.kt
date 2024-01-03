@@ -35,7 +35,7 @@ enum class Command(
     arrayOf("-c", "--create"),
     "Create resources for current level",
 
-  ),
+    ),
   ANSWER(
     arrayOf("-a", "--answer"),
     "Submit answer for current level"

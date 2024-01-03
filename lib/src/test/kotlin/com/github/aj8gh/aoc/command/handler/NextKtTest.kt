@@ -1,7 +1,5 @@
 package com.github.aj8gh.aoc.command.handler
 
-import com.github.aj8gh.aoc.io.readYaml
-import com.github.aj8gh.aoc.properties.Properties
 import com.github.aj8gh.aoc.util.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -42,7 +40,7 @@ class NextKtTest : BaseTest() {
     next(next)
 
     // Then
-    val actual = readYaml(ACTIVE_CONFIG_FILE, Properties::class.java)
+    val actual = activeProperties()
     assertEquals(expectedYear, actual.current.year)
     assertEquals(expectedDay, actual.current.day)
     assertEquals(expectedLevel, actual.current.level)

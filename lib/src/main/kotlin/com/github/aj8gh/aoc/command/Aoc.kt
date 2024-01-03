@@ -2,6 +2,7 @@ package com.github.aj8gh.aoc.command
 
 import com.github.aj8gh.aoc.command.Command.*
 import com.github.aj8gh.aoc.command.handler.answer
+import com.github.aj8gh.aoc.command.handler.echoCurrent
 import com.github.aj8gh.aoc.command.handler.next
 import com.github.aj8gh.aoc.command.handler.set
 import com.github.ajalt.clikt.completion.CompletionCandidates.Fixed
@@ -23,8 +24,8 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   override fun run() {
     set(year = year, day = day, level = level)
     next(next)
-    echo(echo)
     answer(answer)
+    echoCurrent(echo)
   }
 
   private fun toOption(
