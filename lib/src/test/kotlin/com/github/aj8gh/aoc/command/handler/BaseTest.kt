@@ -11,7 +11,8 @@ import kotlin.test.assertEquals
 const val DEFAULT_YEAR = 15
 const val DEFAULT_DAY = 1
 const val DEFAULT_LEVEL = 1
-const val TOKEN = "token"
+const val HTTP_PORT = 80
+const val SESSION = "session"
 const val AOC_HOME = "src/test/resources/"
 const val ACTIVE_CONFIG_FILE = "${AOC_HOME}current-test.yaml"
 const val TEMPLATE_CONFIG_FILE = "${AOC_HOME}templates/current-test-template.yaml"
