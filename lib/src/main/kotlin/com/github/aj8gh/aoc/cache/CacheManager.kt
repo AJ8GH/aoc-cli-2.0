@@ -14,12 +14,14 @@ fun checkAnswer(answer: String) =
   handle(answer, getCachedAnswer())
 
 fun cache(answer: String) {
-  val answers = getAnswers()
-  val y: Map<String, Map<String, String>>? = answers[getCurrent().year.toString()]
-  val d = y?.get(getCurrent().day.toString())
-  writeAnswers(answers.plus(getCurrent().year.toString() to y?.plus(
-    getCurrent().day.toString() to
-        d?.plus(getCurrent().level.toString() to answer))))
+  val answers = getAnswers().toMutableMap()
+  answers
+    .computeIfAbsent(getCurrent().year.toString()) {
+      mutableMapOf(getCurrent().day.toString() to mutableMapOf())
+    }.computeIfAbsent(getCurrent().day.toString()) {
+      mutableMapOf(getCurrent().level.toString() to answer)
+    }[getCurrent().level.toString()] = answer
+  writeAnswers(answers)
 }
 
 private fun getCachedAnswer(): String? =
@@ -28,9 +30,9 @@ private fun getCachedAnswer(): String? =
     ?.get(getCurrent().level.toString())
 
 @SuppressWarnings("unchecked")
-private fun getAnswers(): Map<String, Map<String, Map<String, String>>> =
+private fun getAnswers(): MutableMap<String, MutableMap<String, MutableMap<String, String>>> =
   readYaml("${getAocHome()}$ANSWER_CACHE", Map::class.java)
-      as Map<String, Map<String, Map<String, String>>>
+      as MutableMap<String, MutableMap<String, MutableMap<String, String>>>
 
 private fun writeAnswers(answers: Map<String, Map<String, Map<String, String>?>?>) =
   write(File("${getAocHome()}$ANSWER_CACHE"), answers)
