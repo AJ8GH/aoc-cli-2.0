@@ -87,9 +87,6 @@ open class BaseTest {
   protected fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
       verify(exactly(0), anyRequestedFor(urlPathEqualTo(expectedUrl)))
 
-  protected fun getEchoMessage(year: Int, day: Int, level: Int) =
-      "You are on year $year day $day level $level"
-
   private fun activeProperties() =
       readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
 
@@ -98,3 +95,6 @@ open class BaseTest {
     System.setOut(PrintStream(outContent))
   }
 }
+
+fun getEchoMessage(year: Int, day: Int, level: Int) =
+    "You are on year $year day $day level $level"

@@ -1,10 +1,7 @@
 package com.github.aj8gh.aoc.command
 
 import com.github.aj8gh.aoc.command.Command.*
-import com.github.aj8gh.aoc.command.handler.answer
-import com.github.aj8gh.aoc.command.handler.echoCurrent
-import com.github.aj8gh.aoc.command.handler.next
-import com.github.aj8gh.aoc.command.handler.set
+import com.github.aj8gh.aoc.command.handler.*
 import com.github.ajalt.clikt.completion.CompletionCandidates.Fixed
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.flag
@@ -25,6 +22,7 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
     set(year = year, day = day, level = level)
     next(next)
     answer(answer)
+    create(create)
     echoCurrent(echo)
   }
 

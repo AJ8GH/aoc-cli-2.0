@@ -29,19 +29,18 @@ private fun submitAnswer(answer: String) {
   handle(response, answer)
 }
 
-private fun handle(response: String, answer: String) {
-  with(response) {
-    when {
-      contains(CORRECT) -> handleCorrect(answer)
-      contains(INCORRECT) -> println(INCORRECT)
-      contains(WRONG_LEVEL) -> println(WRONG_LEVEL)
-      contains(TOO_HIGH) -> println(TOO_HIGH)
-      contains(TOO_LOW) -> println(TOO_LOW)
-      contains(NOT_CACHED) -> submitAnswer(answer)
-      else -> println(response)
+private fun handle(response: String, answer: String) =
+    with(response) {
+      when {
+        contains(CORRECT) -> handleCorrect(answer)
+        contains(INCORRECT) -> println(INCORRECT)
+        contains(WRONG_LEVEL) -> println(WRONG_LEVEL)
+        contains(TOO_HIGH) -> println(TOO_HIGH)
+        contains(TOO_LOW) -> println(TOO_LOW)
+        contains(NOT_CACHED) -> submitAnswer(answer)
+        else -> println(response)
+      }
     }
-  }
-}
 
 private fun handleCorrect(answer: String) {
   println(CORRECT)
