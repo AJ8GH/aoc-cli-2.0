@@ -29,8 +29,8 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   }
 
   private fun toOption(
-    names: Array<String>,
-    help: String,
-    completion: Fixed? = null
+      names: Array<String>,
+      help: String,
+      completion: Fixed? = null
   ) = option(names = names, help = help, completionCandidates = completion)
 }

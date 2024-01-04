@@ -8,12 +8,9 @@ import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
 
-private const val SECOND_YEAR = FIRST_YEAR + 1
-private const val SECOND_DAY = FIRST_DAY + 1
-
 private val CLOCK = Clock.fixed(
-  Instant.parse("2023-12-26T00:00:00Z"),
-  ZoneId.systemDefault()
+    Instant.parse("2023-12-26T00:00:00Z"),
+    ZoneId.systemDefault()
 )
 
 private val LATEST_YEAR = latestYear(CLOCK)
@@ -23,53 +20,52 @@ class NextKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun nextTest(
-    next: Boolean,
-    year: Int,
-    day: Int,
-    level: Int,
-    expectedYear: Int,
-    expectedDay: Int,
-    expectedLevel: Int,
+      next: Boolean,
+      year: Int,
+      day: Int,
+      level: Int,
+      expectedYear: Int,
+      expectedDay: Int,
+      expectedLevel: Int,
   ) {
     givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
     whenNextIsCalledFor(next)
     thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    thenTheFollowingMessageIsEchoed(
-      expectedMessage(next, expectedYear, expectedDay, expectedLevel))
+    thenTheFollowingMessageIsEchoed(expectedMessage(next, expectedYear, expectedDay, expectedLevel))
   }
 
   private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =
-    EMPTY_MESSAGE.takeUnless { next } ?: getEchoMessage(year, day, level)
+      EMPTY_MESSAGE.takeUnless { next } ?: getEchoMessage(year, day, level)
 
   companion object {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(
-        true,
-        FIRST_YEAR, FIRST_DAY, LEVEL_1,
-        FIRST_YEAR, FIRST_DAY, LEVEL_2
-      ),
-      Arguments.of(
-        false,
-        FIRST_YEAR, FIRST_DAY, LEVEL_1,
-        FIRST_YEAR, FIRST_DAY, LEVEL_1
-      ),
-      Arguments.of(
-        true,
-        FIRST_YEAR, FIRST_DAY, LEVEL_2,
-        FIRST_YEAR, SECOND_DAY, LEVEL_1
-      ),
-      Arguments.of(
-        true,
-        FIRST_YEAR, LAST_DAY, LEVEL_2,
-        SECOND_YEAR, FIRST_DAY, LEVEL_1
-      ),
-      Arguments.of(
-        true,
-        LATEST_YEAR, LAST_DAY, LEVEL_2,
-        LATEST_YEAR, LAST_DAY, LEVEL_2
-      ),
+        Arguments.of(
+            true,
+            Y15, D1, L1,
+            Y15, D1, L2
+        ),
+        Arguments.of(
+            false,
+            Y15, D1, L1,
+            Y15, D1, L1
+        ),
+        Arguments.of(
+            true,
+            Y15, D1, L2,
+            Y15, D2, L1
+        ),
+        Arguments.of(
+            true,
+            Y15, D25, L2,
+            Y16, D1, L1
+        ),
+        Arguments.of(
+            true,
+            LATEST_YEAR, D25, L2,
+            LATEST_YEAR, D25, L2
+        ),
     )
   }
 }

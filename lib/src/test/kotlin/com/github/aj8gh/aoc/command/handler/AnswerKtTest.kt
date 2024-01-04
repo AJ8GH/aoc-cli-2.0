@@ -1,10 +1,15 @@
 package com.github.aj8gh.aoc.command.handler
 
+import com.github.aj8gh.aoc.util.*
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 
 private const val ANSWER = "123"
 private const val LEVEL_KEY = "level"
@@ -14,74 +19,79 @@ private const val TOO_HIGH = "That's not the right answer; your answer is too hi
 private const val TOO_LOW = "That's not the right answer; your answer is too low."
 private const val WRONG_LEVEL = "You don't seem to be solving the right level.  Did you already complete it?"
 private const val CORRECT = "Congratulations, that's the correct answer!"
+private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
 @WireMockTest(httpPort = HTTP_PORT)
 class AnswerKtTest : BaseTest() {
 
   @Test
   fun answer_HappyPath_NoCache() {
-    val expectedUrl = expectedUrl(DEFAULT_YEAR, DEFAULT_DAY)
-    givenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1)
-    givenTheFollowingRequestStub(
-        post(urlPathEqualTo(expectedUrl))
-          .withCookie(SESSION_KEY, matching(SESSION))
-          .withFormParam(LEVEL_KEY, equalTo((DEFAULT_LEVEL + 1).toString()))
-          .withFormParam(ANSWER_KEY, equalTo(ANSWER))
-          .willReturn(
-              responseDefinition()
-                .withStatus(200)
-                .withResponseBody(Body(CORRECT))))
-
+    givenTheFollowingRequestStub(postMapping(CORRECT))
     whenAnswerIsCalledWith(ANSWER)
-
-    thenTheFollowingRequestWasMade(
-        postRequestedFor(urlPathEqualTo(expectedUrl))
-          .withCookie("session", matching(SESSION))
-          .withFormParam("level", equalTo((DEFAULT_LEVEL + 1).toString()))
-          .withFormParam("answer", equalTo(ANSWER)))
-
-    thenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY + 1, DEFAULT_LEVEL)
-    thenTheFollowingMessagesAreEchoed(
-        CORRECT,
-        getEchoMessage(DEFAULT_YEAR, DEFAULT_DAY + 1, DEFAULT_LEVEL))
+    thenTheFollowingRequestWasMade(postPattern())
+    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
+    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
 
     resetAllRequests()
 
     // Answer should now be cached
-    givenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY, DEFAULT_LEVEL + 1)
+    givenCurrentYearDayAndLevelAre(Y15, D1, L1)
     whenAnswerIsCalledWith(ANSWER)
-    thenNoRequestsWereMadeForUrl(expectedUrl)
-    thenCurrentYearDayAndLevelAre(DEFAULT_YEAR, DEFAULT_DAY + 1, DEFAULT_LEVEL)
-    thenTheFollowingMessagesAreEchoed(
-        CORRECT,
-        getEchoMessage(DEFAULT_YEAR, DEFAULT_DAY + 1, DEFAULT_LEVEL))
+    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
+    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
   }
 
   @Test
   fun answer_HappyPath_Cached() {
-    val year = 16
-    val day = 2
-    val level = 1
-
-    givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
-    givenTheFollowingRequestStub(
-        post(urlPathEqualTo(expectedUrl(year, day)))
-          .withCookie("session", matching(SESSION))
-          .withFormParam("level", equalTo(DEFAULT_LEVEL.toString()))
-          .withFormParam("answer", equalTo(ANSWER))
-          .willReturn(
-              responseDefinition()
-                .withStatus(200)
-                .withResponseBody(Body(CORRECT))))
-
+    givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
     whenAnswerIsCalledWith(ANSWER)
-
-    thenNoRequestsWereMadeForUrl(expectedUrl(year, day))
-    thenCurrentYearDayAndLevelAre(year, day, level + 1)
-    thenTheFollowingMessagesAreEchoed(
-        CORRECT,
-        getEchoMessage(year, day, level + 1))
+    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+    thenCurrentYearDayAndLevelAre(Y15, D2, L1)
+    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1))
   }
 
-  private fun expectedUrl(year: Int, day: Int) = "/20$year/day/$day/answer"
+  @ParameterizedTest
+  @MethodSource("inputProvider")
+  fun answer_SadPath_Cached(answer: String, expectedResponse: String) {
+    givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+    whenAnswerIsCalledWith(answer)
+    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
+    thenTheFollowingMessageIsEchoed(expectedResponse)
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, "UNKNOWN"])
+  fun answer_SadPath_NoCache(expectedResponse: String) {
+    givenTheFollowingRequestStub(postMapping(expectedResponse))
+    whenAnswerIsCalledWith(ANSWER)
+    thenTheFollowingRequestWasMade(postPattern())
+    thenCurrentYearDayAndLevelAre(Y15, D1, L1)
+    thenTheFollowingMessageIsEchoed(expectedResponse)
+  }
+
+  private fun postMapping(response: String) = post(urlPathEqualTo(DEFAULT_ANSWER_URL))
+      .withCookie(SESSION_KEY, matching(SESSION))
+      .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
+      .withFormParam(ANSWER_KEY, equalTo(ANSWER))
+      .willReturn(
+          responseDefinition()
+              .withStatus(200)
+              .withResponseBody(Body(response)))
+
+  private fun postPattern() = postRequestedFor(urlPathEqualTo(DEFAULT_ANSWER_URL))
+      .withCookie(SESSION_KEY, matching(SESSION))
+      .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
+      .withFormParam(ANSWER_KEY, equalTo(ANSWER))
+
+  companion object {
+
+    @JvmStatic
+    private fun inputProvider() = listOf(
+        Arguments.of("122", TOO_LOW),
+        Arguments.of("124", TOO_HIGH),
+        Arguments.of("abc", INCORRECT),
+    )
+  }
 }

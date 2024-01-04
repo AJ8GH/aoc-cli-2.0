@@ -24,17 +24,17 @@ private fun updateCurrentProperties(): Properties {
   val day = properties.current.day
   val level = properties.current.level
 
-  if (level == LEVEL_1) {
-    properties.current.level = LEVEL_2
+  if (level == L1) {
+    properties.current.level = L2
     return properties
   }
 
-  if (day == LAST_DAY) {
+  if (day == D25) {
     if (year == latestYear()) {
       logger.warn { "You're already as far as you can go!" }
     } else {
       properties.current.year++
-      properties.current.day = FIRST_DAY
+      properties.current.day = D1
       properties.current.level--
     }
     return properties

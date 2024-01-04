@@ -11,22 +11,22 @@ private const val SESSION_KEY = "session"
 private const val COOKIE = "Cookie"
 
 fun submitAnswer(answer: String, level: String, url: String, session: String) =
-  OkHttpClient()
-    .newCall(request(answer, level, url, session))
-    .execute()
-    .use(::handle)
+    OkHttpClient()
+        .newCall(request(answer, level, url, session))
+        .execute()
+        .use(::handle)
 
 private fun request(answer: String, level: String, url: String, session: String) =
-  Request.Builder()
-    .post(answerForm(answer, level))
-    .url(url)
-    .addHeader(COOKIE, "$SESSION_KEY=$session")
-    .build()
+    Request.Builder()
+        .post(answerForm(answer, level))
+        .url(url)
+        .addHeader(COOKIE, "$SESSION_KEY=$session")
+        .build()
 
 private fun answerForm(answer: String, level: String) = FormBody.Builder()
-  .add(LEVEL_KEY, level)
-  .add(ANSWER_KEY, answer)
-  .build()
+    .add(LEVEL_KEY, level)
+    .add(ANSWER_KEY, answer)
+    .build()
 
 private fun handle(response: Response): String {
   if (!response.isSuccessful) {

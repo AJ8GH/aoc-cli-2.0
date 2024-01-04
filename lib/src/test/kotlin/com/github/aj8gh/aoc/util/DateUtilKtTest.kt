@@ -23,11 +23,11 @@ class DateUtilKtTest {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of("2086-12-01T00:00:00Z", 86),
-      Arguments.of("2086-11-30T23:59:59Z", 85),
-      Arguments.of("2023-07-30T23:59:59Z", 22),
-      Arguments.of("2023-12-26T23:59:59Z", 23),
-      Arguments.of("2024-01-01T00:00:00Z", 23),
+        Arguments.of("2086-12-01T00:00:00Z", 86),
+        Arguments.of("2086-11-30T23:59:59Z", 85),
+        Arguments.of("2023-07-30T23:59:59Z", 22),
+        Arguments.of("2023-12-26T23:59:59Z", 23),
+        Arguments.of("2024-01-01T00:00:00Z", 23),
     )
   }
 }

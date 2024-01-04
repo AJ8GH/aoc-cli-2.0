@@ -17,9 +17,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 
-const val DEFAULT_YEAR = 15
-const val DEFAULT_DAY = 1
-const val DEFAULT_LEVEL = 1
 const val HTTP_PORT = 80
 const val EMPTY_MESSAGE = ""
 const val SESSION = "session"
@@ -52,19 +49,19 @@ open class BaseTest {
   }
 
   protected fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
-    stubFor(stub)
+      stubFor(stub)
 
   protected fun whenNextIsCalledFor(next: Boolean) =
-    next(next)
+      next(next)
 
   protected fun whenSetIsCalledFor(year: Int?, day: Int?, level: Int?) =
-    set(year = year, day = day, level = level)
+      set(year = year, day = day, level = level)
 
   protected fun whenEchoCurrentIsCalledFor(echo: Boolean) =
-    echoCurrent(echo)
+      echoCurrent(echo)
 
   protected fun whenAnswerIsCalledWith(answer: String) =
-    answer(answer)
+      answer(answer)
 
   protected fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
     val actual = activeProperties()
@@ -74,7 +71,7 @@ open class BaseTest {
   }
 
   protected fun thenTheFollowingMessageIsEchoed(expected: String) =
-    assertEquals(expected, outContent.toString().trim())
+      assertEquals(expected, outContent.toString().trim())
 
   protected fun thenTheFollowingMessagesAreEchoed(vararg expected: String) {
     val actual = outContent.toString().trim().lines()
@@ -85,16 +82,16 @@ open class BaseTest {
   }
 
   protected fun thenTheFollowingRequestWasMade(expected: RequestPatternBuilder) =
-    verify(expected)
+      verify(expected)
 
   protected fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
-    verify(exactly(0), anyRequestedFor(urlPathEqualTo(expectedUrl)))
+      verify(exactly(0), anyRequestedFor(urlPathEqualTo(expectedUrl)))
 
   protected fun getEchoMessage(year: Int, day: Int, level: Int) =
-    "You are on year $year day $day level $level"
+      "You are on year $year day $day level $level"
 
   private fun activeProperties() =
-    readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
+      readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
 
   private fun resetOutStream() {
     outContent = ByteArrayOutputStream()

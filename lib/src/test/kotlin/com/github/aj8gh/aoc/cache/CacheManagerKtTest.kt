@@ -1,8 +1,6 @@
 package com.github.aj8gh.aoc.cache
 
-import com.github.aj8gh.aoc.command.handler.BaseTest
-import com.github.aj8gh.aoc.command.handler.CORRECT
-import com.github.aj8gh.aoc.command.handler.NOT_CACHED
+import com.github.aj8gh.aoc.command.handler.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,20 +12,23 @@ class CacheManagerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
-  fun cache(year: Int, day: Int, level: Int) {
+  fun cacheIncorrect(year: Int, day: Int, level: Int, response: String, answer: String) {
     givenCurrentYearDayAndLevelAre(year, day, level)
-    assertEquals(NOT_CACHED, checkAnswer(ANSWER))
+    assertEquals(NOT_CACHED, checkAnswer(answer))
     cache(ANSWER)
-    assertEquals(CORRECT, checkAnswer(ANSWER))
+    assertEquals(response, checkAnswer(answer))
   }
 
   companion object {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of(15, 1, 2),
-        Arguments.of(16, 1, 1),
-        Arguments.of(17, 1, 1),
+        Arguments.of(15, 1, 1, CORRECT, ANSWER),
+        Arguments.of(16, 1, 1, CORRECT, ANSWER),
+        Arguments.of(17, 1, 1, CORRECT, ANSWER),
+        Arguments.of(15, 1, 1, TOO_LOW, "320"),
+        Arguments.of(16, 1, 1, TOO_HIGH, "322"),
+        Arguments.of(17, 1, 1, INCORRECT, "abc"),
     )
   }
 }

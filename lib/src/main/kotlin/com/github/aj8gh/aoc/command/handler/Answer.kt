@@ -14,10 +14,10 @@ const val NOT_CACHED = "Answer not found in cache."
 const val CORRECT = "Congratulations, that's the correct answer!"
 
 fun answer(answer: String?) =
-  answer?.let { checkCache(it) }
+    answer?.let { checkCache(it) }
 
 private fun checkCache(answer: String) =
-  handle(checkAnswer(answer), answer)
+    handle(checkAnswer(answer), answer)
 
 private fun submitAnswer(answer: String) {
   val year = getCurrent().year
