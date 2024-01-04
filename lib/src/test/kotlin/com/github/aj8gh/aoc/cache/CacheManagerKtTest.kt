@@ -1,6 +1,8 @@
 package com.github.aj8gh.aoc.cache
 
+import com.github.aj8gh.aoc.BaseTest
 import com.github.aj8gh.aoc.command.handler.*
+import com.github.aj8gh.aoc.givenCurrentYearDayAndLevelAre
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource

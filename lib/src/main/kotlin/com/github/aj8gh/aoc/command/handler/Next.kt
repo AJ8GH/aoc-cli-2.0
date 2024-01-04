@@ -10,12 +10,10 @@ private val logger = KotlinLogging.logger {}
 
 fun next() = next(true)
 
-fun next(next: Boolean) {
-  if (next) {
-    updateProperties(updateCurrentProperties())
-    echoCurrent()
-  }
-}
+fun next(next: Boolean) = if (next) {
+  updateProperties(updateCurrentProperties())
+  echoCurrent()
+} else Unit
 
 private fun updateCurrentProperties(): Properties {
   val properties = getActiveProperties()

@@ -1,5 +1,6 @@
 package com.github.aj8gh.aoc.command.handler
 
+import com.github.aj8gh.aoc.*
 import com.github.aj8gh.aoc.util.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

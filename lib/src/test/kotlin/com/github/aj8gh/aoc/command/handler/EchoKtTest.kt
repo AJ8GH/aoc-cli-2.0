@@ -1,5 +1,6 @@
 package com.github.aj8gh.aoc.command.handler
 
+import com.github.aj8gh.aoc.*
 import com.github.aj8gh.aoc.util.D1
 import com.github.aj8gh.aoc.util.L1
 import com.github.aj8gh.aoc.util.Y15
@@ -20,8 +21,8 @@ class EchoKtTest : BaseTest() {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of(false, ""),
-        Arguments.of(true, "You are on year $Y15 day $D1 level $L1"),
+        Arguments.of(false, EMPTY_MESSAGE),
+        Arguments.of(true, getEchoMessage(Y15, D1, L1)),
     )
   }
 }

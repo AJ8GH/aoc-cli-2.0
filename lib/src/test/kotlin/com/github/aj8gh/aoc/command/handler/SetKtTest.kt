@@ -1,5 +1,6 @@
 package com.github.aj8gh.aoc.command.handler
 
+import com.github.aj8gh.aoc.*
 import com.github.aj8gh.aoc.util.D1
 import com.github.aj8gh.aoc.util.L1
 import com.github.aj8gh.aoc.util.Y15
@@ -31,7 +32,7 @@ class SetKtTest : BaseTest() {
         Arguments.of(16, null, null, getEchoMessage(16, D1, L1)),
         Arguments.of(null, null, 2, getEchoMessage(Y15, D1, 2)),
         Arguments.of(null, 2, null, getEchoMessage(Y15, 2, L1)),
-        Arguments.of(null, null, null, ""),
+        Arguments.of(null, null, null, EMPTY_MESSAGE),
     )
   }
 }
