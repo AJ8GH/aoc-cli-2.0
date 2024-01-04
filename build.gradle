@@ -30,6 +30,7 @@ ext {
   mockitoVersion = '3.2.0'
   http4kVersion = '4.0.0.0'
   wiremockVersion = '2.1.1'
+  markdownVersion = '0.6.1'
 }
 
 subprojects {
@@ -50,6 +51,7 @@ subprojects {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     implementation "org.http4k:http4k-client-okhttp:${http4kVersion}"
+    implementation "org.jetbrains:markdown:${markdownVersion}"
 
     testImplementation "com.marcinziolo:kotlin-wiremock:${wiremockVersion}"
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
