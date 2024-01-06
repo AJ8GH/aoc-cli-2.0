@@ -10,13 +10,19 @@ private var aocProperties: AocProperties? = null
 private var properties: Properties? = null
 
 var homeOverride: String? = null
+var projectOverride: String? = null
 
-fun getActiveProperties() = properties ?: readAndSetActiveProperties()
-fun getCurrent() = getActiveProperties().current
-fun getAocProperties() = aocProperties ?: readAndSetAocProperties()
-fun getAocPropertiesFile() = "${getAocHome()}${AOC_PROPERTIES_FILE}"
-fun getActivePropertiesFile() = "${getAocHome()}${getAocProperties().active}"
-fun getAocHome() = homeOverride ?: AOC_HOME
+fun activeProperties() = properties ?: readAndSetActiveProperties()
+fun current() = activeProperties().current
+fun files() = activeProperties().files
+fun aocProperties() = aocProperties ?: readAndSetAocProperties()
+fun aocPropertiesFile() = "${aocHome()}${AOC_PROPERTIES_FILE}"
+fun activePropertiesFile() = "${aocHome()}${aocProperties().active}"
+fun aocHome() = homeOverride ?: AOC_HOME
+fun project() = projectOverride ?: files().project
+fun year() = current().year
+fun day() = current().day
+fun level() = current().level
 
 fun updateProperties(newProperties: Properties) {
   properties = newProperties
@@ -24,11 +30,11 @@ fun updateProperties(newProperties: Properties) {
 }
 
 private fun readAndSetAocProperties(): AocProperties {
-  aocProperties = readYaml(getAocPropertiesFile(), AocProperties::class.java)
+  aocProperties = readYaml(aocPropertiesFile(), AocProperties::class.java)
   return aocProperties!!
 }
 
 private fun readAndSetActiveProperties(): Properties {
-  properties = readYaml(getActivePropertiesFile(), Properties::class.java)
+  properties = readYaml(activePropertiesFile(), Properties::class.java)
   return properties!!
 }

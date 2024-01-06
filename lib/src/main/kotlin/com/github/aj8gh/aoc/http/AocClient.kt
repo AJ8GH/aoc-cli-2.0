@@ -1,5 +1,8 @@
 package com.github.aj8gh.aoc.http
 
+import com.github.aj8gh.aoc.properties.aocProperties
+import com.github.aj8gh.aoc.properties.day
+import com.github.aj8gh.aoc.properties.year
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -13,6 +16,9 @@ fun call(request: Request) = OkHttpClient()
     .newCall(request)
     .execute()
     .use(::handle)
+
+fun url(endpoint: String) =
+    "${aocProperties().url}/20${year()}/day/${day()}$endpoint"
 
 private fun handle(response: Response) =
     if (!response.isSuccessful) {

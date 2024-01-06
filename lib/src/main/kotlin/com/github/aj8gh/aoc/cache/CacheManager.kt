@@ -3,12 +3,12 @@ package com.github.aj8gh.aoc.cache
 import com.github.aj8gh.aoc.command.handler.*
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
-import com.github.aj8gh.aoc.properties.getAocHome
-import com.github.aj8gh.aoc.properties.getCurrent
+import com.github.aj8gh.aoc.properties.aocHome
+import com.github.aj8gh.aoc.properties.current
 import java.io.File
 
 private const val CACHE_DIR = "cache/"
-private const val ANSWER_CACHE = "${CACHE_DIR}answer/real.yaml"
+private const val ANSWER_CACHE = "${CACHE_DIR}answer/answers.yaml"
 
 fun checkAnswer(answer: String) =
     handle(answer, getCachedAnswer())
@@ -16,26 +16,26 @@ fun checkAnswer(answer: String) =
 fun cache(answer: String) {
   val answers = getAnswers().toMutableMap()
   answers
-      .computeIfAbsent(getCurrent().year.toString()) {
-        mutableMapOf(getCurrent().day.toString() to mutableMapOf())
-      }.computeIfAbsent(getCurrent().day.toString()) {
-        mutableMapOf(getCurrent().level.toString() to answer)
-      }[getCurrent().level.toString()] = answer
+      .computeIfAbsent(current().year.toString()) {
+        mutableMapOf(current().day.toString() to mutableMapOf())
+      }.computeIfAbsent(current().day.toString()) {
+        mutableMapOf(current().level.toString() to answer)
+      }[current().level.toString()] = answer
   writeAnswers(answers)
 }
 
 private fun getCachedAnswer(): String? =
-    getAnswers()[getCurrent().year.toString()]
-        ?.get(getCurrent().day.toString())
-        ?.get(getCurrent().level.toString())
+    getAnswers()[current().year.toString()]
+        ?.get(current().day.toString())
+        ?.get(current().level.toString())
 
 @SuppressWarnings("unchecked")
 private fun getAnswers(): MutableMap<String, MutableMap<String, MutableMap<String, String>>> =
-    readYaml("${getAocHome()}$ANSWER_CACHE", Map::class.java)
+    readYaml("${aocHome()}$ANSWER_CACHE", Map::class.java)
         as MutableMap<String, MutableMap<String, MutableMap<String, String>>>
 
 private fun writeAnswers(answers: Map<String, Map<String, Map<String, String>?>?>) =
-    write(File("${getAocHome()}$ANSWER_CACHE"), answers)
+    write(File("${aocHome()}$ANSWER_CACHE"), answers)
 
 private fun handle(answer: String, cachedAnswer: String?) =
     with(cachedAnswer) {

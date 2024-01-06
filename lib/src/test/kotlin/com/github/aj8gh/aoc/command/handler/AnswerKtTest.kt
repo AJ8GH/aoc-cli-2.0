@@ -19,6 +19,7 @@ private const val SESSION_KEY = "session"
 private const val TOO_HIGH = "That's not the right answer; your answer is too high."
 private const val TOO_LOW = "That's not the right answer; your answer is too low."
 private const val WRONG_LEVEL = "You don't seem to be solving the right level.  Did you already complete it?"
+private const val UNKNOWN = "UNKNOWN"
 private const val CORRECT = "Congratulations, that's the correct answer!"
 private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
@@ -63,7 +64,7 @@ class AnswerKtTest : BaseTest() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, "UNKNOWN"])
+  @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, UNKNOWN])
   fun answer_SadPath_NoCache(expectedResponse: String) {
     givenTheFollowingRequestStub(postMapping(expectedResponse))
     whenAnswerIsCalledWith(ANSWER)

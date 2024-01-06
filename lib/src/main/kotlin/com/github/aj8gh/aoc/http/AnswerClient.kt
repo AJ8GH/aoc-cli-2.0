@@ -1,19 +1,23 @@
 package com.github.aj8gh.aoc.http
 
+import com.github.aj8gh.aoc.properties.aocProperties
+import com.github.aj8gh.aoc.properties.current
 import okhttp3.FormBody
 import okhttp3.Request
 
-fun submitAnswer(answer: String, level: String, url: String, session: String) =
-    call(request(answer, level, url, session))
+private const val ANSWER_ENDPOINT = "/answer"
 
-private fun request(answer: String, level: String, url: String, session: String) =
+fun postAnswer(answer: String) =
+    call(request(answer))
+
+private fun request(answer: String) =
     Request.Builder()
-        .post(answerForm(answer, level))
-        .url(url)
-        .addHeader(COOKIE, "$SESSION_KEY=$session")
+        .post(answerForm(answer))
+        .url(url(ANSWER_ENDPOINT))
+        .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
         .build()
 
-private fun answerForm(answer: String, level: String) = FormBody.Builder()
-    .add(LEVEL_KEY, level)
+private fun answerForm(answer: String) = FormBody.Builder()
+    .add(LEVEL_KEY, current().level.toString())
     .add(ANSWER_KEY, answer)
     .build()

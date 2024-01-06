@@ -1,5 +1,7 @@
 package com.github.aj8gh.aoc
 
+import com.github.aj8gh.aoc.command.handler.create.getInputFile
+import com.github.aj8gh.aoc.io.read
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import kotlin.test.assertEquals
@@ -27,3 +29,6 @@ fun thenTheFollowingRequestWasMade(expected: RequestPatternBuilder) =
 
 fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
   WireMock.verify(WireMock.exactly(0), WireMock.anyRequestedFor(WireMock.urlPathEqualTo(expectedUrl)))
+
+fun thenTodaysInputIs(expected: String) =
+  assertEquals(expected, read(getInputFile().absolutePath))

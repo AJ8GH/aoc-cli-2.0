@@ -1,7 +1,7 @@
 package com.github.aj8gh.aoc.command.handler
 
 import com.github.aj8gh.aoc.properties.Properties
-import com.github.aj8gh.aoc.properties.getActiveProperties
+import com.github.aj8gh.aoc.properties.activeProperties
 import com.github.aj8gh.aoc.properties.updateProperties
 import com.github.aj8gh.aoc.util.*
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -16,7 +16,7 @@ fun next(next: Boolean) = if (next) {
 } else Unit
 
 private fun updateCurrentProperties(): Properties {
-  val properties = getActiveProperties()
+  val properties = activeProperties()
 
   val year = properties.current.year
   val day = properties.current.day
