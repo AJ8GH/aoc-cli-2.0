@@ -12,6 +12,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import kotlin.test.Test
 
 private const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
+private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 
 @WireMockTest(httpPort = HTTP_PORT)
 class ReadmeKtTest : BaseTest() {
@@ -25,8 +26,8 @@ class ReadmeKtTest : BaseTest() {
     whenCreateReadmeIsCalled()
 
     thenTheFollowingRequestWasMade(requestPattern())
-    andTodaysReadmeIsCreatedCorrectly()
-    andTodaysReadmeIsCached()
+    andTodaysReadmeIsCreatedCorrectly(markdown())
+    andTodaysReadmeIsCached(html())
   }
 
   private fun requestMapping(response: String) = get(url())
@@ -36,7 +37,9 @@ class ReadmeKtTest : BaseTest() {
         .withResponseBody(Body(response))
     )
 
-  private fun html() = read("${HTML_DIR}y${year()}/day/${day()}")
+  private fun html() = read("${HTML_DIR}y${year()}/d${day()}.html")
+
+  private fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
 
   private fun requestPattern() = getRequestedFor(urlEqualTo(url()))
     .withCookie(SESSION_KEY, matching(SESSION))

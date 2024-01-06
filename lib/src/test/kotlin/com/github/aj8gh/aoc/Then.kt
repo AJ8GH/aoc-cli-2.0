@@ -1,6 +1,8 @@
 package com.github.aj8gh.aoc
 
-import com.github.aj8gh.aoc.command.handler.create.getInputFile
+import com.github.aj8gh.aoc.cache.readmeCacheFile
+import com.github.aj8gh.aoc.command.handler.create.inputFile
+import com.github.aj8gh.aoc.command.handler.create.readmeFile
 import com.github.aj8gh.aoc.io.read
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
@@ -38,10 +40,12 @@ fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
 fun andNoRequestsWereMadeForUrl(expectedUrl: String) = thenNoRequestsWereMadeForUrl(expectedUrl)
 
 fun thenTodaysInputExists() =
-  assertEquals(testInput(), read(getInputFile().absolutePath).trim())
+  assertEquals(testInput(), read(inputFile().absolutePath).trim())
 
 fun andTodaysInputExists() = thenTodaysInputExists()
 
-fun andTodaysReadmeIsCreatedCorrectly() = Unit
+fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
+  assertEquals(markdown, read(readmeFile().absolutePath))
 
-fun andTodaysReadmeIsCached() = Unit
+fun andTodaysReadmeIsCached(expected: String) =
+  assertEquals(read(readmeCacheFile()), expected)
