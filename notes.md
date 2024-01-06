@@ -30,7 +30,6 @@
   * [ ] GET readme and create
   * [ ] cache readme once level complete
 
-
 ### Example
 * [ ] example input:
   * [ ] take all example inputs, save as example files in repo
@@ -42,6 +41,9 @@
 
 ## Util
 * [x] print current y/d/l
-* [ ] print current config
+* [ ] print current config / properties
+* [ ] update config / properties
 * [ ] open project for default / given ide
 * [ ] install/uninstall aoc cli tool
+* [ ] create new projects with new properties
+* [ ] override `$AOC_HOME` location

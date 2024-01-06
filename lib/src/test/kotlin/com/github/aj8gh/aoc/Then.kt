@@ -45,7 +45,7 @@ fun thenTodaysInputExists() =
 fun andTodaysInputExists() = thenTodaysInputExists()
 
 fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
-  assertEquals(markdown, read(readmeFile().absolutePath))
+  assertEquals(markdown.trim(), read(readmeFile().absolutePath))
 
 fun andTodaysReadmeIsCached(expected: String) =
   assertEquals(read(readmeCacheFile()), expected)

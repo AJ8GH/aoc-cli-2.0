@@ -5,11 +5,14 @@ import com.github.aj8gh.aoc.http.SESSION_KEY
 import com.github.aj8gh.aoc.io.read
 import com.github.aj8gh.aoc.properties.day
 import com.github.aj8gh.aoc.properties.year
+import com.github.aj8gh.aoc.util.*
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
-import kotlin.test.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 private const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
 private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
@@ -17,9 +20,11 @@ private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 @WireMockTest(httpPort = HTTP_PORT)
 class ReadmeKtTest : BaseTest() {
 
-  @Test
-  fun readme() {
-    givenTheFollowingRequestStub(requestMapping(html()))
+  @ParameterizedTest
+  @MethodSource("inputProvider")
+  fun readme(year: Int, day: Int, level: Int) {
+    givenCurrentYearDayAndLevelAre(year, day, level)
+    andTheFollowingRequestStub(requestMapping(html()))
     andNoReadmeExistsForToday()
     andTodaysReadmeIsNotCached()
 
@@ -45,4 +50,14 @@ class ReadmeKtTest : BaseTest() {
     .withCookie(SESSION_KEY, matching(SESSION))
 
   private fun url() = "/20${year()}/day/${day()}"
+
+  companion object {
+
+    @JvmStatic
+    private fun inputProvider() = listOf(
+      Arguments.of(Y15, D1, L1),
+      Arguments.of(Y23, D5, L1),
+      Arguments.of(Y23, D6, L1),
+    )
+  }
 }

@@ -12,7 +12,6 @@ import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   set(year = year, day = day, level = level)
