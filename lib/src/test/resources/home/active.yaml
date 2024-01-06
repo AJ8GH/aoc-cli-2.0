@@ -1,5 +1,5 @@
 ---
-name: "current-test"
+name: "active"
 language: "kt"
 ide: "idea"
 files:

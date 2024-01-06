@@ -9,18 +9,25 @@ import java.io.File
 
 private const val INPUT_FILE_NAME = "input.txt"
 
-fun input() = write(getInputFile(), getInput())
+fun input() = write(getAndCreateFile(), getInput())
 
-fun getInputFile(): File {
-  val file = File(buildString {
-    append(project())
-    append(files().modulePrefix)
-    append("${current().year}/")
-    append(files().resources)
-    append(files().dayPrefix)
-    append("${current().day}/")
-    append(INPUT_FILE_NAME)
-  })
+fun getInputDir() = File(buildString {
+  append(project())
+  append(files().modulePrefix)
+  append("${current().year}/")
+  append(files().resources)
+  append(files().yearPrefix)
+  append("${current().year}/")
+  append(files().dayPrefix)
+  append("${current().day}/")
+})
+
+fun getInputFile() = File("${getInputDir()}/$INPUT_FILE_NAME")
+
+private fun getAndCreateFile(): File {
+  val dir = getInputDir()
+  val file = getInputFile()
+  if (!dir.exists()) dir.mkdirs()
   if (!file.exists()) file.createNewFile()
   return file
 }
