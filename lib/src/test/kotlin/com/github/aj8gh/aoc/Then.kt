@@ -5,7 +5,6 @@ import com.github.aj8gh.aoc.io.read
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 
 fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   val actual = activeProperties()
@@ -32,8 +31,6 @@ fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
     WireMock.verify(WireMock.exactly(0), WireMock.anyRequestedFor(WireMock.urlPathEqualTo(expectedUrl)))
 
 fun thenTodaysInputExists() =
-    assertEquals(INPUT, read(getInputFile().absolutePath))
+    assertEquals(testInput(), read(getInputFile().absolutePath).trim())
 
-fun givenTodaysInputFileDoesNotExist() = assertFalse { getInputFile().exists() }
-
-fun givenTodaysInputFileAlreadyExists() = thenTodaysInputExists()
+fun thenTodaysInputIsCached() = givenTodaysInputIsCached()

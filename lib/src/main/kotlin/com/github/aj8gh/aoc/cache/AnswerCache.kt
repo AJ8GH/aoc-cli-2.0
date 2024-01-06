@@ -7,8 +7,7 @@ import com.github.aj8gh.aoc.properties.aocHome
 import com.github.aj8gh.aoc.properties.current
 import java.io.File
 
-private const val CACHE_DIR = "cache/"
-private const val ANSWER_CACHE = "${CACHE_DIR}answer/answers.yaml"
+private const val ANSWER_CACHE = "cache/answer/answers.yaml"
 
 fun checkAnswer(answer: String) =
     handle(answer, getCachedAnswer())

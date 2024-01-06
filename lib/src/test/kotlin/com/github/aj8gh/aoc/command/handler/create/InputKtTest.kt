@@ -15,6 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.Test
+import com.github.aj8gh.aoc.thenNoRequestsWereMadeForUrl
 
 @WireMockTest(httpPort = HTTP_PORT)
 class InputKtTest : BaseTest() {
@@ -28,6 +29,7 @@ class InputKtTest : BaseTest() {
     whenCreateInputIsCalled()
     thenTheFollowingRequestWasMade(getRequestDefinition())
     thenTodaysInputExists()
+    thenTodaysInputIsCached()
   }
 
   @Test
@@ -38,12 +40,22 @@ class InputKtTest : BaseTest() {
     thenNoRequestsWereMadeForUrl(url())
   }
 
+  @Test
+  fun inputFromCache() {
+    givenCurrentYearDayAndLevelAre(Y15, D3, L1)
+    givenTodaysInputFileDoesNotExist()
+    givenTodaysInputIsCached()
+    whenCreateInputIsCalled()
+    thenTodaysInputExists()
+    thenNoRequestsWereMadeForUrl(url())
+  }
+
   private fun getInputMapping(): MappingBuilder =
       get(url())
           .withCookie(SESSION_KEY, matching(SESSION))
           .willReturn(ResponseDefinitionBuilder.responseDefinition()
               .withStatus(200)
-              .withResponseBody(Body(INPUT)))
+              .withResponseBody(Body(testInput())))
 
   private fun getRequestDefinition(): RequestPatternBuilder =
       getRequestedFor(urlEqualTo(url()))

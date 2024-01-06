@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 
 private const val ANSWER = "321"
 
-class CacheManagerKtTest : BaseTest() {
+class AnswerCacheKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")

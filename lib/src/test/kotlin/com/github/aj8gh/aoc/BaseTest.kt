@@ -57,3 +57,5 @@ fun resetOutStream() {
 }
 
 fun outContent() = outContent.toString().trim()
+
+fun testInput() = INPUT.trimIndent().trim()
