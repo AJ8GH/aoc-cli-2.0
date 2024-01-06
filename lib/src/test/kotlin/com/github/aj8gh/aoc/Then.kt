@@ -13,10 +13,15 @@ fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   assertEquals(level, actual.current.level)
 }
 
+fun andCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) =
+    givenCurrentYearDayAndLevelAre(year, day, level)
+
 fun thenTheFollowingMessageIsEchoed(expected: String) =
     assertEquals(expected, outContent())
 
-fun thenTheFollowingMessagesAreEchoed(vararg expected: String) {
+fun andTheFollowingMessageIsEchoed(expected: String) = thenTheFollowingMessageIsEchoed(expected)
+
+fun andTheFollowingMessagesAreEchoed(vararg expected: String) {
   val actual = outContent().lines()
   assertEquals(expected.size, actual.size, "Found mismatched number of expected and actual messages")
   for (i in expected.indices) {
@@ -30,7 +35,9 @@ fun thenTheFollowingRequestWasMade(expected: RequestPatternBuilder) =
 fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
     WireMock.verify(WireMock.exactly(0), WireMock.anyRequestedFor(WireMock.urlPathEqualTo(expectedUrl)))
 
+fun andNoRequestsWereMadeForUrl(expectedUrl: String) = thenNoRequestsWereMadeForUrl(expectedUrl)
+
 fun thenTodaysInputExists() =
     assertEquals(testInput(), read(getInputFile().absolutePath).trim())
 
-fun thenTodaysInputIsCached() = givenTodaysInputIsCached()
+fun andTodaysInputExists() = thenTodaysInputExists()

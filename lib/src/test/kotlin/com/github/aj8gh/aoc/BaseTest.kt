@@ -11,9 +11,9 @@ import kotlin.test.BeforeTest
 const val HTTP_PORT = 80
 const val EMPTY_MESSAGE = ""
 const val SESSION = "session"
-const val ROOT = "src/test/resources/"
-const val AOC_HOME = "${ROOT}home/"
-const val TEMPLATE_HOME = "${ROOT}template/home/"
+const val TEST_RESOURCES_ROOT = "src/test/resources/"
+const val AOC_HOME = "${TEST_RESOURCES_ROOT}home/"
+const val TEMPLATE_HOME = "${TEST_RESOURCES_ROOT}template/home/"
 const val PROJECT_ROOT = "${AOC_HOME}project/"
 const val ACTIVE_PROPERTIES_FILE = "${AOC_HOME}active.yaml"
 const val TEMPLATE_PROPERTIES_FILE = "${TEMPLATE_HOME}active.yaml"

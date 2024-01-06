@@ -30,9 +30,11 @@ class NextKtTest : BaseTest() {
       expectedLevel: Int,
   ) {
     givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
+
     whenNextIsCalledFor(next)
+
     thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    thenTheFollowingMessageIsEchoed(expectedMessage(next, expectedYear, expectedDay, expectedLevel))
+    andTheFollowingMessageIsEchoed(expectedMessage(next, expectedYear, expectedDay, expectedLevel))
   }
 
   private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =

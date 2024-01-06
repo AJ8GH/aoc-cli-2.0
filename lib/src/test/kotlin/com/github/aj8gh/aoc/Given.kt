@@ -18,8 +18,12 @@ fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
     WireMock.stubFor(stub)
 
-fun givenTodaysInputFileDoesNotExist() = assertFalse { getInputFile().exists() }
+fun andTheFollowingRequestStub(stub: MappingBuilder) = givenTheFollowingRequestStub(stub)
 
-fun givenTodaysInputFileAlreadyExists() = thenTodaysInputExists()
+fun andTodaysInputFileDoesNotExist() = assertFalse { getInputFile().exists() }
 
-fun givenTodaysInputIsCached() = assertEquals(testInput(), read(inputCacheFile()).trim())
+fun andTodaysInputFileAlreadyExists() = thenTodaysInputExists()
+
+fun andTodaysInputIsCached() = assertEquals(testInput(), read(inputCacheFile()).trim())
+
+fun andNoReadmeExistsForToday() = Unit

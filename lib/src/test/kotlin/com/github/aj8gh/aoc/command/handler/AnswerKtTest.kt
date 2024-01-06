@@ -29,48 +29,58 @@ class AnswerKtTest : BaseTest() {
   @Test
   fun answer_HappyPath_NoCache() {
     givenTheFollowingRequestStub(postMapping(CORRECT))
+
     whenAnswerIsCalledWith(ANSWER)
+
     thenTheFollowingRequestWasMade(postPattern())
-    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
-    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
+    andCurrentYearDayAndLevelAre(Y15, D1, L2)
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
 
     resetAllRequests()
 
     // Answer should now be cached
     givenCurrentYearDayAndLevelAre(Y15, D1, L1)
+
     whenAnswerIsCalledWith(ANSWER)
+
     thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
-    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
+    andCurrentYearDayAndLevelAre(Y15, D1, L2)
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
   }
 
   @Test
   fun answer_HappyPath_Cached() {
     givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+
     whenAnswerIsCalledWith(ANSWER)
+
     thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    thenCurrentYearDayAndLevelAre(Y15, D2, L1)
-    thenTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1))
+    andCurrentYearDayAndLevelAre(Y15, D2, L1)
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1))
   }
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun answer_SadPath_Cached(answer: String, expectedResponse: String) {
     givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+
     whenAnswerIsCalledWith(answer)
+
     thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    thenCurrentYearDayAndLevelAre(Y15, D1, L2)
-    thenTheFollowingMessageIsEchoed(expectedResponse)
+    andCurrentYearDayAndLevelAre(Y15, D1, L2)
+    andTheFollowingMessageIsEchoed(expectedResponse)
   }
 
   @ParameterizedTest
   @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, UNKNOWN])
   fun answer_SadPath_NoCache(expectedResponse: String) {
     givenTheFollowingRequestStub(postMapping(expectedResponse))
+
     whenAnswerIsCalledWith(ANSWER)
+
     thenTheFollowingRequestWasMade(postPattern())
-    thenCurrentYearDayAndLevelAre(Y15, D1, L1)
-    thenTheFollowingMessageIsEchoed(expectedResponse)
+    andCurrentYearDayAndLevelAre(Y15, D1, L1)
+    andTheFollowingMessageIsEchoed(expectedResponse)
   }
 
   private fun postMapping(response: String) = post(urlPathEqualTo(DEFAULT_ANSWER_URL))

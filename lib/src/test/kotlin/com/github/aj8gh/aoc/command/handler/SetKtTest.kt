@@ -18,8 +18,9 @@ class SetKtTest : BaseTest() {
     val expectedLevel = level ?: L1
 
     whenSetIsCalledFor(year = year, day = day, level = level)
+
     thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    thenTheFollowingMessageIsEchoed(message)
+    andTheFollowingMessageIsEchoed(message)
   }
 
   companion object {

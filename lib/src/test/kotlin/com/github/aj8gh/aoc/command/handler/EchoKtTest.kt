@@ -14,6 +14,7 @@ class EchoKtTest : BaseTest() {
   @MethodSource("inputProvider")
   fun echoTest(echo: Boolean, expected: String) {
     whenEchoCurrentIsCalledFor(echo)
+
     thenTheFollowingMessageIsEchoed(expected)
   }
 
