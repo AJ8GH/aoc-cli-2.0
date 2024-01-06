@@ -13,5 +13,5 @@ fun latestYear() = latestYear(systemUTC())
 fun latestYear(clock: Clock) = year(LocalDate.now(clock)) % YEAR_2000
 
 private fun year(today: LocalDate) = today.year
-    .takeIf { today.monthValue == DECEMBER }
-    ?: (today.year - ONE_YEAR)
+  .takeIf { today.monthValue == DECEMBER }
+  ?: (today.year - ONE_YEAR)

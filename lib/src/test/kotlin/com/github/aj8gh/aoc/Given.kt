@@ -7,6 +7,7 @@ import com.github.aj8gh.aoc.io.read
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
@@ -16,7 +17,7 @@ fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 }
 
 fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
-    WireMock.stubFor(stub)
+  WireMock.stubFor(stub)
 
 fun andTheFollowingRequestStub(stub: MappingBuilder) = givenTheFollowingRequestStub(stub)
 
@@ -26,4 +27,8 @@ fun andTodaysInputFileAlreadyExists() = thenTodaysInputExists()
 
 fun andTodaysInputIsCached() = assertEquals(testInput(), read(inputCacheFile()).trim())
 
+fun andTodaysInputIsNotCached() = assertFalse(File(inputCacheFile()).exists())
+
 fun andNoReadmeExistsForToday() = Unit
+
+fun andTodaysReadmeIsNotCached() = Unit

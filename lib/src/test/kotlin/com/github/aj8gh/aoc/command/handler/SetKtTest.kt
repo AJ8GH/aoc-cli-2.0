@@ -26,14 +26,14 @@ class SetKtTest : BaseTest() {
   companion object {
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of(16, 2, 2, getEchoMessage(16, 2, 2)),
-        Arguments.of(null, 2, 2, getEchoMessage(Y15, 2, 2)),
-        Arguments.of(16, null, 2, getEchoMessage(16, D1, 2)),
-        Arguments.of(16, 2, null, getEchoMessage(16, 2, L1)),
-        Arguments.of(16, null, null, getEchoMessage(16, D1, L1)),
-        Arguments.of(null, null, 2, getEchoMessage(Y15, D1, 2)),
-        Arguments.of(null, 2, null, getEchoMessage(Y15, 2, L1)),
-        Arguments.of(null, null, null, EMPTY_MESSAGE),
+      Arguments.of(16, 2, 2, getEchoMessage(16, 2, 2)),
+      Arguments.of(null, 2, 2, getEchoMessage(Y15, 2, 2)),
+      Arguments.of(16, null, 2, getEchoMessage(16, D1, 2)),
+      Arguments.of(16, 2, null, getEchoMessage(16, 2, L1)),
+      Arguments.of(16, null, null, getEchoMessage(16, D1, L1)),
+      Arguments.of(null, null, 2, getEchoMessage(Y15, D1, 2)),
+      Arguments.of(null, 2, null, getEchoMessage(Y15, 2, L1)),
+      Arguments.of(null, null, null, EMPTY_MESSAGE),
     )
   }
 }

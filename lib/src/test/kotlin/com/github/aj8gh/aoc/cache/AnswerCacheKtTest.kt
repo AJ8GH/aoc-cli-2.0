@@ -25,12 +25,12 @@ class AnswerCacheKtTest : BaseTest() {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of(15, 1, 1, CORRECT, ANSWER),
-        Arguments.of(16, 1, 1, CORRECT, ANSWER),
-        Arguments.of(17, 1, 1, CORRECT, ANSWER),
-        Arguments.of(15, 1, 1, TOO_LOW, "320"),
-        Arguments.of(16, 1, 1, TOO_HIGH, "322"),
-        Arguments.of(17, 1, 1, INCORRECT, "abc"),
+      Arguments.of(15, 1, 1, CORRECT, ANSWER),
+      Arguments.of(16, 1, 1, CORRECT, ANSWER),
+      Arguments.of(17, 1, 1, CORRECT, ANSWER),
+      Arguments.of(15, 1, 1, TOO_LOW, "320"),
+      Arguments.of(16, 1, 1, TOO_HIGH, "322"),
+      Arguments.of(17, 1, 1, INCORRECT, "abc"),
     )
   }
 }

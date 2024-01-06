@@ -84,26 +84,27 @@ class AnswerKtTest : BaseTest() {
   }
 
   private fun postMapping(response: String) = post(urlPathEqualTo(DEFAULT_ANSWER_URL))
-      .withCookie(SESSION_KEY, matching(SESSION))
-      .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
-      .withFormParam(ANSWER_KEY, equalTo(ANSWER))
-      .willReturn(
-          responseDefinition()
-              .withStatus(200)
-              .withResponseBody(Body(response)))
+    .withCookie(SESSION_KEY, matching(SESSION))
+    .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
+    .withFormParam(ANSWER_KEY, equalTo(ANSWER))
+    .willReturn(
+      responseDefinition()
+        .withStatus(200)
+        .withResponseBody(Body(response))
+    )
 
   private fun postPattern() = postRequestedFor(urlPathEqualTo(DEFAULT_ANSWER_URL))
-      .withCookie(SESSION_KEY, matching(SESSION))
-      .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
-      .withFormParam(ANSWER_KEY, equalTo(ANSWER))
+    .withCookie(SESSION_KEY, matching(SESSION))
+    .withFormParam(LEVEL_KEY, equalTo(L1.toString()))
+    .withFormParam(ANSWER_KEY, equalTo(ANSWER))
 
   companion object {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of("122", TOO_LOW),
-        Arguments.of("124", TOO_HIGH),
-        Arguments.of("abc", INCORRECT),
+      Arguments.of("122", TOO_LOW),
+      Arguments.of("124", TOO_HIGH),
+      Arguments.of("abc", INCORRECT),
     )
   }
 }

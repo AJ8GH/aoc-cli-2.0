@@ -13,14 +13,20 @@ const val SESSION_KEY = "session"
 const val COOKIE = "Cookie"
 
 fun call(request: Request) = OkHttpClient()
-    .newCall(request)
-    .execute()
-    .use(::handle)
+  .newCall(request)
+  .execute()
+  .use(::handle)
 
 fun url(endpoint: String) =
-    "${aocProperties().url}/20${year()}/day/${day()}$endpoint"
+  "${aocProperties().url}/20${year()}/day/${day()}$endpoint"
+
+fun getRequest(endpoint: String) = Request.Builder()
+  .get()
+  .url(url(endpoint))
+  .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
+  .build()
 
 private fun handle(response: Response) =
-    if (!response.isSuccessful) {
-      throw RuntimeException("${response.code} error, ${response.body?.string()}")
-    } else response.body!!.string()
+  if (!response.isSuccessful)
+    throw RuntimeException("${response.code} error, ${response.body?.string()}")
+  else response.body!!.string()

@@ -8,16 +8,15 @@ import okhttp3.Request
 private const val ANSWER_ENDPOINT = "/answer"
 
 fun postAnswer(answer: String) =
-    call(request(answer))
+  call(postRequest(answer))
 
-private fun request(answer: String) =
-    Request.Builder()
-        .post(answerForm(answer))
-        .url(url(ANSWER_ENDPOINT))
-        .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
-        .build()
+private fun postRequest(answer: String) = Request.Builder()
+  .post(answerForm(answer))
+  .url(url(ANSWER_ENDPOINT))
+  .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
+  .build()
 
 private fun answerForm(answer: String) = FormBody.Builder()
-    .add(LEVEL_KEY, current().level.toString())
-    .add(ANSWER_KEY, answer)
-    .build()
+  .add(LEVEL_KEY, current().level.toString())
+  .add(ANSWER_KEY, answer)
+  .build()

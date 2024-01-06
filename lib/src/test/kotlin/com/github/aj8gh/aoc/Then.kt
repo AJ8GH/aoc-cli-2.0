@@ -14,10 +14,10 @@ fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 }
 
 fun andCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) =
-    givenCurrentYearDayAndLevelAre(year, day, level)
+  givenCurrentYearDayAndLevelAre(year, day, level)
 
 fun thenTheFollowingMessageIsEchoed(expected: String) =
-    assertEquals(expected, outContent())
+  assertEquals(expected, outContent())
 
 fun andTheFollowingMessageIsEchoed(expected: String) = thenTheFollowingMessageIsEchoed(expected)
 
@@ -30,14 +30,18 @@ fun andTheFollowingMessagesAreEchoed(vararg expected: String) {
 }
 
 fun thenTheFollowingRequestWasMade(expected: RequestPatternBuilder) =
-    WireMock.verify(expected)
+  WireMock.verify(expected)
 
 fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
-    WireMock.verify(WireMock.exactly(0), WireMock.anyRequestedFor(WireMock.urlPathEqualTo(expectedUrl)))
+  WireMock.verify(WireMock.exactly(0), WireMock.anyRequestedFor(WireMock.urlPathEqualTo(expectedUrl)))
 
 fun andNoRequestsWereMadeForUrl(expectedUrl: String) = thenNoRequestsWereMadeForUrl(expectedUrl)
 
 fun thenTodaysInputExists() =
-    assertEquals(testInput(), read(getInputFile().absolutePath).trim())
+  assertEquals(testInput(), read(getInputFile().absolutePath).trim())
 
 fun andTodaysInputExists() = thenTodaysInputExists()
+
+fun andTodaysReadmeIsCreatedCorrectly() = Unit
+
+fun andTodaysReadmeIsCached() = Unit

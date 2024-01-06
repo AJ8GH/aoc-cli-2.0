@@ -22,8 +22,8 @@ class EchoKtTest : BaseTest() {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-        Arguments.of(false, EMPTY_MESSAGE),
-        Arguments.of(true, getEchoMessage(Y15, D1, L1)),
+      Arguments.of(false, EMPTY_MESSAGE),
+      Arguments.of(true, getEchoMessage(Y15, D1, L1)),
     )
   }
 }

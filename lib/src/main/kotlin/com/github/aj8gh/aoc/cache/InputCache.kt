@@ -11,8 +11,8 @@ import java.io.File
 private const val INPUT_CACHE = "cache/files/"
 
 fun getCachedInput(): String? =
-    if (File(inputCacheFile()).exists()) read(inputCacheFile())
-    else null
+  if (File(inputCacheFile()).exists()) read(inputCacheFile())
+  else null
 
 fun cacheInput(input: String) {
   val dir = File(inputCacheDir())

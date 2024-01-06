@@ -46,10 +46,10 @@ open class BaseTest {
 }
 
 fun getEchoMessage(year: Int, day: Int, level: Int) =
-    "You are on year $year day $day level $level"
+  "You are on year $year day $day level $level"
 
 fun activeProperties() =
-    readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
+  readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
 
 fun resetOutStream() {
   outContent = ByteArrayOutputStream()
