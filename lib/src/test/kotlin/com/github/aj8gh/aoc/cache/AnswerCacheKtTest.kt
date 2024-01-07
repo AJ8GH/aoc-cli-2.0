@@ -17,7 +17,7 @@ class AnswerCacheKtTest : BaseTest() {
   fun cacheIncorrect(year: Int, day: Int, level: Int, response: String, answer: String) {
     givenCurrentYearDayAndLevelAre(year, day, level)
     assertEquals(NOT_CACHED, checkAnswer(answer))
-    cache(ANSWER)
+    cacheAnswer(ANSWER)
     assertEquals(response, checkAnswer(answer))
   }
 

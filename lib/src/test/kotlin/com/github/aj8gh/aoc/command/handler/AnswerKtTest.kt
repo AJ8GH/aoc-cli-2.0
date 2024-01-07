@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 
-private const val ANSWER = "123"
 private const val LEVEL_KEY = "level"
 private const val ANSWER_KEY = "answer"
 private const val SESSION_KEY = "session"

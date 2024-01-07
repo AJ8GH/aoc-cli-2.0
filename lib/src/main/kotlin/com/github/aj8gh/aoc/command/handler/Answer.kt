@@ -1,6 +1,6 @@
 package com.github.aj8gh.aoc.command.handler
 
-import com.github.aj8gh.aoc.cache.cache
+import com.github.aj8gh.aoc.cache.cacheAnswer
 import com.github.aj8gh.aoc.cache.checkAnswer
 import com.github.aj8gh.aoc.http.postAnswer
 
@@ -37,6 +37,6 @@ private fun handle(response: String, answer: String) =
 
 private fun handleCorrect(answer: String) {
   println(CORRECT)
-  cache(answer)
+  cacheAnswer(answer)
   next()
 }

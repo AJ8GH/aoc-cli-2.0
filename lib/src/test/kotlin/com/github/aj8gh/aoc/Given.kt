@@ -1,7 +1,6 @@
 package com.github.aj8gh.aoc
 
-import com.github.aj8gh.aoc.cache.inputCacheFile
-import com.github.aj8gh.aoc.cache.readmeCacheFile
+import com.github.aj8gh.aoc.cache.*
 import com.github.aj8gh.aoc.command.handler.create.inputFile
 import com.github.aj8gh.aoc.command.handler.create.readmeFile
 import com.github.aj8gh.aoc.command.handler.set
@@ -37,3 +36,16 @@ fun andNoReadmeExistsForToday() = assertFalse { readmeFile().exists() }
 fun andTodaysReadmeExists() = assertTrue { readmeFile().exists() }
 
 fun andTodaysReadmeIsNotCached() = assertFalse { File(readmeCacheFile()).exists() }
+
+fun andTodaysReadmeIsCached(readme: String) = cacheReadme(readme)
+
+fun andTodaysCompletionLevelIs(level: Int) {
+  if (level == 0) {
+    clearCacheForDay()
+    return
+  }
+  (1..level).forEach { cacheAnswer(it, ANSWER)}
+}
+
+fun andNoAnswersAreCachedForToday() {
+}

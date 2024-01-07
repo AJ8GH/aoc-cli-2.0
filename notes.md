@@ -25,10 +25,13 @@
   * [x] cache input
 
 ### Readme
-* [ ] check if readme is cached, use cached file if it is
-* [ ] if not cached:
-  * [ ] GET readme and create
-  * [ ] cache readme once level complete
+* [x] check if readme is cached
+* [x] if not cached:
+  * [x] GET readme and create
+  * [x] cache readme
+* [x] if readme is cached
+  * [ ] GET readme if not up to date
+  * [ ] Use cached readme if up to date
 
 ### Example
 * [ ] example input:

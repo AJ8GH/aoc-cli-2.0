@@ -4,7 +4,11 @@ import com.github.aj8gh.aoc.command.handler.*
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
 import com.github.aj8gh.aoc.properties.aocHome
-import com.github.aj8gh.aoc.properties.current
+import com.github.aj8gh.aoc.properties.day
+import com.github.aj8gh.aoc.properties.level
+import com.github.aj8gh.aoc.properties.year
+import com.github.aj8gh.aoc.util.L1
+import com.github.aj8gh.aoc.util.L2
 import java.io.File
 
 private const val ANSWER_CACHE = "cache/answer/answers.yaml"
@@ -12,21 +16,34 @@ private const val ANSWER_CACHE = "cache/answer/answers.yaml"
 fun checkAnswer(answer: String) =
   handle(answer, getCachedAnswer())
 
-fun cache(answer: String) {
+fun cacheAnswer(answer: String) = cacheAnswer(level(), answer)
+
+fun cacheAnswer(level: Int, answer: String) {
   val answers = getAnswers().toMutableMap()
   answers
-    .computeIfAbsent(current().year.toString()) {
-      mutableMapOf(current().day.toString() to mutableMapOf())
-    }.computeIfAbsent(current().day.toString()) {
-      mutableMapOf(current().level.toString() to answer)
-    }[current().level.toString()] = answer
+    .computeIfAbsent(year().toString()) {
+      mutableMapOf(day().toString() to mutableMapOf())
+    }.computeIfAbsent(day().toString()) {
+      mutableMapOf(level.toString() to answer)
+    }[level.toString()] = answer
   writeAnswers(answers)
 }
 
+fun dayCompletion(): Int {
+  val year = getAnswers()[year().toString()]
+  val day = year?.get(day().toString())
+  return if (year == null || day == null || day[L1.toString()] == null) 0
+  else if (day[L2.toString()] == null) 1
+  else 2
+}
+
+fun clearCacheForDay() =
+  getAnswers()[year().toString()]?.get(day().toString())?.clear()
+
 private fun getCachedAnswer(): String? =
-  getAnswers()[current().year.toString()]
-    ?.get(current().day.toString())
-    ?.get(current().level.toString())
+  getAnswers()[year().toString()]
+    ?.get(day().toString())
+    ?.get(level().toString())
 
 @SuppressWarnings("unchecked")
 private fun getAnswers(): MutableMap<String, MutableMap<String, MutableMap<String, String>>> =
