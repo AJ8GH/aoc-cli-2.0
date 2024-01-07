@@ -12,10 +12,11 @@ import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   set(year = year, day = day, level = level)
-  resetOutStream()
+  stubOutStream()
 }
 
 fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
@@ -32,5 +33,7 @@ fun andTodaysInputIsCached() = assertEquals(testInput(), read(inputCacheFile()).
 fun andTodaysInputIsNotCached() = assertFalse(File(inputCacheFile()).exists())
 
 fun andNoReadmeExistsForToday() = assertFalse { readmeFile().exists() }
+
+fun andTodaysReadmeExists() = assertTrue { readmeFile().exists() }
 
 fun andTodaysReadmeIsNotCached() = assertFalse { File(readmeCacheFile()).exists() }

@@ -30,18 +30,15 @@ open class BaseTest {
 
   @BeforeTest
   fun setUp() {
-    homeOverride = AOC_HOME
-    projectOverride = PROJECT_ROOT
-    aocProperties()
-    resetOutStream()
+    overrideAndLoadProperties()
+    stubOutStream()
   }
 
   @AfterTest
   fun tearDown() {
-    updateProperties(readYaml(TEMPLATE_PROPERTIES_FILE, Properties::class.java))
-    System.setOut(originalOut)
-    File(AOC_HOME).deleteRecursively()
-    File(TEMPLATE_HOME).copyRecursively(File(AOC_HOME), true)
+    resetProperties()
+    resetFiles()
+    resetOut()
   }
 }
 
@@ -51,7 +48,7 @@ fun getEchoMessage(year: Int, day: Int, level: Int) =
 fun activeProperties() =
   readYaml(ACTIVE_PROPERTIES_FILE, Properties::class.java)
 
-fun resetOutStream() {
+fun stubOutStream() {
   outContent = ByteArrayOutputStream()
   System.setOut(PrintStream(outContent))
 }
@@ -59,3 +56,19 @@ fun resetOutStream() {
 fun outContent() = outContent.toString().trim()
 
 fun testInput() = INPUT.trimIndent().trim()
+
+private fun resetProperties() =
+  updateProperties(readYaml(TEMPLATE_PROPERTIES_FILE, Properties::class.java))
+
+private fun resetFiles() {
+  File(AOC_HOME).deleteRecursively()
+  File(TEMPLATE_HOME).copyRecursively(File(AOC_HOME), true)
+}
+
+private fun resetOut() = System.setOut(originalOut)
+
+private fun overrideAndLoadProperties() {
+  homeOverride = AOC_HOME
+  projectOverride = PROJECT_ROOT
+  aocProperties()
+}

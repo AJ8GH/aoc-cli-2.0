@@ -16,12 +16,13 @@ fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 }
 
 fun andCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) =
-  givenCurrentYearDayAndLevelAre(year, day, level)
+  thenCurrentYearDayAndLevelAre(year, day, level)
 
 fun thenTheFollowingMessageIsEchoed(expected: String) =
   assertEquals(expected, outContent())
 
-fun andTheFollowingMessageIsEchoed(expected: String) = thenTheFollowingMessageIsEchoed(expected)
+fun andTheFollowingMessageIsEchoed(expected: String) =
+  thenTheFollowingMessageIsEchoed(expected)
 
 fun andTheFollowingMessagesAreEchoed(vararg expected: String) {
   val actual = outContent().lines()
@@ -48,4 +49,4 @@ fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
   assertEquals(markdown.trim(), read(readmeFile().absolutePath))
 
 fun andTodaysReadmeIsCached(expected: String) =
-  assertEquals(read(readmeCacheFile()), expected)
+  assertEquals(expected, read(readmeCacheFile()))

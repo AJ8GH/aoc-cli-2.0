@@ -1,7 +1,6 @@
 package com.github.aj8gh.aoc.cache
 
-import com.github.aj8gh.aoc.command.handler.create.README_FILE_NAME
-import com.github.aj8gh.aoc.command.handler.create.getResourcesDir
+import com.github.aj8gh.aoc.command.handler.create.README_CACHE_FILE_NAME
 import com.github.aj8gh.aoc.io.write
 import com.github.aj8gh.aoc.properties.aocHome
 import com.github.aj8gh.aoc.properties.day
@@ -16,6 +15,6 @@ fun cacheReadme(html: String) {
   write(File(readmeCacheFile()), html)
 }
 
-fun readmeCacheFile() = "${readmeCacheDir()}$README_FILE_NAME"
+fun readmeCacheFile() = "${readmeCacheDir()}$README_CACHE_FILE_NAME"
 
 private fun readmeCacheDir() = "${aocHome()}${README_CACHE}y${year()}/d${day()}/"

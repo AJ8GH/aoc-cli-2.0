@@ -13,6 +13,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.Test
 
 private const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
 private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
@@ -33,6 +34,28 @@ class ReadmeKtTest : BaseTest() {
     thenTheFollowingRequestWasMade(requestPattern())
     andTodaysReadmeIsCreatedCorrectly(markdown())
     andTodaysReadmeIsCached(html())
+  }
+
+  @Test
+  fun readmeExists() {
+    givenCurrentYearDayAndLevelAre(Y15, D2, L1)
+    andTodaysReadmeExists()
+
+    whenCreateReadmeIsCalled()
+
+    thenNoRequestsWereMadeForUrl(url())
+  }
+
+  @Test
+  fun readmeCached() {
+    givenCurrentYearDayAndLevelAre(Y15, D3, L1)
+    andNoReadmeExistsForToday()
+    andTodaysReadmeIsCached(html())
+
+    whenCreateReadmeIsCalled()
+
+    thenNoRequestsWereMadeForUrl(url())
+    andTodaysReadmeIsCreatedCorrectly(markdown())
   }
 
   private fun requestMapping(response: String) = get(url())
