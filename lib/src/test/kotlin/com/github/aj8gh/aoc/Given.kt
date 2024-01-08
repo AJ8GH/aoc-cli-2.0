@@ -1,10 +1,12 @@
 package com.github.aj8gh.aoc
 
 import com.github.aj8gh.aoc.cache.*
+import com.github.aj8gh.aoc.command.handler.create.resourcesDir
 import com.github.aj8gh.aoc.command.handler.create.inputFile
 import com.github.aj8gh.aoc.command.handler.create.readmeFile
 import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.io.read
+import com.github.aj8gh.aoc.io.write
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
@@ -35,6 +37,12 @@ fun andNoReadmeExistsForToday() = assertFalse { readmeFile().exists() }
 
 fun andTodaysReadmeExists() = assertTrue { readmeFile().exists() }
 
+fun andTodaysReadmeExists(markdown: String) = run {
+  resourcesDir().mkdirs()
+  write(readmeFile(), markdown)
+}
+
+
 fun andTodaysReadmeIsNotCached() = assertFalse { File(readmeCacheFile()).exists() }
 
 fun andTodaysReadmeIsCached(readme: String) = cacheReadme(readme)
@@ -44,7 +52,7 @@ fun andTodaysCompletionLevelIs(level: Int) {
     clearCacheForDay()
     return
   }
-  (1..level).forEach { cacheAnswer(it, ANSWER)}
+  (1..level).forEach { cacheAnswer(it, ANSWER) }
 }
 
 fun andNoAnswersAreCachedForToday() {

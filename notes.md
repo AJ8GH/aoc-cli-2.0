@@ -1,6 +1,6 @@
 # Notes
 
-## Env
+## Env [x]
 * [x] Set year, day, level
 * [x] Next level/day/year
 
@@ -14,24 +14,24 @@
       * [x] cache answer
       * [x] advance to next level
       * [ ] create / update files for next level
-      * [ ] cache readme
+      * [x] cache readme
 
 ## Create
 
-### Input
+### Input [x]
 * [x] check if input is cached, use cached input if it is
 * [x] if not cached:
   * [x] GET input and create
   * [x] cache input
 
-### Readme
+### Readme [x]
 * [x] check if readme is cached
 * [x] if not cached:
   * [x] GET readme and create
   * [x] cache readme
 * [x] if readme is cached
-  * [ ] GET readme if not up to date
-  * [ ] Use cached readme if up to date
+  * [x] GET readme if not up to date
+  * [x] Use cached readme if up to date
 
 ### Example
 * [ ] example input:

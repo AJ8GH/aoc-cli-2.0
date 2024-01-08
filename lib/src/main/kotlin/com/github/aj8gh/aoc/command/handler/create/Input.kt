@@ -14,10 +14,10 @@ fun input() {
   write(getAndCreateFile(), input ?: getAndCacheInput())
 }
 
-fun inputFile() = File("${getResourcesDir()}/$INPUT_FILE_NAME")
+fun inputFile() = File("${resourcesDir()}/$INPUT_FILE_NAME")
 
 private fun getAndCreateFile(): File {
-  val dir = getResourcesDir()
+  val dir = resourcesDir()
   val file = inputFile()
   if (!dir.exists()) dir.mkdirs()
   if (!file.exists()) file.createNewFile()

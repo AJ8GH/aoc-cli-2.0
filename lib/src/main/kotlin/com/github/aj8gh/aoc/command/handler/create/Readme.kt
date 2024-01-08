@@ -27,12 +27,12 @@ const val HEADER_NEW = ""
 fun readme() {
   if (!isReadmeStale(readmeFile())) return
 
-  val dir = getResourcesDir()
+  val dir = resourcesDir()
   if (!dir.exists()) dir.mkdirs()
   write(readmeFile(), format(toMarkdown(checkCacheOrGet())))
 }
 
-fun readmeFile() = File("${getResourcesDir()}/${README_FILE_NAME}")
+fun readmeFile() = File("${resourcesDir()}/${README_FILE_NAME}")
 
 private fun checkCacheOrGet() =
   if (isReadmeStale(File(readmeCacheFile()))) getAndCacheReadme()

@@ -14,7 +14,7 @@ fun create() {
   code()
 }
 
-fun getResourcesDir() = File(buildString {
+fun resourcesDir() = File(buildString {
   append(project())
   append(files().modulePrefix)
   append("${current().year}/")

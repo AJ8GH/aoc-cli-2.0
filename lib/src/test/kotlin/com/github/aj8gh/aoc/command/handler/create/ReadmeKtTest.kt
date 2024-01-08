@@ -13,7 +13,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import kotlin.test.Test
 
 private const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
 private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
@@ -22,7 +21,7 @@ private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 class ReadmeKtTest : BaseTest() {
 
   @ParameterizedTest
-  @MethodSource("inputProvider")
+  @MethodSource("readmeNotExistsNotCached")
   fun readmeNotExistsNotCached(year: Int, day: Int, level: Int) {
     givenCurrentYearDayAndLevelAre(year, day, level)
     andTheFollowingRequestStub(requestMapping(html()))
@@ -36,38 +35,39 @@ class ReadmeKtTest : BaseTest() {
     andTodaysReadmeHasBeenCached(html())
   }
 
-  @Test
-  // @ParameterizedTest
-  // @MethodSource("notStale")
-  fun readmeExistsNotStale() {
-    givenCurrentYearDayAndLevelAre(Y15, D2, L1)
-    andTodaysReadmeExists()
+  @ParameterizedTest
+  @MethodSource("notStale")
+  fun readmeExistsNotStale(readmeLevel: Int, completionLevel: Int) {
+    givenCurrentYearDayAndLevelAre(Y22, D1, L1)
+    andTodaysReadmeIsNotCached()
+    andTodaysReadmeExists(markdownForLevel(readmeLevel))
+    andTodaysCompletionLevelIs(completionLevel)
 
     whenCreateReadmeIsCalled()
 
     thenNoRequestsWereMadeForUrl(url())
   }
 
-  @Test
-  // @ParameterizedTest
-  // @MethodSource("notStale")
-  fun readmeNotExistsCacheNotStale() {
-    givenCurrentYearDayAndLevelAre(Y15, D3, L1)
+  @ParameterizedTest
+  @MethodSource("notStale")
+  fun readmeNotExistsCacheNotStale(cacheLevel: Int, completionLevel: Int) {
+    givenCurrentYearDayAndLevelAre(Y22, D1, L1)
     andNoReadmeExistsForToday()
-    andTodaysReadmeHasBeenCached(html())
+    andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
+    andTodaysCompletionLevelIs(completionLevel)
 
     whenCreateReadmeIsCalled()
 
     thenNoRequestsWereMadeForUrl(url())
-    andTodaysReadmeIsCreatedCorrectly(markdown())
+    andTodaysReadmeIsCreatedCorrectly(markdownForLevel(cacheLevel))
   }
 
   @ParameterizedTest
   @MethodSource("stale")
-  fun readmeNotExistsCacheIsStale(readmeLevel: Int, completionLevel: Int) {
+  fun readmeNotExistsCacheIsStale(cacheLevel: Int, completionLevel: Int) {
     givenCurrentYearDayAndLevelAre(Y22, D1, L1)
     andNoReadmeExistsForToday()
-    andTodaysReadmeIsCached(htmlAtLevel(readmeLevel))
+    andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
     andTodaysCompletionLevelIs(completionLevel)
     andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
 
@@ -80,46 +80,46 @@ class ReadmeKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("stale")
   fun readmeStaleNotCached(readmeLevel: Int, completionLevel: Int) {
-    // givenCurrentYearDayAndLevelAre(Y22, D1, L1)
-    // andNoReadmeExistsForToday()
-    // andTodaysReadmeIsCached(htmlAtLevel(readmeLevel))
-    // andTodaysCompletionLevelIs(completionLevel)
-    // andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
-    //
-    // whenCreateReadmeIsCalled()
-    //
-    // thenTheFollowingRequestWasMade(requestPattern())
-    // andTodaysReadmeIsCreatedCorrectly(markdownForLevel(completionLevel))
+    givenCurrentYearDayAndLevelAre(Y22, D1, L1)
+    andTodaysReadmeExists(markdownForLevel(readmeLevel))
+    andTodaysReadmeIsNotCached()
+    andTodaysCompletionLevelIs(completionLevel)
+    andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
+
+    whenCreateReadmeIsCalled()
+
+    thenTheFollowingRequestWasMade(requestPattern())
+    andTodaysReadmeIsCreatedCorrectly(markdownForLevel(completionLevel))
+    andTodaysReadmeHasBeenCached(htmlAtLevel(completionLevel))
   }
 
   @ParameterizedTest
-  @MethodSource("stale")
-  fun readmeAndCacheStale(readmeLevel: Int, completionLevel: Int) {
-    // givenCurrentYearDayAndLevelAre(Y22, D1, L1)
-    // andNoReadmeExistsForToday()
-    // andTodaysReadmeIsCached(htmlAtLevel(readmeLevel))
-    // andTodaysCompletionLevelIs(completionLevel)
-    // andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
-    //
-    // whenCreateReadmeIsCalled()
-    //
-    // thenTheFollowingRequestWasMade(requestPattern())
-    // andTodaysReadmeIsCreatedCorrectly(markdownForLevel(completionLevel))
+  @MethodSource("readmeAndCacheStale")
+  fun readmeAndCacheStale(readmeLevel: Int, cacheLevel: Int, completionLevel: Int) {
+    givenCurrentYearDayAndLevelAre(Y22, D1, L1)
+    andTodaysReadmeExists(markdownForLevel(readmeLevel))
+    andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
+    andTodaysCompletionLevelIs(completionLevel)
+    andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
+
+    whenCreateReadmeIsCalled()
+
+    thenTheFollowingRequestWasMade(requestPattern())
+    andTodaysReadmeIsCreatedCorrectly(markdownForLevel(completionLevel))
   }
 
   @ParameterizedTest
-  @MethodSource("notStale")
-  fun readmeStaleCacheNotStale(readmeLevel: Int, completionLevel: Int) {
-    // givenCurrentYearDayAndLevelAre(Y22, D1, L1)
-    // andNoReadmeExistsForToday()
-    // andTodaysReadmeIsCached(htmlAtLevel(readmeLevel))
-    // andTodaysCompletionLevelIs(completionLevel)
-    // andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
-    //
-    // whenCreateReadmeIsCalled()
-    //
-    // thenTheFollowingRequestWasMade(requestPattern())
-    // andTodaysReadmeIsCreatedCorrectly(markdownForLevel(completionLevel))
+  @MethodSource("readmeStaleCacheNotStale")
+  fun readmeStaleCacheNotStale(readmeLevel: Int, cacheLevel: Int, completionLevel: Int) {
+    givenCurrentYearDayAndLevelAre(Y22, D1, L1)
+    andTodaysReadmeExists(markdownForLevel(readmeLevel))
+    andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
+    andTodaysCompletionLevelIs(completionLevel)
+
+    whenCreateReadmeIsCalled()
+
+    thenNoRequestsWereMadeForUrl(url())
+    andTodaysReadmeIsCreatedCorrectly(markdownForLevel(cacheLevel))
   }
 
   private fun requestMapping(response: String) = get(url())
@@ -145,7 +145,7 @@ class ReadmeKtTest : BaseTest() {
   companion object {
 
     @JvmStatic
-    private fun inputProvider() = listOf(
+    private fun readmeNotExistsNotCached() = listOf(
       Arguments.of(Y15, D1, L1),
       Arguments.of(Y23, D5, L1),
       Arguments.of(Y23, D6, L1),
@@ -166,6 +166,23 @@ class ReadmeKtTest : BaseTest() {
       Arguments.of(2, 2),
       Arguments.of(2, 1),
       Arguments.of(2, 0),
+    )
+
+    @JvmStatic
+    private fun readmeStaleCacheNotStale() = listOf(
+      Arguments.of(0, 1, 1),
+      Arguments.of(0, 2, 1),
+      Arguments.of(0, 2, 2),
+      Arguments.of(1, 2, 2)
+    )
+
+    @JvmStatic
+    private fun readmeAndCacheStale() = listOf(
+      Arguments.of(0, 0, 1),
+      Arguments.of(0, 0, 2),
+      Arguments.of(1, 0, 2),
+      Arguments.of(0, 1, 2),
+      Arguments.of(1, 1, 2),
     )
   }
 }
