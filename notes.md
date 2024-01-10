@@ -4,7 +4,7 @@
 * [x] Set year, day, level
 * [x] Next level/day/year
 
-## Submit
+## Submit [ ]
 * [x] submit answer for current level
 * [x] Flow:
   * [x] check if answer is cached already
@@ -16,7 +16,7 @@
       * [ ] create / update files for next level
       * [x] cache readme
 
-## Create
+## Create [ ]
 
 ### Input [x]
 * [x] check if input is cached, use cached input if it is
@@ -33,16 +33,16 @@
   * [x] GET readme if not up to date
   * [x] Use cached readme if up to date
 
-### Example
+### Example [ ]
 * [ ] example input:
   * [ ] take all example inputs, save as example files in repo
   * [ ] cache example inputs
 
-### Code
+### Code [ ]
 * [ ] create src file and test files for current / given day
 * [ ] use cache and / or readme to update test code with example answer 1, example answer 2, answer 1 and answer 2
 
-## Util
+## Util [ ]
 * [x] print current y/d/l
 * [ ] print current config / properties
 * [ ] update config / properties

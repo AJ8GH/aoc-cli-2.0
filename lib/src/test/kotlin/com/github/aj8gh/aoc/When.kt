@@ -1,6 +1,7 @@
 package com.github.aj8gh.aoc
 
 import com.github.aj8gh.aoc.command.handler.answer
+import com.github.aj8gh.aoc.command.handler.create.code
 import com.github.aj8gh.aoc.command.handler.create.input
 import com.github.aj8gh.aoc.command.handler.create.readme
 import com.github.aj8gh.aoc.command.handler.echoCurrent
@@ -19,3 +20,5 @@ fun whenSetIsCalledFor(year: Int?, day: Int?, level: Int?) =
 fun whenCreateInputIsCalled() = input()
 
 fun whenCreateReadmeIsCalled() = readme()
+
+fun whenCreateCodeIsCalled() = code()

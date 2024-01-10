@@ -50,3 +50,5 @@ fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
 
 fun andTodaysReadmeHasBeenCached(expected: String) =
   assertEquals(expected, read(readmeCacheFile()))
+
+fun thenCodeFilesExistForToday() = Unit

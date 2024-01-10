@@ -35,13 +35,10 @@ fun andTodaysInputIsNotCached() = assertFalse(File(inputCacheFile()).exists())
 
 fun andNoReadmeExistsForToday() = assertFalse { readmeFile().exists() }
 
-fun andTodaysReadmeExists() = assertTrue { readmeFile().exists() }
-
 fun andTodaysReadmeExists(markdown: String) = run {
   resourcesDir().mkdirs()
   write(readmeFile(), markdown)
 }
-
 
 fun andTodaysReadmeIsNotCached() = assertFalse { File(readmeCacheFile()).exists() }
 
@@ -55,5 +52,4 @@ fun andTodaysCompletionLevelIs(level: Int) {
   (1..level).forEach { cacheAnswer(it, ANSWER) }
 }
 
-fun andNoAnswersAreCachedForToday() {
-}
+fun givenCodeFilesDoNotExistForToday() = Unit
