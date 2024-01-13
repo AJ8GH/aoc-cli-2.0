@@ -1,10 +1,6 @@
 package com.github.aj8gh.aoc
 
-import com.github.aj8gh.aoc.io.inputFile
-import com.github.aj8gh.aoc.io.read
-import com.github.aj8gh.aoc.io.readmeCacheFile
-import com.github.aj8gh.aoc.io.readmeFile
-import com.github.aj8gh.aoc.properties.activeProperties
+import com.github.aj8gh.aoc.io.*
 import com.github.aj8gh.aoc.properties.day
 import com.github.aj8gh.aoc.properties.level
 import com.github.aj8gh.aoc.properties.year
@@ -54,4 +50,6 @@ fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
 fun andTodaysReadmeHasBeenCached(expected: String) =
   assertEquals(expected, read(readmeCacheFile()))
 
-fun thenCodeFilesExistForToday() = Unit
+fun thenMainFileIsCreatedAsExpected(expected: String) = assertEquals(expected, mainFile().readText())
+
+fun thenTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, testFile().readText())
