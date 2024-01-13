@@ -15,7 +15,7 @@ private const val EXAMPLE_FILE_NAME = "example.txt"
 private const val README_CACHE_FILE_NAME = "README.html"
 private const val README_FILE_NAME = "README.md"
 private const val MAIN_TEMPLATE_FILE_NAME = "main.txt"
-private const val TEST_TEMPLATE_FILE_NAME = "aoc.yaml"
+private const val TEST_TEMPLATE_FILE_NAME = "test.txt"
 
 private val AOC_HOME = "${System.getProperty("user.home")}/.config/.aoc/"
 

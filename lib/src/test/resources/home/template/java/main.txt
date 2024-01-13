@@ -1,8 +1,8 @@
-package io.github.aj8gh.aoc.y15.d1;
+package io.github.aj8gh.aoc.y${YEAR}.d${DAY};
 
 import java.util.List;
 
-public class Day1 {
+public class Day${DAY} {
 
   public int part1(List<String> input) {
     return 0;

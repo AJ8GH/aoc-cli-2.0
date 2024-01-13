@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.y15.d1;
+package io.github.aj8gh.aoc.y${YEAR}.d${DAY};
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,13 +10,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class Day1Test extends InputProvider {
+class Day${DAY}Test extends InputProvider {
 
-  private Day1 subject;
+  private Day${DAY} subject;
 
   @BeforeEach
   void setUp() {
-    subject = new Day1();
+    subject = new Day${DAY}();
   }
 
   @ParameterizedTest
@@ -43,8 +43,8 @@ class Day1Test extends InputProvider {
 
   private static Stream<Arguments> getInput(int example, int result) {
     return Stream.of(
-        Arguments.of(reader().getExample(DAY_1).asStringList(), example),
-        Arguments.of(reader().getInput(DAY_1).asStringList(), result)
+        Arguments.of(reader().getExample(DAY_${DAY}).asStringList(), example),
+        Arguments.of(reader().getInput(DAY_${DAY}).asStringList(), result)
     );
   }
 }
