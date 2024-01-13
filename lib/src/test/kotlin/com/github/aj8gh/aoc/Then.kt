@@ -1,18 +1,21 @@
 package com.github.aj8gh.aoc
 
-import com.github.aj8gh.aoc.cache.readmeCacheFile
-import com.github.aj8gh.aoc.command.handler.create.inputFile
-import com.github.aj8gh.aoc.command.handler.create.readmeFile
+import com.github.aj8gh.aoc.io.inputFile
 import com.github.aj8gh.aoc.io.read
+import com.github.aj8gh.aoc.io.readmeCacheFile
+import com.github.aj8gh.aoc.io.readmeFile
+import com.github.aj8gh.aoc.properties.activeProperties
+import com.github.aj8gh.aoc.properties.day
+import com.github.aj8gh.aoc.properties.level
+import com.github.aj8gh.aoc.properties.year
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import kotlin.test.assertEquals
 
-fun thenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
-  val actual = activeProperties()
-  assertEquals(year, actual.current.year)
-  assertEquals(day, actual.current.day)
-  assertEquals(level, actual.current.level)
+fun thenCurrentYearDayAndLevelAre(expectedYear: Int, expectedDay: Int, expectedLevel: Int) {
+  assertEquals(expectedYear, year())
+  assertEquals(expectedDay, day())
+  assertEquals(expectedLevel, level())
 }
 
 fun andCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) =
@@ -41,12 +44,12 @@ fun thenNoRequestsWereMadeForUrl(expectedUrl: String) =
 fun andNoRequestsWereMadeForUrl(expectedUrl: String) = thenNoRequestsWereMadeForUrl(expectedUrl)
 
 fun thenTodaysInputExists() =
-  assertEquals(testInput(), read(inputFile().absolutePath).trim())
+  assertEquals(testInput(), read(inputFile()).trim())
 
 fun andTodaysInputExists() = thenTodaysInputExists()
 
 fun andTodaysReadmeIsCreatedCorrectly(markdown: String) =
-  assertEquals(markdown.trim(), read(readmeFile().absolutePath))
+  assertEquals(markdown.trim(), read(readmeFile()))
 
 fun andTodaysReadmeHasBeenCached(expected: String) =
   assertEquals(expected, read(readmeCacheFile()))

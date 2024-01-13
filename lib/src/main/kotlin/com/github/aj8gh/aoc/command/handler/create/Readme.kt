@@ -2,16 +2,12 @@ package com.github.aj8gh.aoc.command.handler.create
 
 import com.github.aj8gh.aoc.cache.cacheReadme
 import com.github.aj8gh.aoc.cache.dayCompletion
-import com.github.aj8gh.aoc.cache.readmeCacheFile
 import com.github.aj8gh.aoc.cache.readmeLevel
 import com.github.aj8gh.aoc.http.getReadme
-import com.github.aj8gh.aoc.io.read
-import com.github.aj8gh.aoc.io.write
+import com.github.aj8gh.aoc.io.*
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
 import java.io.File
 
-const val README_CACHE_FILE_NAME = "README.html"
-const val README_FILE_NAME = "README.md"
 const val TAIL_COMPLETE = "At this point, you should [return to your Advent calendar]"
 const val TAIL_INCOMPLETE = "To begin, [get your puzzle input]"
 const val TAIL_HALF_COMPLETE = "Answer:"
@@ -26,16 +22,12 @@ const val HEADER_NEW = ""
 
 fun readme() {
   if (!isReadmeStale(readmeFile())) return
-
-  val dir = resourcesDir()
-  if (!dir.exists()) dir.mkdirs()
+  createResourcesDirIfNotExists()
   write(readmeFile(), format(toMarkdown(checkCacheOrGet())))
 }
 
-fun readmeFile() = File("${resourcesDir()}/${README_FILE_NAME}")
-
 private fun checkCacheOrGet() =
-  if (isReadmeStale(File(readmeCacheFile()))) getAndCacheReadme()
+  if (isReadmeStale(readmeCacheFile())) getAndCacheReadme()
   else read(readmeCacheFile())
 
 private fun isReadmeStale(file: File) = readmeLevel(file) < dayCompletion()

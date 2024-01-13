@@ -1,17 +1,14 @@
 package com.github.aj8gh.aoc.cache
 
 import com.github.aj8gh.aoc.command.handler.*
+import com.github.aj8gh.aoc.io.answerCacheFile
 import com.github.aj8gh.aoc.io.readYaml
 import com.github.aj8gh.aoc.io.write
-import com.github.aj8gh.aoc.properties.aocHome
 import com.github.aj8gh.aoc.properties.day
 import com.github.aj8gh.aoc.properties.level
 import com.github.aj8gh.aoc.properties.year
 import com.github.aj8gh.aoc.util.L1
 import com.github.aj8gh.aoc.util.L2
-import java.io.File
-
-private const val ANSWER_CACHE = "cache/answer/answers.yaml"
 
 fun checkAnswer(answer: String) =
   handle(answer, getCachedAnswer())
@@ -47,11 +44,11 @@ private fun getCachedAnswer(): String? =
 
 @SuppressWarnings("unchecked")
 private fun getAnswers(): MutableMap<String, MutableMap<String, MutableMap<String, String>>> =
-  readYaml("${aocHome()}$ANSWER_CACHE", Map::class.java)
+  readYaml(answerCacheFile(), Map::class.java)
       as MutableMap<String, MutableMap<String, MutableMap<String, String>>>
 
 private fun writeAnswers(answers: Map<String, Map<String, Map<String, String>?>?>) =
-  write(File("${aocHome()}$ANSWER_CACHE"), answers)
+  write(answerCacheFile(), answers)
 
 private fun handle(answer: String, cachedAnswer: String?) =
   with(cachedAnswer) {
