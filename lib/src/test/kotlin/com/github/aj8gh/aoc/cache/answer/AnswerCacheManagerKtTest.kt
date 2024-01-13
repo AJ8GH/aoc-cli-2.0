@@ -1,4 +1,4 @@
-package com.github.aj8gh.aoc.cache
+package com.github.aj8gh.aoc.cache.answer
 
 import com.github.aj8gh.aoc.BaseTest
 import com.github.aj8gh.aoc.command.handler.*
@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 
 private const val ANSWER = "321"
 
-class AnswerCacheKtTest : BaseTest() {
+class AnswerCacheManagerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")

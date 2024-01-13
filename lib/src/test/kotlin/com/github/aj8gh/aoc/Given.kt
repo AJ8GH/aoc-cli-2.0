@@ -1,8 +1,8 @@
 package com.github.aj8gh.aoc
 
-import com.github.aj8gh.aoc.cache.cacheAnswer
+import com.github.aj8gh.aoc.cache.answer.cacheAnswer
+import com.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import com.github.aj8gh.aoc.cache.cacheReadme
-import com.github.aj8gh.aoc.cache.clearCacheForDay
 import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.io.*
 import com.github.tomakehurst.wiremock.client.MappingBuilder

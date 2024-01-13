@@ -1,4 +1,4 @@
-package com.github.aj8gh.aoc.cache
+package com.github.aj8gh.aoc.cache.answer
 
 import com.github.aj8gh.aoc.command.handler.*
 import com.github.aj8gh.aoc.io.answerCacheFile
@@ -10,45 +10,33 @@ import com.github.aj8gh.aoc.properties.year
 import com.github.aj8gh.aoc.util.L1
 import com.github.aj8gh.aoc.util.L2
 
+private const val COMPLETION_LEVEL_2 = 2
+private const val COMPLETION_LEVEL_1 = 1
+private const val COMPLETION_LEVEL_0 = 0
+
 fun checkAnswer(answer: String) =
-  handle(answer, getCachedAnswer())
+  handle(answer, getAnswer())
 
 fun cacheAnswer(answer: String) = cacheAnswer(level(), answer)
 
 fun cacheAnswer(level: Int, answer: String) {
-  val answers = getAnswers().toMutableMap()
-  answers
-    .computeIfAbsent(year().toString()) {
-      mutableMapOf(day().toString() to mutableMapOf())
-    }.computeIfAbsent(day().toString()) {
-      mutableMapOf(level.toString() to answer)
-    }[level.toString()] = answer
+  val answers = getAnswers()
+  answers.save(year(), day(), level, answer)
   writeAnswers(answers)
 }
 
 fun dayCompletion(): Int {
-  val year = getAnswers()[year().toString()]
-  val day = year?.get(day().toString())
-  return if (year == null || day == null || day[L1.toString()] == null) 0
-  else if (day[L2.toString()] == null) 1
-  else 2
+  val day = getAnswers().get(year(), day())
+  return if (day.level(L2) != null) COMPLETION_LEVEL_2
+  else if (day.level(L1) != null) COMPLETION_LEVEL_1
+  else COMPLETION_LEVEL_0
 }
 
-fun clearCacheForDay() =
-  getAnswers()[year().toString()]?.get(day().toString())?.clear()
+fun clearCacheForDay() = getAnswers().clear(year(), day())
 
-private fun getCachedAnswer(): String? =
-  getAnswers()[year().toString()]
-    ?.get(day().toString())
-    ?.get(level().toString())
-
-@SuppressWarnings("unchecked")
-private fun getAnswers(): MutableMap<String, MutableMap<String, MutableMap<String, String>>> =
-  readYaml(answerCacheFile(), Map::class.java)
-      as MutableMap<String, MutableMap<String, MutableMap<String, String>>>
-
-private fun writeAnswers(answers: Map<String, Map<String, Map<String, String>?>?>) =
-  write(answerCacheFile(), answers)
+private fun getAnswer() = getAnswers().get(year(), day(), level())
+private fun getAnswers(): AnswerCache = readYaml(answerCacheFile(), AnswerCache::class.java)
+private fun writeAnswers(answers: AnswerCache) = write(answerCacheFile(), answers)
 
 private fun handle(answer: String, cachedAnswer: String?) =
   with(cachedAnswer) {

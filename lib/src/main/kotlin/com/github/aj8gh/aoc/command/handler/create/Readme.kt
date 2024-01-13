@@ -1,7 +1,7 @@
 package com.github.aj8gh.aoc.command.handler.create
 
+import com.github.aj8gh.aoc.cache.answer.dayCompletion
 import com.github.aj8gh.aoc.cache.cacheReadme
-import com.github.aj8gh.aoc.cache.dayCompletion
 import com.github.aj8gh.aoc.cache.readmeLevel
 import com.github.aj8gh.aoc.http.getReadme
 import com.github.aj8gh.aoc.io.*

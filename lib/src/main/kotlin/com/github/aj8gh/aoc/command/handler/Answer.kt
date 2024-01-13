@@ -1,7 +1,7 @@
 package com.github.aj8gh.aoc.command.handler
 
-import com.github.aj8gh.aoc.cache.cacheAnswer
-import com.github.aj8gh.aoc.cache.checkAnswer
+import com.github.aj8gh.aoc.cache.answer.cacheAnswer
+import com.github.aj8gh.aoc.cache.answer.checkAnswer
 import com.github.aj8gh.aoc.http.postAnswer
 
 const val TOO_HIGH = "That's not the right answer; your answer is too high."
