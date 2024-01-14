@@ -14,6 +14,14 @@ private const val COMPLETION_LEVEL_2 = 2
 private const val COMPLETION_LEVEL_1 = 1
 private const val COMPLETION_LEVEL_0 = 0
 
+private const val INT_TYPE = "Int"
+private const val LONG_TYPE = "Long"
+private const val STRING_TYPE = "String"
+
+private const val INT_DEFAULT = "0"
+private const val LONG_DEFAULT = "0L"
+private const val STRING_DEFAULT = ""
+
 fun checkAnswer(answer: String) =
   handle(answer, getAnswer())
 
@@ -34,18 +42,38 @@ fun dayCompletion(): Int {
 
 fun clearCacheForDay() = getAnswers().clear(year(), day())
 
-fun type() = "Int"
+fun type() = when {
+  isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT_TYPE
+  isLong(answer1()) || isLong(answer2()) -> LONG_TYPE
+  else -> STRING_TYPE
+}
 
-fun answer1() = getAnswers().get(year(), day(), L1) ?: 0.toString()
+fun answer1OrDefault() = wrapIfString(answer1() ?: default())
 
-fun answer2() = getAnswers().get(year(), day(), L2) ?: 0.toString()
+fun answer2OrDefault() = wrapIfString(answer2() ?: default())
 
-fun example1() = 0.toString()
+fun example1() = wrapIfString(default())
 
-fun example2() = 0.toString()
+fun example2() = wrapIfString(default())
+
+private fun wrapIfString(answer: String): String = answer
+  .takeIf { type() != STRING_TYPE }
+  ?: "\"${answer}\""
+
+private fun answer1() = getAnswers().get(year(), day(), L1)
+
+private fun answer2() = getAnswers().get(year(), day(), L2)
+
+private fun default() = when (type()) {
+  INT_TYPE -> INT_DEFAULT
+  LONG_TYPE -> LONG_DEFAULT
+  else -> STRING_DEFAULT
+}
 
 private fun getAnswer() = getAnswers().get(year(), day(), level())
+
 private fun getAnswers(): AnswerCache = readYaml(answerCacheFile(), AnswerCache::class.java)
+
 private fun writeAnswers(answers: AnswerCache) = write(answerCacheFile(), answers)
 
 private fun handle(answer: String, cachedAnswer: String?) =
@@ -64,7 +92,11 @@ private fun handleWrongAnswer(answer: String, cachedAnswer: String) =
     else -> INCORRECT
   }
 
-private fun isInt(s: String) = s.toIntOrNull() != null
+private fun isInt(s: String?) = s?.toIntOrNull() != null
+
+private fun isIntOrNull(s: String?) = s == null || s.toIntOrNull() != null
+
+private fun isLong(s: String?) = s?.toLongOrNull() != null
 
 private fun isTooLow(answer: String, cachedAnswer: String) =
   isInt(answer) && isInt(cachedAnswer) && answer.toInt() < cachedAnswer.toInt()
