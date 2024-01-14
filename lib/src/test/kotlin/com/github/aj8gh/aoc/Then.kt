@@ -52,4 +52,8 @@ fun andTodaysReadmeHasBeenCached(expected: String) =
 
 fun thenMainFileIsCreatedAsExpected(expected: String) = assertEquals(expected, mainFile().readText())
 
-fun thenTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, testFile().readText())
+fun andTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, testFile().readText())
+
+fun thenMainFileIsUnchanged(expected: String) = assertEquals(expected, mainFile().readText())
+
+fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile().readText())

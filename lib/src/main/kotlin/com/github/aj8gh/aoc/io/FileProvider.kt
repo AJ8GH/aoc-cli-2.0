@@ -40,10 +40,12 @@ fun mainTemplateFile() = File("${templateDir()}$MAIN_TEMPLATE_FILE_NAME")
 fun testTemplateFile() = File("${templateDir()}$TEST_TEMPLATE_FILE_NAME")
 
 fun createResourcesDirIfNotExists() = createDirsIfNotExists(resourcesDir())
-fun createMainDirIfNotExists() = createDirsIfNotExists(mainDir())
-fun createTestDirIfNotExists() = createDirsIfNotExists(testDir())
 fun createAnswerCacheDirIfNotExists() = createDirsIfNotExists(answerCacheDir())
 fun createResourcesCacheDirIfNotExists() = createDirsIfNotExists(resourcesCacheDir())
+fun createSourceDirsIfNotExists() {
+  createDirsIfNotExists(mainDir())
+  createDirsIfNotExists(testDir())
+}
 
 private fun aocHomeDir() = homeOverride ?: AOC_HOME
 private fun contentRootDir() = "${project()}${files().modulePrefix}${year()}/"

@@ -10,6 +10,7 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   set(year = year, day = day, level = level)
@@ -44,7 +45,12 @@ fun andTodaysCompletionLevelIs(level: Int) =
   if (level == 0) clearCacheForDay()
   else (1..level).forEach { cacheAnswer(it, ANSWER) }
 
-fun givenCodeFilesDoNotExistForToday() {
+fun andCodeFilesDoNotExistForToday() {
   assertFalse { mainFile().exists() }
   assertFalse { testFile().exists() }
+}
+
+fun andCodeFilesExistForToday() {
+  assertTrue { mainFile().exists() }
+  assertTrue { testFile().exists() }
 }

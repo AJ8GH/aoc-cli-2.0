@@ -6,15 +6,15 @@ import com.github.aj8gh.aoc.properties.year
 import java.io.File
 
 fun code() {
-  createMainDirIfNotExists()
-  createTestDirIfNotExists()
+  createSourceDirsIfNotExists()
   generate(mainFile(), mainTemplateFile())
   generate(testFile(), testTemplateFile())
 }
 
 private fun generate(file: File, template: File) {
-  val content = template.readText()
-    .replace("\${YEAR}", "${year()}")
-    .replace("\${DAY}", "${day()}")
-  write(file, content)
+  if (!file.exists()) write(
+    file, template.readText()
+      .replace("\${YEAR}", "${year()}")
+      .replace("\${DAY}", "${day()}")
+  )
 }
