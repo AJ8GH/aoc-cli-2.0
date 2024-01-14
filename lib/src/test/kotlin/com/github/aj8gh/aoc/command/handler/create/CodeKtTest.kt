@@ -51,7 +51,7 @@ class CodeKtTest : BaseTest() {
 
   companion object {
 
-    private val noAnswersCached = Arguments.of(Y15, D1, L1)
+    private val noAnswersCached = Arguments.of(Y15, D3, L1)
     private val intLevel1Cached = Arguments.of(Y16, D7, L1)
     private val intLevel2Cached = Arguments.of(Y16, D8, L1)
     private val intBothLevelsCached = Arguments.of(Y16, D9, L1)

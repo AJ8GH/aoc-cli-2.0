@@ -34,6 +34,16 @@ fun dayCompletion(): Int {
 
 fun clearCacheForDay() = getAnswers().clear(year(), day())
 
+fun type() = "Int"
+
+fun answer1() = getAnswers().get(year(), day(), L1) ?: 0.toString()
+
+fun answer2() = getAnswers().get(year(), day(), L2) ?: 0.toString()
+
+fun example1() = 0.toString()
+
+fun example2() = 0.toString()
+
 private fun getAnswer() = getAnswers().get(year(), day(), level())
 private fun getAnswers(): AnswerCache = readYaml(answerCacheFile(), AnswerCache::class.java)
 private fun writeAnswers(answers: AnswerCache) = write(answerCacheFile(), answers)

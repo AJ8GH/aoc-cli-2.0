@@ -1,4 +1,4 @@
-package com.github.aj8gh.aok.y15.d1
+package com.github.aj8gh.aok.y15.d3
 
 fun part1(input: List<String>) = 0
 

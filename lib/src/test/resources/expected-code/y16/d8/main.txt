@@ -2,4 +2,4 @@ package com.github.aj8gh.aok.y16.d8
 
 fun part1(input: List<String>) = 0
 
-fun part2(input: List<String>) = 0
+fun part2(input: List<String>) = 123

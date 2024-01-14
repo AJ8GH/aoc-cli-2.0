@@ -1,5 +1,5 @@
 package com.github.aj8gh.aok.y17.d23
 
-fun part1(input: List<String>) = ""
+fun part1(input: List<String>) = "abc"
 
 fun part2(input: List<String>) = ""

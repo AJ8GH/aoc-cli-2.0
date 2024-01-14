@@ -1,5 +1,5 @@
 package com.github.aj8gh.aok.y18.d23
 
-fun part1(input: List<String>) = 0L
+fun part1(input: List<String>) = 123123123123123123L
 
 fun part2(input: List<String>) = 0L
