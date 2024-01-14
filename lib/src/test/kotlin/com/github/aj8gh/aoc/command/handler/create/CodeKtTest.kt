@@ -50,11 +50,33 @@ class CodeKtTest : BaseTest() {
   private fun expectedCodeDir() = "${EXPECTED_CODE_DIR}y${year()}/d${day()}/"
 
   companion object {
+
+    private val noAnswersCached = Arguments.of(Y15, D1, L1)
+    private val intLevel1Cached = Arguments.of(Y16, D7, L1)
+    private val intLevel2Cached = Arguments.of(Y16, D8, L1)
+    private val intBothLevelsCached = Arguments.of(Y16, D9, L1)
+    private val stringLevel1Cached = Arguments.of(Y17, D23, L1)
+    private val stringLevel2Cached = Arguments.of(Y17, D24, L1)
+    private val stringBothLevelsCached = Arguments.of(Y17, D25, L1)
+    private val longLevel1Cached = Arguments.of(Y18, D23, L1)
+    private val longLevel2Cached = Arguments.of(Y18, D24, L1)
+    private val longBothLevelsCached = Arguments.of(Y18, D25, L1)
+
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(Y15, D1, L1),
-      Arguments.of(Y16, D8, L1),
-      Arguments.of(Y21, D25, L1),
+      noAnswersCached,
+
+      intLevel1Cached,
+      intLevel2Cached,
+      intBothLevelsCached,
+
+      stringLevel1Cached,
+      stringLevel2Cached,
+      stringBothLevelsCached,
+
+      longLevel1Cached,
+      longLevel2Cached,
+      longBothLevelsCached,
     )
   }
 }
