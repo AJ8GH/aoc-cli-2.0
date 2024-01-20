@@ -72,7 +72,11 @@ private fun default() = when (type()) {
 
 private fun getAnswer() = getAnswers().get(year(), day(), level())
 
-private fun getAnswers(): AnswerCache = readYaml(answerCacheFile(), AnswerCache::class.java)
+private fun getAnswers(): AnswerCache {
+  val file = answerCacheFile()
+  if (!file.exists()) write(answerCacheFile(), AnswerCache())
+  return readYaml(file, AnswerCache::class.java)
+}
 
 private fun writeAnswers(answers: AnswerCache) = write(answerCacheFile(), answers)
 

@@ -39,7 +39,7 @@ fun andTodaysReadmeExists(markdown: String) {
 
 fun andTodaysReadmeIsNotCached() = assertFalse { readmeCacheFile().exists() }
 
-fun andTodaysReadmeIsCached(readme: String) = cacheReadme(readme)
+fun andTodaysReadmeIsCached(html: String) = cacheReadme(html)
 
 fun andTodaysCompletionLevelIs(level: Int) =
   if (level == 0) clearCacheForDay()
@@ -54,3 +54,5 @@ fun andCodeFilesExistForToday() {
   assertTrue { mainFile().exists() }
   assertTrue { testFile().exists() }
 }
+
+fun andNoExampleExistsForToday() = assertFalse { exampleFile().exists() }

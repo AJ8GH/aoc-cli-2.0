@@ -2,6 +2,7 @@ package com.github.aj8gh.aoc
 
 import com.github.aj8gh.aoc.command.handler.answer
 import com.github.aj8gh.aoc.command.handler.create.code
+import com.github.aj8gh.aoc.command.handler.create.example
 import com.github.aj8gh.aoc.command.handler.create.input
 import com.github.aj8gh.aoc.command.handler.create.readme
 import com.github.aj8gh.aoc.command.handler.echoCurrent
@@ -22,3 +23,5 @@ fun whenCreateInputIsCalled() = input()
 fun whenCreateReadmeIsCalled() = readme()
 
 fun whenCreateCodeIsCalled() = code()
+
+fun whenCreateExampleIsCalled() = example()

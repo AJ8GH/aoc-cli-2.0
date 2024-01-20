@@ -47,9 +47,9 @@ fun createSourceDirsIfNotExists() {
   createDirsIfNotExists(testDir())
 }
 
+fun resourcesDir() = "${sourceDir(files().resources)}/"
 private fun aocHomeDir() = homeOverride ?: AOC_HOME
 private fun contentRootDir() = "${project()}${files().modulePrefix}${year()}/"
-private fun resourcesDir() = "${sourceDir(files().resources)}/"
 private fun mainDir() = sourceDir("${files().main}${yearSourceDir()}/")
 private fun testDir() = sourceDir("${files().test}${yearSourceDir()}/")
 private fun cacheDir() = "${aocHomeDir()}$CACHE_DIR"

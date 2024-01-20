@@ -14,7 +14,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-private const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
 private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 
 @WireMockTest(httpPort = HTTP_PORT)

@@ -6,6 +6,7 @@ import com.github.aj8gh.aoc.properties.level
 import com.github.aj8gh.aoc.properties.year
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
+import java.io.File
 import kotlin.test.assertEquals
 
 fun thenCurrentYearDayAndLevelAre(expectedYear: Int, expectedDay: Int, expectedLevel: Int) {
@@ -57,3 +58,14 @@ fun andTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, te
 fun thenMainFileIsUnchanged(expected: String) = assertEquals(expected, mainFile().readText())
 
 fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile().readText())
+
+fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
+  val actual = File(resourcesDir()).listFiles()!!
+    .filter { it.name.contains("example") }
+
+  assertEquals(expected.size, actual.size)
+
+  for (i in 1..expected.size) {
+    assertEquals(expected[i].readText(), actual[i].readText())
+  }
+}

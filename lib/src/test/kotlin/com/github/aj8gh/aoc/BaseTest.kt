@@ -19,6 +19,8 @@ const val TEST_RESOURCES_ROOT = "src/test/resources/"
 const val AOC_HOME = "${TEST_RESOURCES_ROOT}home/"
 const val TEMPLATE_HOME = "${TEST_RESOURCES_ROOT}template/home/"
 const val TEMPLATE_PROPERTIES_FILE = "${TEMPLATE_HOME}active.yaml"
+const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
+const val EXAMPLE_DIR = "${TEST_RESOURCES_ROOT}example/"
 const val INPUT = """
       1 2 3
       4 5 6

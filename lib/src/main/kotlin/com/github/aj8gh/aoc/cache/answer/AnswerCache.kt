@@ -1,6 +1,10 @@
 package com.github.aj8gh.aoc.cache.answer
 
-data class AnswerCache(val cache: MutableMap<Int, Year> = mutableMapOf()) {
+import com.github.aj8gh.aoc.util.Y15
+
+data class AnswerCache(
+  val cache: MutableMap<Int, Year> = mutableMapOf(Y15 to Year())
+) {
 
   fun year(year: Int) = cache.getOrDefault(year, Year())
 
