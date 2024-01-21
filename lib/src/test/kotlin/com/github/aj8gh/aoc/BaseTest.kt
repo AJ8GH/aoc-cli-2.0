@@ -1,10 +1,14 @@
 package com.github.aj8gh.aoc
 
+import com.github.aj8gh.aoc.http.SESSION_KEY
 import com.github.aj8gh.aoc.io.homeOverride
+import com.github.aj8gh.aoc.io.read
 import com.github.aj8gh.aoc.io.readYaml
-import com.github.aj8gh.aoc.properties.Properties
-import com.github.aj8gh.aoc.properties.aocProperties
-import com.github.aj8gh.aoc.properties.updateProperties
+import com.github.aj8gh.aoc.properties.*
+import com.github.tomakehurst.wiremock.client.MappingBuilder
+import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
+import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.http.Body
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
@@ -57,6 +61,28 @@ fun stubOutStream() {
 fun outContent() = outContent.toString().trim()
 
 fun testInput() = INPUT.trimIndent().trim()
+
+fun html() = read("${HTML_DIR}y${year()}/d${day()}.html")
+
+fun readmeRequestMapping(response: String) = WireMock.get(readmeUrl())
+  .withCookie(SESSION_KEY, WireMock.matching(SESSION))
+  .willReturn(
+    ResponseDefinitionBuilder.responseDefinition()
+      .withResponseBody(Body(response))
+  )
+
+fun readmeUrl() = "/20${year()}/day/${day()}"
+
+fun inputUrl() = "/20${year()}/day/${day()}/input"
+
+fun getInputMapping(): MappingBuilder =
+  WireMock.get(inputUrl())
+    .withCookie(SESSION_KEY, WireMock.matching(SESSION))
+    .willReturn(
+      ResponseDefinitionBuilder.responseDefinition()
+        .withStatus(200)
+        .withResponseBody(Body(testInput()))
+    )
 
 private fun resetProperties() =
   updateProperties(readYaml(File(TEMPLATE_PROPERTIES_FILE), Properties::class.java))

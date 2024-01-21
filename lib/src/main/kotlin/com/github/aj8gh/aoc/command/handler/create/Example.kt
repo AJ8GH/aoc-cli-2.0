@@ -22,6 +22,7 @@ private const val CLOSING_EMPHASIS_TAG = "</em>"
 private const val EMPTY_STRING = ""
 
 fun example() {
+  if (!readmeCacheFile().exists()) return
   val html = readmeCacheFile().readText()
   if (!findExampleIdentifier(html.lowercase())) return
   val example = sanitiseExample(buildExample(html.lines()))

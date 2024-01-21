@@ -28,6 +28,8 @@ class AnswerKtTest : BaseTest() {
   @Test
   fun answer_HappyPath_NoCache() {
     givenTheFollowingRequestStub(postMapping(CORRECT))
+    andTheFollowingRequestStub(readmeRequestMapping(html()))
+    andTheFollowingRequestStub(getInputMapping())
 
     whenAnswerIsCalledWith(ANSWER)
 

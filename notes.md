@@ -35,12 +35,15 @@
 
 ### Example [ ]
 * [ ] example input:
-  * [ ] take all example inputs, save as example files in repo
-  * [ ] cache example inputs
+  * [x] save first example 
+  * [ ] save all example inputs if more than one
+  * [ ] use readme to update test code with example answer 1 and example answer 2
+  * [ ] maintain example input cache
+  * [ ] maintain example answer cache
 
 ### Code [ ]
-* [ ] create src file and test files for current / given day
-* [ ] use cache and / or readme to update test code with example answer 1, example answer 2, answer 1 and answer 2
+* [x] create src file and test files for current / given day
+* [x] use answer cache to update test code with answer 1 and answer 2
 
 ## Util [ ]
 * [x] print current y/d/l

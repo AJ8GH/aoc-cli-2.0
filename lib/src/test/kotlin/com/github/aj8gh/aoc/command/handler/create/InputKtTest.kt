@@ -2,13 +2,8 @@ package com.github.aj8gh.aoc.command.handler.create
 
 import com.github.aj8gh.aoc.*
 import com.github.aj8gh.aoc.http.SESSION_KEY
-import com.github.aj8gh.aoc.properties.day
-import com.github.aj8gh.aoc.properties.year
 import com.github.aj8gh.aoc.util.*
-import com.github.tomakehurst.wiremock.client.MappingBuilder
-import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import org.junit.jupiter.params.ParameterizedTest
@@ -42,7 +37,7 @@ class InputKtTest : BaseTest() {
 
     whenCreateInputIsCalled()
 
-    thenNoRequestsWereMadeForUrl(url())
+    thenNoRequestsWereMadeForUrl(inputUrl())
     andTodaysInputExists()
   }
 
@@ -55,23 +50,12 @@ class InputKtTest : BaseTest() {
     whenCreateInputIsCalled()
 
     thenTodaysInputExists()
-    andNoRequestsWereMadeForUrl(url())
+    andNoRequestsWereMadeForUrl(inputUrl())
   }
 
-  private fun getInputMapping(): MappingBuilder =
-    get(url())
-      .withCookie(SESSION_KEY, matching(SESSION))
-      .willReturn(
-        ResponseDefinitionBuilder.responseDefinition()
-          .withStatus(200)
-          .withResponseBody(Body(testInput()))
-      )
-
   private fun getRequestDefinition(): RequestPatternBuilder =
-    getRequestedFor(urlEqualTo(url()))
+    getRequestedFor(urlEqualTo(inputUrl()))
       .withCookie(SESSION_KEY, matching(SESSION))
-
-  private fun url() = "/20${year()}/day/${day()}/input"
 
   companion object {
 

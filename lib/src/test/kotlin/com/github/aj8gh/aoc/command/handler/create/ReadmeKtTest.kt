@@ -6,9 +6,7 @@ import com.github.aj8gh.aoc.io.read
 import com.github.aj8gh.aoc.properties.day
 import com.github.aj8gh.aoc.properties.year
 import com.github.aj8gh.aoc.util.*
-import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -23,7 +21,7 @@ class ReadmeKtTest : BaseTest() {
   @MethodSource("readmeNotExistsNotCached")
   fun readmeNotExistsNotCached(year: Int, day: Int, level: Int) {
     givenCurrentYearDayAndLevelAre(year, day, level)
-    andTheFollowingRequestStub(requestMapping(html()))
+    andTheFollowingRequestStub(readmeRequestMapping(html()))
     andNoReadmeExistsForToday()
     andTodaysReadmeIsNotCached()
 
@@ -44,7 +42,7 @@ class ReadmeKtTest : BaseTest() {
 
     whenCreateReadmeIsCalled()
 
-    thenNoRequestsWereMadeForUrl(url())
+    thenNoRequestsWereMadeForUrl(readmeUrl())
   }
 
   @ParameterizedTest
@@ -57,7 +55,7 @@ class ReadmeKtTest : BaseTest() {
 
     whenCreateReadmeIsCalled()
 
-    thenNoRequestsWereMadeForUrl(url())
+    thenNoRequestsWereMadeForUrl(readmeUrl())
     andTodaysReadmeIsCreatedCorrectly(markdownForLevel(cacheLevel))
   }
 
@@ -68,7 +66,7 @@ class ReadmeKtTest : BaseTest() {
     andNoReadmeExistsForToday()
     andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
     andTodaysCompletionLevelIs(completionLevel)
-    andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
+    andTheFollowingRequestStub(readmeRequestMapping(htmlAtLevel(completionLevel)))
 
     whenCreateReadmeIsCalled()
 
@@ -83,7 +81,7 @@ class ReadmeKtTest : BaseTest() {
     andTodaysReadmeExists(markdownForLevel(readmeLevel))
     andTodaysReadmeIsNotCached()
     andTodaysCompletionLevelIs(completionLevel)
-    andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
+    andTheFollowingRequestStub(readmeRequestMapping(htmlAtLevel(completionLevel)))
 
     whenCreateReadmeIsCalled()
 
@@ -99,7 +97,7 @@ class ReadmeKtTest : BaseTest() {
     andTodaysReadmeExists(markdownForLevel(readmeLevel))
     andTodaysReadmeIsCached(htmlAtLevel(cacheLevel))
     andTodaysCompletionLevelIs(completionLevel)
-    andTheFollowingRequestStub(requestMapping(htmlAtLevel(completionLevel)))
+    andTheFollowingRequestStub(readmeRequestMapping(htmlAtLevel(completionLevel)))
 
     whenCreateReadmeIsCalled()
 
@@ -117,29 +115,18 @@ class ReadmeKtTest : BaseTest() {
 
     whenCreateReadmeIsCalled()
 
-    thenNoRequestsWereMadeForUrl(url())
+    thenNoRequestsWereMadeForUrl(readmeUrl())
     andTodaysReadmeIsCreatedCorrectly(markdownForLevel(cacheLevel))
   }
 
-  private fun requestMapping(response: String) = get(url())
-    .withCookie(SESSION_KEY, matching(SESSION))
-    .willReturn(
-      responseDefinition()
-        .withResponseBody(Body(response))
-    )
-
-  private fun html() = read("${HTML_DIR}y${year()}/d${day()}.html")
-
-  private fun htmlAtLevel(level: Int) = read("${HTML_DIR}y${year()}/l$level.html")
+  private fun htmlAtLevel(level: Int) = read("${HTML_DIR}y${year()}/level/l$level.html")
 
   private fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
 
-  private fun markdownForLevel(level: Int) = read("${MARKDOWN_DIR}y${year()}/l$level.md")
+  private fun markdownForLevel(level: Int) = read("${MARKDOWN_DIR}y${year()}/level/l$level.md")
 
-  private fun requestPattern() = getRequestedFor(urlEqualTo(url()))
+  private fun requestPattern() = getRequestedFor(urlEqualTo(readmeUrl()))
     .withCookie(SESSION_KEY, matching(SESSION))
-
-  private fun url() = "/20${year()}/day/${day()}"
 
   companion object {
 
