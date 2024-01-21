@@ -65,7 +65,7 @@ fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
 
   assertEquals(expected.size, actual.size)
 
-  for (i in 1..expected.size) {
+  for (i in expected.indices) {
     assertEquals(expected[i].readText(), actual[i].readText())
   }
 }
