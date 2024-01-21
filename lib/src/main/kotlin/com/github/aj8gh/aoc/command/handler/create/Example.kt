@@ -7,6 +7,7 @@ import com.github.aj8gh.aoc.io.write
 
 private const val EXAMPLE_IDENTIFIER = "for example"
 private const val LARGER_EXAMPLE_IDENTIFIER = "consider this larger example"
+private const val HERE_IS_EXAMPLE_IDENTIFIER = "here is an example"
 private const val OPENING_TAG = "<pre><code>"
 private const val CLOSING_TAG = "</code></pre>"
 
@@ -61,6 +62,9 @@ private fun findExampleIdentifier(html: String) =
     true
   } else if (html.contains(EXAMPLE_IDENTIFIER)) {
     identifier = EXAMPLE_IDENTIFIER
+    true
+  } else if (html.contains(HERE_IS_EXAMPLE_IDENTIFIER)) {
+    identifier = HERE_IS_EXAMPLE_IDENTIFIER
     true
   } else {
     println("Example not found")

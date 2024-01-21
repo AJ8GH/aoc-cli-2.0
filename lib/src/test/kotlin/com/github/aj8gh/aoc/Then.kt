@@ -59,6 +59,9 @@ fun thenMainFileIsUnchanged(expected: String) = assertEquals(expected, mainFile(
 
 fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile().readText())
 
+fun thenTodaysExampleIsCreatedAsExpected(expected: File) =
+  assertEquals(trimLines(expected), trimLines(exampleFile()))
+
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!
     .filter { it.name.contains("example") }
@@ -66,6 +69,12 @@ fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   assertEquals(expected.size, actual.size)
 
   for (i in expected.indices) {
-    assertEquals(expected[i].readText(), actual[i].readText())
+    assertEquals(
+      trimLines(expected[i]),
+      trimLines(actual[i]),
+    )
   }
 }
+
+private fun trimLines(file: File) = file
+  .readLines().joinToString { it.trimEnd() }
