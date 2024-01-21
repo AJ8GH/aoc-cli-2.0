@@ -12,51 +12,63 @@ private const val CLOSING_TAG = "</code></pre>"
 
 private var identifier = EXAMPLE_IDENTIFIER
 
+private const val ENCODED_OPENING_BRACKET = "&lt;"
+private const val ENCODED_CLOSING_BRACKET = "&gt;"
+private const val OPENING_BRACKET = "<"
+private const val CLOSING_BRACKET = ">"
+private const val OPENING_EMPHASIS_TAG = "<em>"
+private const val CLOSING_EMPHASIS_TAG = "</em>"
+private const val EMPTY_STRING = ""
+
 fun example() {
   val html = readmeCacheFile().readText()
-  val lines = html.lines()
-
-  val lower = html.lowercase()
-  identifier = if (lower.contains(LARGER_EXAMPLE_IDENTIFIER)) {
-    LARGER_EXAMPLE_IDENTIFIER
-  } else if (lower.contains(EXAMPLE_IDENTIFIER)) {
-    EXAMPLE_IDENTIFIER
-  } else {
-    println("Example not found")
-    return
-  }
-
-  val exampleBuilder: StringBuilder = StringBuilder()
-  var foundExample = false
-  var completedExample = false
-  for (i in lines.indices) {
-
-    if (foundExample && !completedExample) {
-      if (lines[i].contains(OPENING_TAG)) {
-        val line = lines[i].substringAfter(OPENING_TAG)
-        if (line.contains(CLOSING_TAG)) {
-          exampleBuilder.appendLine(line.substringBefore(CLOSING_TAG))
-          completedExample = true
-        } else {
-          exampleBuilder.appendLine(line)
-        }
-      } else if (lines[i].contains(CLOSING_TAG)) {
-        exampleBuilder.append(lines[i].substringBefore(CLOSING_TAG))
-        completedExample = true
-      } else {
-        exampleBuilder.appendLine(lines[i])
-      }
-    }
-    if (lines[i].lowercase().contains(identifier))
-      foundExample = true
-  }
-
-  val example = exampleBuilder.toString()
-    .replace("&lt;", "<")
-    .replace("&gt;", ">")
-    .replace("<em>", "")
-    .replace("</em>", "")
-
+  if (!findExampleIdentifier(html.lowercase())) return
+  val example = sanitiseExample(buildExample(html.lines()))
   createResourcesDirIfNotExists()
   write(exampleFile(), example)
 }
+
+private fun buildExample(lines: List<String>): String {
+  val exampleBuilder: StringBuilder = StringBuilder()
+  var foundExample = false
+  for (line in lines) {
+
+    if (foundExample) {
+      if (line.contains(OPENING_TAG)) {
+        val openingLine = line.substringAfter(OPENING_TAG)
+        if (openingLine.contains(CLOSING_TAG)) {
+          exampleBuilder.appendLine(openingLine.substringBefore(CLOSING_TAG))
+          break
+        } else {
+          exampleBuilder.appendLine(openingLine)
+        }
+      } else if (line.contains(CLOSING_TAG)) {
+        exampleBuilder.append(line.substringBefore(CLOSING_TAG))
+        break
+      } else {
+        exampleBuilder.appendLine(line)
+      }
+    }
+    if (line.lowercase().contains(identifier))
+      foundExample = true
+  }
+  return exampleBuilder.toString()
+}
+
+private fun findExampleIdentifier(html: String) =
+  if (html.contains(LARGER_EXAMPLE_IDENTIFIER)) {
+    identifier = LARGER_EXAMPLE_IDENTIFIER
+    true
+  } else if (html.contains(EXAMPLE_IDENTIFIER)) {
+    identifier = EXAMPLE_IDENTIFIER
+    true
+  } else {
+    println("Example not found")
+    false
+  }
+
+private fun sanitiseExample(example: String) = example
+  .replace(ENCODED_OPENING_BRACKET, OPENING_BRACKET)
+  .replace(ENCODED_CLOSING_BRACKET, CLOSING_BRACKET)
+  .replace(OPENING_EMPHASIS_TAG, EMPTY_STRING)
+  .replace(CLOSING_EMPHASIS_TAG, EMPTY_STRING)
