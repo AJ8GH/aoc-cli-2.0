@@ -5,12 +5,18 @@ import com.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import com.github.aj8gh.aoc.cache.cacheReadme
 import com.github.aj8gh.aoc.command.handler.set
 import com.github.aj8gh.aoc.io.*
+import com.github.aj8gh.aoc.util.L1
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+
+fun givenCurrentYearDayAndLevelAre(year: Int, day: Int) {
+  set(year = year, day = day, level = L1)
+  stubOutStream()
+}
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
   set(year = year, day = day, level = level)
