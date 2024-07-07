@@ -57,20 +57,27 @@ private fun buildExample(lines: List<String>): String {
   return exampleBuilder.toString()
 }
 
-private fun findExampleIdentifier(html: String) =
-  if (html.contains(LARGER_EXAMPLE_IDENTIFIER)) {
+private fun findExampleIdentifier(html: String) = when {
+  html.contains(LARGER_EXAMPLE_IDENTIFIER) -> {
     identifier = LARGER_EXAMPLE_IDENTIFIER
     true
-  } else if (html.contains(EXAMPLE_IDENTIFIER)) {
+  }
+
+  html.contains(EXAMPLE_IDENTIFIER) -> {
     identifier = EXAMPLE_IDENTIFIER
     true
-  } else if (html.contains(HERE_IS_EXAMPLE_IDENTIFIER)) {
+  }
+
+  html.contains(HERE_IS_EXAMPLE_IDENTIFIER) -> {
     identifier = HERE_IS_EXAMPLE_IDENTIFIER
     true
-  } else {
+  }
+
+  else -> {
     println("Example not found")
     false
   }
+}
 
 private fun sanitiseExample(example: String) = example
   .replace(ENCODED_OPENING_BRACKET, OPENING_BRACKET)

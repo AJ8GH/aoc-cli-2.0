@@ -48,6 +48,7 @@ fun createSourceDirsIfNotExists() {
 }
 
 fun resourcesDir() = "${sourceDir(files().resources)}/"
+
 private fun aocHomeDir() = homeOverride ?: AOC_HOME
 private fun contentRootDir() = "${project()}${files().modulePrefix}${year()}/"
 private fun mainDir() = sourceDir("${files().main}${yearSourceDir()}/")
@@ -61,7 +62,6 @@ private fun yearSourceDir() = "${files().yearPrefix}${year()}"
 private fun fileExt() = activeProperties().language
 private fun mainFileName() = "Day${day()}.${fileExt()}"
 private fun testFileName() = "Day${day()}Test.${fileExt()}"
-
 private fun createDirsIfNotExists(dir: String) = File(dir).let {
   if (!it.exists()) it.mkdirs()
 }

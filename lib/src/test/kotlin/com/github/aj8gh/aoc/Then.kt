@@ -55,6 +55,8 @@ fun thenMainFileIsCreatedAsExpected(expected: String) = assertEquals(expected, m
 
 fun andTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, testFile().readText())
 
+fun andMainFileIsCreatedAsExpected(expected: String) = thenMainFileIsCreatedAsExpected(expected)
+
 fun thenMainFileIsUnchanged(expected: String) = assertEquals(expected, mainFile().readText())
 
 fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile().readText())

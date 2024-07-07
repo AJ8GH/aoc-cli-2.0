@@ -3,7 +3,6 @@ package com.github.aj8gh.aoc.command.handler.create
 import com.github.aj8gh.aoc.*
 import com.github.aj8gh.aoc.http.SESSION_KEY
 import com.github.aj8gh.aoc.io.read
-import com.github.aj8gh.aoc.properties.day
 import com.github.aj8gh.aoc.properties.year
 import com.github.aj8gh.aoc.util.*
 import com.github.tomakehurst.wiremock.client.WireMock.*
@@ -11,8 +10,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-
-private const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 
 @WireMockTest(httpPort = HTTP_PORT)
 class ReadmeKtTest : BaseTest() {
@@ -120,8 +117,6 @@ class ReadmeKtTest : BaseTest() {
   }
 
   private fun htmlAtLevel(level: Int) = read("${HTML_DIR}y${year()}/level/l$level.html")
-
-  private fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
 
   private fun markdownForLevel(level: Int) = read("${MARKDOWN_DIR}y${year()}/level/l$level.md")
 

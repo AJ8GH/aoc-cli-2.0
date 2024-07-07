@@ -25,6 +25,11 @@ const val TEMPLATE_HOME = "${TEST_RESOURCES_ROOT}template/home/"
 const val TEMPLATE_PROPERTIES_FILE = "${TEMPLATE_HOME}active.yaml"
 const val HTML_DIR = "${TEST_RESOURCES_ROOT}html/"
 const val EXAMPLE_DIR = "${TEST_RESOURCES_ROOT}example/"
+const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
+const val EXPECTED_CODE_DIR = "${TEST_RESOURCES_ROOT}expected-code/"
+const val MAIN_FILE = "main.txt"
+const val TEST_FILE = "test.txt"
+
 const val INPUT = """
       1 2 3
       4 5 6
@@ -83,6 +88,12 @@ fun getInputMapping(): MappingBuilder =
         .withStatus(200)
         .withResponseBody(Body(testInput()))
     )
+
+fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
+
+fun expectedMainFile() = read("${EXPECTED_CODE_DIR}y${year()}/d${day()}/$MAIN_FILE")
+
+fun expectedTestFile() = read("${EXPECTED_CODE_DIR}y${year()}/d${day()}/$TEST_FILE")
 
 private fun resetProperties() =
   updateProperties(readYaml(File(TEMPLATE_PROPERTIES_FILE), Properties::class.java))
