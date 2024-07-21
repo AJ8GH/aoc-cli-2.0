@@ -11,17 +11,17 @@ enum class Command(
   YEAR(
     arrayOf("-y", "--year"),
     "New year value to set, must be between 15 and current year",
-    rangeOf(Y15, latestYear()),
+    toCandidates(YEAR_RANGE),
   ),
   DAY(
     arrayOf("-d", "--day"),
     "New day value to set, must be between 1 and 25",
-    rangeOf(D1, D25),
+    toCandidates(DAY_RANGE),
   ),
   LEVEL(
     arrayOf("-l", "--level"),
     "New level value to set, must be 1 or 2",
-    rangeOf(L1, L2),
+    toCandidates(LEVEL_RANGE),
   ),
   NEXT(
     arrayOf("-n", "--next"),
