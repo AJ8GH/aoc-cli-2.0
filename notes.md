@@ -50,6 +50,9 @@
 * [ ] print current config / properties
 * [ ] update config / properties
 * [ ] open project for default / given ide
-* [ ] install/uninstall aoc cli tool
+* [x] install aoc cli tool
+* [ ] uninstall aoc cli tool
 * [ ] create new projects with new properties
 * [ ] override `$AOC_HOME` location
+* [ ] update session token `-t`
+* [ ] error handling for http exceptions - e.g. 404 when trying to request resource files for a level not reached yet

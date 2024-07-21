@@ -10,7 +10,7 @@ jar {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
   manifest {
-    attributes 'Main-Class': 'com.github.aj8gh.aoc.MainKt'
+    attributes 'Main-Class': 'io.github.aj8gh.aoc.MainKt'
   }
 
   from {

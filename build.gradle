@@ -4,11 +4,11 @@ plugins {
   id 'java'
 }
 
-group = 'com.github.aj8gh'
+group = 'io.github.aj8gh'
 version = '1.0-SNAPSHOT'
 
 allprojects {
-  mainClassName = "com.github.aj8gh.aoc.MainKt"
+  mainClassName = "io.github.aj8gh.aoc.MainKt"
   repositories {
     mavenLocal()
     mavenCentral()

@@ -1,4 +1,4 @@
-package com.github.aj8gh.aok.y${YEAR}.d${DAY}
+package io.github.aj8gh.aok.y${YEAR}.d${DAY}
 
 fun part1(input: List<String>) = ${ANSWER_1}
 

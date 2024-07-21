@@ -1,4 +1,4 @@
-package com.github.aj8gh.aok.y16.d9
+package io.github.aj8gh.aok.y16.d9
 
 fun part1(input: List<String>) = 123
 
