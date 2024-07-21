@@ -1,40 +1,29 @@
+import static java.lang.Integer.parseInt
+
 plugins {
-  id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+  id 'org.jetbrains.kotlin.jvm'
   id 'application'
   id 'java'
 }
 
-group = 'io.github.aj8gh'
-version = '1.0-SNAPSHOT'
-
 allprojects {
-  mainClassName = "io.github.aj8gh.aoc.MainKt"
+  apply plugin: 'org.jetbrains.kotlin.jvm'
+
   repositories {
     mavenLocal()
     mavenCentral()
   }
 
-  compileJava {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+  group = groupId
+  version = projectVersion
+
+  kotlin {
+    jvmToolchain(parseInt(javaVersion))
   }
 }
 
-ext {
-  jUnitVersion = '5.10.1'
-  cliktVersion = '4.2.1'
-  jacksonVersion = '2.16.+'
-  jnaVersion = '5.14.0'
-  kotlinLoggingVersion = '5.1.0'
-  slf4jVersion = '2.0.9'
-  mockitoVersion = '3.2.0'
-  http4kVersion = '4.0.0.0'
-  wiremockVersion = '2.1.1'
-  markdownVersion = '0.6.1'
-  flexmarkVersion = '0.64.8'
-}
-
 subprojects {
+  apply plugin: 'org.jetbrains.kotlin.jvm'
   apply plugin: 'java'
   apply plugin: 'application'
 
@@ -43,25 +32,21 @@ subprojects {
   }
 
   dependencies {
-    implementation "com.github.ajalt.clikt:clikt:${cliktVersion}"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
-    implementation "net.java.dev.jna:jna:${jnaVersion}"
-    implementation "net.java.dev.jna:jna-platform:${jnaVersion}"
-    implementation "io.github.oshai:kotlin-logging-jvm:${kotlinLoggingVersion}"
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
-    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
-    implementation "org.http4k:http4k-client-okhttp:${http4kVersion}"
-    implementation "org.jetbrains:markdown:${markdownVersion}"
-    implementation "com.vladsch.flexmark:flexmark-html2md-converter:${flexmarkVersion}"
+    implementation "com.github.ajalt.clikt:clikt:$cliktVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
+    implementation "net.java.dev.jna:jna:$jnaVersion"
+    implementation "net.java.dev.jna:jna-platform:$jnaVersion"
+    implementation "io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    implementation "org.slf4j:slf4j-simple:$slf4jVersion"
+    implementation "org.http4k:http4k-client-okhttp:$http4kVersion"
+    implementation "org.jetbrains:markdown:$markdownVersion"
+    implementation "com.vladsch.flexmark:flexmark-html2md-converter:$flexmarkVersion"
 
-    testImplementation "com.marcinziolo:kotlin-wiremock:${wiremockVersion}"
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$jUnitVersion"
+    testImplementation "com.marcinziolo:kotlin-wiremock:$wiremockVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoVersion"
   }
-}
-
-kotlin {
-  jvmToolchain(17)
 }
