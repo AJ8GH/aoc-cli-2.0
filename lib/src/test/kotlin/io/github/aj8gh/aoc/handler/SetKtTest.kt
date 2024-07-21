@@ -13,7 +13,7 @@ class SetKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun setTest(year: Int?, day: Int?, level: Int?, message: String) {
-    val expectedYear = year ?: Y15
+    val expectedYear = year?.mod(2000) ?: Y15
     val expectedDay = day ?: D1
     val expectedLevel = level ?: L1
 
@@ -27,6 +27,7 @@ class SetKtTest : BaseTest() {
     @JvmStatic
     private fun inputProvider() = listOf(
       Arguments.of(16, 2, 2, getEchoMessage(16, 2, 2)),
+      Arguments.of(2016, 2, 2, getEchoMessage(16, 2, 2)),
       Arguments.of(null, 2, 2, getEchoMessage(Y15, 2, 2)),
       Arguments.of(16, null, 2, getEchoMessage(16, D1, 2)),
       Arguments.of(16, 2, null, getEchoMessage(16, 2, L1)),
