@@ -1,7 +1,7 @@
 package io.github.aj8gh.aoc.command
 
 import com.github.ajalt.clikt.completion.CompletionCandidates
-import io.github.aj8gh.aoc.util.*
+import io.github.aj8gh.aoc.util.toCandidates
 
 enum class Command(
   val names: Array<String>,
@@ -9,35 +9,34 @@ enum class Command(
   val completion: CompletionCandidates.Fixed? = null,
 ) {
   YEAR(
-    arrayOf("-y", "--year"),
-    "New year value to set, must be between 15 and current year",
+    arrayOf(YEAR_SHORT, YEAR_LONG),
+    YEAR_DESCRIPTION,
     toCandidates(YEAR_RANGE),
   ),
   DAY(
-    arrayOf("-d", "--day"),
-    "New day value to set, must be between 1 and 25",
+    arrayOf(DAY_SHORT, DAY_LONG),
+    DAY_DESCRIPTION,
     toCandidates(DAY_RANGE),
   ),
   LEVEL(
-    arrayOf("-l", "--level"),
-    "New level value to set, must be 1 or 2",
+    arrayOf(LEVEL_SHORT, LEVEL_LONG),
+    LEVEL_DESCRIPTION,
     toCandidates(LEVEL_RANGE),
   ),
   NEXT(
-    arrayOf("-n", "--next"),
-    "Advance to the next level",
+    arrayOf(NEXT_SHORT, NEXT_LONG),
+    NEXT_DESCRIPTION,
   ),
   ECHO(
-    arrayOf("-e", "--echo"),
-    "Echo the current year, day and level",
+    arrayOf(ECHO_SHORT, ECHO_LONG),
+    ECHO_DESCRIPTION,
   ),
   CREATE(
-    arrayOf("-c", "--create"),
-    "Create resources for current level",
-
-    ),
+    arrayOf(CREATE_SHORT, CREATE_LONG),
+    CREATE_DESCRIPTION,
+  ),
   ANSWER(
-    arrayOf("-a", "--answer"),
-    "Submit answer for current level"
+    arrayOf(ANSWER_SHORT, ANSWER_LONG),
+    ANSWER_DESCRIPTION,
   )
 }

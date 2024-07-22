@@ -5,8 +5,8 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.command.handler.INCORRECT
-import io.github.aj8gh.aoc.util.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

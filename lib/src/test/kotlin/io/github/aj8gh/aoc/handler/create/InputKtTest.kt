@@ -4,8 +4,8 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.http.SESSION_KEY
-import io.github.aj8gh.aoc.util.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource

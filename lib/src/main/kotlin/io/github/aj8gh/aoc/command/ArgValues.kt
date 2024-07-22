@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.util
+package io.github.aj8gh.aoc.command
 
 const val Y15 = 15
 const val Y16 = 16

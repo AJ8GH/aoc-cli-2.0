@@ -1,6 +1,6 @@
 package io.github.aj8gh.aoc.cache.answer
 
-import io.github.aj8gh.aoc.util.Y15
+import io.github.aj8gh.aoc.command.Y15
 
 data class AnswerCache(
   val cache: MutableMap<Int, Year> = mutableMapOf(Y15 to Year())

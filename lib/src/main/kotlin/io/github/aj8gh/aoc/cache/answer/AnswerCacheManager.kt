@@ -7,8 +7,8 @@ import io.github.aj8gh.aoc.io.write
 import io.github.aj8gh.aoc.properties.day
 import io.github.aj8gh.aoc.properties.level
 import io.github.aj8gh.aoc.properties.year
-import io.github.aj8gh.aoc.util.L1
-import io.github.aj8gh.aoc.util.L2
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.L2
 
 private const val COMPLETION_LEVEL_2 = 2
 private const val COMPLETION_LEVEL_1 = 1

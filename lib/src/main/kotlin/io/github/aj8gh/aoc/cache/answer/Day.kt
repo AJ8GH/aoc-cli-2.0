@@ -1,7 +1,7 @@
 package io.github.aj8gh.aoc.cache.answer
 
-import io.github.aj8gh.aoc.util.L1
-import io.github.aj8gh.aoc.util.L2
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.L2
 
 private const val UNKNOWN_LEVEL = "Unknown level"
 

@@ -1,9 +1,9 @@
 package io.github.aj8gh.aoc.handler
 
 import io.github.aj8gh.aoc.*
-import io.github.aj8gh.aoc.util.D1
-import io.github.aj8gh.aoc.util.L1
-import io.github.aj8gh.aoc.util.Y15
+import io.github.aj8gh.aoc.command.D1
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.Y15
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource

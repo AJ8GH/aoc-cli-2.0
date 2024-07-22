@@ -8,7 +8,7 @@ import io.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import io.github.aj8gh.aoc.cache.cacheReadme
 import io.github.aj8gh.aoc.command.handler.set
 import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.util.L1
+import io.github.aj8gh.aoc.command.L1
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

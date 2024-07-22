@@ -1,5 +1,9 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.D1
+import io.github.aj8gh.aoc.command.D25
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.L2
 import io.github.aj8gh.aoc.properties.Properties
 import io.github.aj8gh.aoc.properties.activeProperties
 import io.github.aj8gh.aoc.properties.updateProperties
