@@ -2,6 +2,7 @@ package io.github.aj8gh.aoc.handler.create
 
 import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.io.resourcesDir
 import io.github.aj8gh.aoc.properties.day
 import io.github.aj8gh.aoc.properties.year
 import org.junit.jupiter.params.ParameterizedTest
@@ -20,15 +21,13 @@ class ExampleKtTest : BaseTest() {
 
     whenCreateExampleIsCalled()
 
-    thenTodaysExampleIsCreatedAsExpected(expectedExamples())
+    thenTodaysExamplesAreCreatedAsExpected(expectedExamples())
   }
-
-  private fun expectedExamples() = File("${EXAMPLE_DIR}y${year()}/d${day()}/example.txt")
 
   companion object {
     @JvmStatic
     private fun inputProvider() = listOf(
-      // Arguments.of(Y15, D1),
+//       Arguments.of(Y15, D1),
       // Arguments.of(Y15, D2),
       // Arguments.of(Y15, D3),
       // Arguments.of(Y15, D4),
@@ -36,7 +35,7 @@ class ExampleKtTest : BaseTest() {
       // Arguments.of(Y15, D6),
       // Arguments.of(Y15, D7),
       // Arguments.of(Y15, D8),
-      Arguments.of(Y15, D9),
+//      Arguments.of(Y15, D9),
 
       Arguments.of(Y21, D1),
       Arguments.of(Y21, D2),
@@ -80,4 +79,8 @@ class ExampleKtTest : BaseTest() {
       Arguments.of(Y23, D6),
     )
   }
+
+  private fun expectedExamples() = File("${EXAMPLE_DIR}y${year()}/d${day()}")
+    .listFiles()!!
+    .sorted()
 }

@@ -16,7 +16,7 @@ class AnswerCacheManagerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
-  fun cacheIncorrect(year: Int, day: Int, level: Int, response: String, answer: String) {
+  fun cache(year: Int, day: Int, level: Int, response: String, answer: String) {
     givenCurrentYearDayAndLevelAre(year, day, level)
     assertEquals(NOT_CACHED, checkAnswer(answer))
     cacheAnswer(ANSWER)
