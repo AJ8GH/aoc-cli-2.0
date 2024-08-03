@@ -6,6 +6,7 @@ import java.io.File
 private const val CACHE_DIR = "cache/"
 private const val FILE_CACHE_DIR = "files/"
 private const val ANSWER_CACHE_DIR = "answer/"
+private const val EXAMPLE_CACHE_DIR = "example/"
 private const val TEMPLATE_DIR = "template/"
 private const val AOC_PROPERTIES_FILE_NAME = "aoc.yaml"
 private const val ANSWER_CACHE_FILE_NAME = "answers.yaml"
@@ -34,6 +35,7 @@ fun testFile() = File("${testDir()}${testFileName()}")
 // Cache & Template Files
 fun readmeCacheFile() = File("${resourcesCacheDir()}$README_CACHE_FILE_NAME")
 fun inputCacheFile() = File("${resourcesCacheDir()}$INPUT_FILE_NAME")
+fun exampleFileCacheFiles() = File(exampleCacheDir()).listFiles()
 fun answerCacheFile() = File("${answerCacheDir()}$ANSWER_CACHE_FILE_NAME")
 fun exampleCacheFile() = File("${answerCacheDir()}$EXAMPLE_CACHE_FILE_NAME")
 fun mainTemplateFile() = File("${templateDir()}$MAIN_TEMPLATE_FILE_NAME")
@@ -41,6 +43,7 @@ fun testTemplateFile() = File("${templateDir()}$TEST_TEMPLATE_FILE_NAME")
 
 fun createResourcesDirIfNotExists() = createDirsIfNotExists(resourcesDir())
 fun createAnswerCacheDirIfNotExists() = createDirsIfNotExists(answerCacheDir())
+fun createExampleCacheDirIfNotExists() = createDirsIfNotExists(answerCacheDir())
 fun createResourcesCacheDirIfNotExists() = createDirsIfNotExists(resourcesCacheDir())
 fun createSourceDirsIfNotExists() {
   createDirsIfNotExists(mainDir())
@@ -56,6 +59,7 @@ private fun testDir() = sourceDir("${files().test}${yearSourceDir()}/")
 private fun cacheDir() = "${aocHomeDir()}$CACHE_DIR"
 private fun resourcesCacheDir() = "${cacheDir()}$FILE_CACHE_DIR/y${year()}/d${day()}/"
 private fun answerCacheDir() = "${cacheDir()}$ANSWER_CACHE_DIR/"
+private fun exampleCacheDir() = "${cacheDir()}$EXAMPLE_CACHE_DIR/"
 private fun templateDir() = "${aocHomeDir()}$TEMPLATE_DIR${fileExt()}/"
 private fun sourceDir(type: String) = "${contentRootDir()}${type}${files().dayPrefix}${day()}/"
 private fun yearSourceDir() = "${files().yearPrefix}${year()}"

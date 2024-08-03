@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.command.handler.create
+package io.github.aj8gh.aoc.command.handler.create.example
 
 import io.github.aj8gh.aoc.io.createResourcesDirIfNotExists
 import io.github.aj8gh.aoc.io.exampleFile
@@ -22,10 +22,15 @@ private const val CLOSING_EMPHASIS_TAG = "</em>"
 private const val EMPTY_STRING = ""
 
 fun example() {
+  if (exampleFilesCached()) return
   if (!readmeCacheFile().exists()) return
   val html = readmeCacheFile().readText()
   if (!findExampleIdentifier(html.lowercase())) return
   val example = sanitiseExample(buildExample(html.lines()))
+  writeExample(example)
+}
+
+fun writeExample(example: String) {
   createResourcesDirIfNotExists()
   write(exampleFile(), example)
 }

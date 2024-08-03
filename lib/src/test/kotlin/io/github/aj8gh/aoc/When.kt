@@ -2,7 +2,7 @@ package io.github.aj8gh.aoc
 
 import io.github.aj8gh.aoc.command.handler.answer
 import io.github.aj8gh.aoc.command.handler.create.code
-import io.github.aj8gh.aoc.command.handler.create.example
+import io.github.aj8gh.aoc.command.handler.create.example.example
 import io.github.aj8gh.aoc.command.handler.create.input
 import io.github.aj8gh.aoc.command.handler.create.readme
 import io.github.aj8gh.aoc.command.handler.echoCurrent
