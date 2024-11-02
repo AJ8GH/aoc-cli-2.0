@@ -24,10 +24,10 @@ class Day25Test {
   companion object {
 
     @JvmStatic
-    private fun inputProviderPart1() = getInput(0, 123123123123123123)
+    private fun inputProviderPart1() = getInput(0L, 123123123123123123L)
 
     @JvmStatic
-    private fun inputProviderPart2() = getInput(0, 321321321321321321)
+    private fun inputProviderPart2() = getInput(0L, 321321321321321321L)
 
     private fun getInput(example: Long, answer: Long) = listOf(
       Arguments.of(readExample(DAY_25), example),

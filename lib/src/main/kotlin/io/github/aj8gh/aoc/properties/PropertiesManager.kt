@@ -9,6 +9,7 @@ private var aocProperties: AocProperties? = null
 private var properties: Properties? = null
 
 fun aocProperties() = aocProperties ?: readAndSetAocProperties()
+fun forceLoadAocProperties() = readAndSetAocProperties()
 fun activeProperties() = properties ?: readAndSetActiveProperties()
 fun current() = activeProperties().current
 fun files() = activeProperties().files

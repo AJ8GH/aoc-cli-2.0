@@ -7,37 +7,42 @@ import (
 )
 
 var testCases = []struct {
-	name  string
-	input []string
-	want  int64
+	name    string
+	subject func([]string) int64
+	input   []string
+	want    int64
 }{
 	{
-		name:  "Day 24 Level 1 - Example",
-		input: util.ReadExample(),
-		want:  0,
+		name:    "Day 24 Level 1 Example",
+		subject: Level1,
+		input:   util.ReadExample(),
+		want:    0,
 	},
 	{
-		name:  "Day 24 Level 1",
-		input: util.ReadInput(),
-		want:  0,
+		name:    "Day 24 Level 1",
+		subject: Level1,
+		input:   util.ReadInput(),
+		want:    0,
 	},
 	{
-		name:  "Day 24 Level 2 - Example",
-		input: util.ReadExample(),
-		want:  0,
+		name:    "Day 24 Level 2 Example",
+		subject: Level2,
+		input:   util.ReadExample(),
+		want:    0,
 	},
 	{
-		name:  "Day 24 Level 2",
-		input: util.ReadInput(),
-		want:  123123123123123123,
+		name:    "Day 24 Level 2",
+		subject: Level2,
+		input:   util.ReadInput(),
+		want:    123123123123123123,
 	},
 }
 
 func TestDay24(t *testing.T) {
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
-			got := Level1(tt.input)
-			util.AssertInt(t, got, tt.want)
+			got := tt.subject(tt.input)
+			util.Assert(t, got, tt.want)
 		})
 	}
 }

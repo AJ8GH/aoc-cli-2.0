@@ -6,9 +6,11 @@ import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import io.github.aj8gh.aoc.cache.answer.cacheAnswer
 import io.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import io.github.aj8gh.aoc.cache.cacheReadme
+import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.handler.set
 import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.properties.aocProperties
+import io.github.aj8gh.aoc.properties.forceLoadAocProperties
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -25,6 +27,11 @@ fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 
 fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
   WireMock.stubFor(stub)
+
+fun givenActivePropertiesIsSetTo(file: String) {
+  write(aocPropertiesFile(), aocProperties().copy(active = file))
+  forceLoadAocProperties()
+}
 
 fun andTheFollowingRequestStub(stub: MappingBuilder) = givenTheFollowingRequestStub(stub)
 

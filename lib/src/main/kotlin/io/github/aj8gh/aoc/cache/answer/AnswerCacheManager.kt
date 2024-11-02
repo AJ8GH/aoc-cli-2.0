@@ -16,12 +16,7 @@ private const val COMPLETION_LEVEL_2 = 2
 private const val COMPLETION_LEVEL_1 = 1
 private const val COMPLETION_LEVEL_0 = 0
 
-private const val INT_TYPE = "Int"
-private const val LONG_TYPE = "Long"
-private const val STRING_TYPE = "String"
-
-private const val INT_DEFAULT = "0"
-private const val LONG_DEFAULT = "0L"
+private const val NUMERIC_DEFAULT = "0"
 private const val STRING_DEFAULT = ""
 
 private const val JAVA = "java"
@@ -90,13 +85,13 @@ fun assertFuncType() = when (type()) {
   else -> "Int"
 }
 
-fun answer1OrDefault() = wrapIfString(answer1() ?: default())
+fun answer1OrDefault() = wrapIfString(handleLong(answer1() ?: default()))
 
-fun answer2OrDefault() = wrapIfString(answer2() ?: default())
+fun answer2OrDefault() = wrapIfString(handleLong(answer2() ?: default()))
 
-fun example1() = wrapIfString(default())
+fun example1() = wrapIfString(handleLong(default()))
 
-fun example2() = wrapIfString(default())
+fun example2() = wrapIfString(handleLong(default()))
 
 private fun wrapIfString(answer: String): String = answer
   .takeIf { type() != STRING }
@@ -106,10 +101,19 @@ private fun answer1() = getAnswers().get(year(), day(), L1)
 
 private fun answer2() = getAnswers().get(year(), day(), L2)
 
-private fun default() = when (type()) {
-  INT -> INT_DEFAULT
-  LONG -> LONG_DEFAULT
-  else -> STRING_DEFAULT
+private fun default(): String {
+  return when (type()) {
+    INT, LONG -> NUMERIC_DEFAULT
+    else -> STRING_DEFAULT
+  }
+}
+
+private fun handleLong(answer: String): String {
+  val lang = activeProperties().language
+  if (type() == LONG && (lang == JAVA || lang == KOTLIN)) {
+    return answer + "L"
+  }
+  return answer
 }
 
 private fun getAnswer() = getAnswers().get(year(), day(), level())

@@ -9,7 +9,6 @@ files:
   mainFilePrefix: "day"
   testFilePrefix: "day"
   testFileSuffix: "_test"
-  resources: ""
   yearPrefix: "year-"
   dayPrefix: "day-"
 current:

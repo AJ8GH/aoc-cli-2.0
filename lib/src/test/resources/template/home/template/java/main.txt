@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Day${DAY} {
 
-  public int part1(List<String> input) {
-    return 0;
+  public ${TYPE} part1(List<String> input) {
+    return ${ANSWER_1};
   }
 
-  public int part2(List<String> input) {
-    return 0;
+  public ${TYPE} part2(List<String> input) {
+    return ${ANSWER_1};
   }
 }

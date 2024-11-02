@@ -28,6 +28,8 @@ const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 const val EXPECTED_CODE_DIR = "${TEST_RESOURCES_ROOT}expected-code/"
 const val MAIN_FILE = "main.txt"
 const val TEST_FILE = "test.txt"
+const val GO = "go.yaml"
+const val KT = "kt.yaml"
 
 const val INPUT = """
       1 2 3

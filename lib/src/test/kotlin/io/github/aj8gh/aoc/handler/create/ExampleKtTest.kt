@@ -23,6 +23,19 @@ class ExampleKtTest : BaseTest() {
     thenTodaysExampleIsCreatedAsExpected(expectedExamples())
   }
 
+  @ParameterizedTest
+  @MethodSource("inputProvider")
+  fun createExampleGo(year: Int, day: Int) {
+    givenActivePropertiesIsSetTo(GO)
+    givenCurrentYearDayAndLevelAre(year, day)
+    andTodaysReadmeIsCached(html())
+    andNoExampleExistsForToday()
+
+    whenCreateExampleIsCalled()
+
+    thenTodaysExampleIsCreatedAsExpected(expectedExamples())
+  }
+
   private fun expectedExamples() = File("${EXAMPLE_DIR}y${year()}/d${day()}/example.txt")
 
   companion object {
