@@ -1,14 +1,16 @@
 package io.github.aj8gh.aoc.cache.answer
 
+import io.github.aj8gh.aoc.cache.answer.AnswerType.*
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.L2
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.io.answerCacheFile
 import io.github.aj8gh.aoc.io.readYaml
 import io.github.aj8gh.aoc.io.write
+import io.github.aj8gh.aoc.properties.activeProperties
 import io.github.aj8gh.aoc.properties.day
 import io.github.aj8gh.aoc.properties.level
 import io.github.aj8gh.aoc.properties.year
-import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.L2
 
 private const val COMPLETION_LEVEL_2 = 2
 private const val COMPLETION_LEVEL_1 = 1
@@ -21,6 +23,39 @@ private const val STRING_TYPE = "String"
 private const val INT_DEFAULT = "0"
 private const val LONG_DEFAULT = "0L"
 private const val STRING_DEFAULT = ""
+
+private const val JAVA = "java"
+private const val KOTLIN = "kt"
+private const val GO = "go"
+
+private val types = mapOf(
+  Pair(
+    INT,
+    mapOf(
+      Pair(JAVA, "int"),
+      Pair(KOTLIN, "Int"),
+      Pair(GO, "int"),
+    )
+  ),
+
+  Pair(
+    STRING,
+    mapOf(
+      Pair(JAVA, "String"),
+      Pair(KOTLIN, "String"),
+      Pair(GO, "string"),
+    )
+  ),
+
+  Pair(
+    LONG,
+    mapOf(
+      Pair(JAVA, "long"),
+      Pair(KOTLIN, "Long"),
+      Pair(GO, "int64"),
+    )
+  ),
+)
 
 fun checkAnswer(answer: String) =
   handle(answer, getAnswer())
@@ -43,9 +78,16 @@ fun dayCompletion(): Int {
 fun clearCacheForDay() = getAnswers().clear(year(), day())
 
 fun type() = when {
-  isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT_TYPE
-  isLong(answer1()) || isLong(answer2()) -> LONG_TYPE
-  else -> STRING_TYPE
+  isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT
+  isLong(answer1()) || isLong(answer2()) -> LONG
+  else -> STRING
+}
+
+fun typeForLanguage() = types[type()]!![activeProperties().language]!!
+
+fun assertFuncType() = when (type()) {
+  STRING -> ""
+  else -> "Int"
 }
 
 fun answer1OrDefault() = wrapIfString(answer1() ?: default())
@@ -57,7 +99,7 @@ fun example1() = wrapIfString(default())
 fun example2() = wrapIfString(default())
 
 private fun wrapIfString(answer: String): String = answer
-  .takeIf { type() != STRING_TYPE }
+  .takeIf { type() != STRING }
   ?: "\"${answer}\""
 
 private fun answer1() = getAnswers().get(year(), day(), L1)
@@ -65,8 +107,8 @@ private fun answer1() = getAnswers().get(year(), day(), L1)
 private fun answer2() = getAnswers().get(year(), day(), L2)
 
 private fun default() = when (type()) {
-  INT_TYPE -> INT_DEFAULT
-  LONG_TYPE -> LONG_DEFAULT
+  INT -> INT_DEFAULT
+  LONG -> LONG_DEFAULT
   else -> STRING_DEFAULT
 }
 

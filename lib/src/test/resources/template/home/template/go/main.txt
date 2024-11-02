@@ -1,9 +1,9 @@
 package day${DAY}
 
-func Level1(input []string) int {
+func Level1(input []string) ${TYPE} {
 	return ${ANSWER_1}
 }
 
-func Level2(input []string) int {
+func Level2(input []string) ${TYPE} {
 	return ${ANSWER_2}
 }

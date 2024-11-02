@@ -9,7 +9,7 @@ import (
 var testCases = []struct {
 	name  string
 	input []string
-	want int
+	want  ${TYPE}
 }{
 	{
 		name:  "Day ${DAY} Level 1 - Example",
@@ -37,7 +37,7 @@ func TestDay${DAY}(t *testing.T) {
 	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
 			got := Level1(tt.input)
-			util.AssertInt(t, got, tt.want)
+			util.Assert${ASSERT_FUNC_TYPE}(t, got, tt.want)
 		})
 	}
 }

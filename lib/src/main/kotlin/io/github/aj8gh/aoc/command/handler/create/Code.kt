@@ -9,6 +9,7 @@ import java.io.File
 private const val YEAR_PLACEHOLDER = "\${YEAR}"
 private const val DAY_PLACEHOLDER = "\${DAY}"
 private const val TYPE_PLACEHOLDER = "\${TYPE}"
+private const val ASSERT_FUNC_TYPE_PLACEHOLDER = "\${ASSERT_FUNC_TYPE}"
 private const val ANSWER_1_PLACEHOLDER = "\${ANSWER_1}"
 private const val ANSWER_2_PLACEHOLDER = "\${ANSWER_2}"
 private const val EXAMPLE_1_PLACEHOLDER = "\${EXAMPLE_1}"
@@ -27,7 +28,8 @@ private fun generate(file: File, template: File) {
 private fun format(text: String) = text
   .replace(YEAR_PLACEHOLDER, year().toString())
   .replace(DAY_PLACEHOLDER, day().toString())
-  .replace(TYPE_PLACEHOLDER, type())
+  .replace(TYPE_PLACEHOLDER, typeForLanguage())
+  .replace(ASSERT_FUNC_TYPE_PLACEHOLDER, assertFuncType())
   .replace(ANSWER_1_PLACEHOLDER, answer1OrDefault())
   .replace(ANSWER_2_PLACEHOLDER, answer2OrDefault())
   .replace(EXAMPLE_1_PLACEHOLDER, example1())
