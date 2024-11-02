@@ -53,11 +53,16 @@ class AnswerKtTest : BaseTest() {
   @Test
   fun answer_HappyPath_Cached() {
     givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+    andTheFollowingRequestStub(getInputMapping(Y15, D2))
+    andTheFollowingRequestStub(readmeRequestMapping(html(Y15, D2), Y15, D2))
 
     whenAnswerIsCalledWith(ANSWER)
 
     thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
     andCurrentYearDayAndLevelAre(Y15, D2, L1)
+    andTodaysReadmeIsCreatedCorrectly(markdown())
+    andTodaysReadmeHasBeenCached(html())
+    andTodaysInputExists()
     andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1))
   }
 

@@ -50,9 +50,10 @@ fun createSourceDirsIfNotExists() {
 fun resourcesDir() = "${sourceDir(files().resources)}/"
 
 private fun aocHomeDir() = homeOverride ?: AOC_HOME
-private fun contentRootDir() = "${project()}${files().modulePrefix}${year()}/"
-private fun mainDir() = sourceDir("${files().main}${yearSourceDir()}/")
-private fun testDir() = sourceDir("${files().test}${yearSourceDir()}/")
+private fun moduleDir() = files().modulePrefix?.let { it + year() } ?: ""
+private fun contentRootDir() = "${project()}${moduleDir()}/"
+private fun mainDir() = sourceDir("${files().mainDir}${yearSourceDir()}/")
+private fun testDir() = sourceDir("${files().testDir}${yearSourceDir()}/")
 private fun cacheDir() = "${aocHomeDir()}$CACHE_DIR"
 private fun resourcesCacheDir() = "${cacheDir()}$FILE_CACHE_DIR/y${year()}/d${day()}/"
 private fun answerCacheDir() = "${cacheDir()}$ANSWER_CACHE_DIR/"
@@ -60,8 +61,8 @@ private fun templateDir() = "${aocHomeDir()}$TEMPLATE_DIR${fileExt()}/"
 private fun sourceDir(type: String) = "${contentRootDir()}${type}${files().dayPrefix}${day()}/"
 private fun yearSourceDir() = "${files().yearPrefix}${year()}"
 private fun fileExt() = activeProperties().language
-private fun mainFileName() = "Day${day()}.${fileExt()}"
-private fun testFileName() = "Day${day()}Test.${fileExt()}"
+private fun mainFileName() = "${files().mainFilePrefix}${day()}.${fileExt()}"
+private fun testFileName() = "${files().testFilePrefix}${day()}${files().testFileSuffix}.${fileExt()}"
 private fun createDirsIfNotExists(dir: String) = File(dir).let {
   if (!it.exists()) it.mkdirs()
 }

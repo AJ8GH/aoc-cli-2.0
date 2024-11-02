@@ -10,9 +10,6 @@ private const val LARGER_EXAMPLE_IDENTIFIER = "consider this larger example"
 private const val HERE_IS_EXAMPLE_IDENTIFIER = "here is an example"
 private const val OPENING_TAG = "<pre><code>"
 private const val CLOSING_TAG = "</code></pre>"
-
-private var identifier = EXAMPLE_IDENTIFIER
-
 private const val ENCODED_OPENING_BRACKET = "&lt;"
 private const val ENCODED_CLOSING_BRACKET = "&gt;"
 private const val OPENING_BRACKET = "<"
@@ -20,6 +17,8 @@ private const val CLOSING_BRACKET = ">"
 private const val OPENING_EMPHASIS_TAG = "<em>"
 private const val CLOSING_EMPHASIS_TAG = "</em>"
 private const val EMPTY_STRING = ""
+
+private var identifier = EXAMPLE_IDENTIFIER
 
 fun example() {
   if (!readmeCacheFile().exists()) return

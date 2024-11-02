@@ -67,21 +67,30 @@ fun outContent() = outContent.toString().trim()
 
 fun testInput() = INPUT.trimIndent().trim()
 
-fun html() = read("${HTML_DIR}y${year()}/d${day()}.html")
+fun html() = html(year(), day())
+fun html(year: Int, day: Int) = read("${HTML_DIR}y$year/d$day.html")
 
-fun readmeRequestMapping(response: String) = WireMock.get(readmeUrl())
+fun readmeRequestMapping(response: String) = readmeRequestMapping(response, year(), day())
+
+fun readmeRequestMapping(response: String, year: Int, day: Int) = WireMock.get(readmeUrl(year, day))
   .withCookie(SESSION_KEY, WireMock.matching(SESSION))
   .willReturn(
     ResponseDefinitionBuilder.responseDefinition()
       .withResponseBody(Body(response))
   )
 
-fun readmeUrl() = "/20${year()}/day/${day()}"
+fun readmeUrl() = readmeUrl(year(), day())
+
+fun readmeUrl(year: Int, day: Int) = "/20$year/day/$day"
 
 fun inputUrl() = "/20${year()}/day/${day()}/input"
 
-fun getInputMapping(): MappingBuilder =
-  WireMock.get(inputUrl())
+fun inputUrl(year: Int, day: Int) = "/20$year/day/$day/input"
+
+fun getInputMapping(): MappingBuilder = getInputMapping(year(), day())
+
+fun getInputMapping(year: Int, day: Int): MappingBuilder =
+  WireMock.get(inputUrl(year, day))
     .withCookie(SESSION_KEY, WireMock.matching(SESSION))
     .willReturn(
       ResponseDefinitionBuilder.responseDefinition()

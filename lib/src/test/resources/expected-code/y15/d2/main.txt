@@ -1,0 +1,5 @@
+package io.github.aj8gh.aok.y15.d2
+
+fun part1(input: List<String>) = 0
+
+fun part2(input: List<String>) = 0
