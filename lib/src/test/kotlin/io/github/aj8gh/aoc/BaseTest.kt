@@ -100,9 +100,11 @@ fun getInputMapping(year: Int, day: Int): MappingBuilder =
 
 fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
 
-fun expectedMainFile() = read("${EXPECTED_CODE_DIR}y${year()}/d${day()}/$MAIN_FILE")
+fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${activeProperties().language}"
 
-fun expectedTestFile() = read("${EXPECTED_CODE_DIR}y${year()}/d${day()}/$TEST_FILE")
+fun expectedMainFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$MAIN_FILE")
+
+fun expectedTestFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$TEST_FILE")
 
 private fun resetProperties() =
   updateProperties(readYaml(File(TEMPLATE_PROPERTIES_FILE), Properties::class.java))

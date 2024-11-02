@@ -1,0 +1,9 @@
+package day25
+
+func Level1(input []string) string {
+	return "abc"
+}
+
+func Level2(input []string) string {
+	return "cba"
+}

@@ -1,0 +1,9 @@
+package day24
+
+func Level1(input []string) string {
+	return ""
+}
+
+func Level2(input []string) string {
+	return "abc"
+}

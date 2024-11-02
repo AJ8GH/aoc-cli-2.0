@@ -1,0 +1,9 @@
+package day7
+
+func Level1(input []string) int {
+	return 123
+}
+
+func Level2(input []string) int {
+	return 0
+}
