@@ -38,17 +38,21 @@ fun inputCacheFile() = File("${resourcesCacheDir()}$INPUT_FILE_NAME")
 fun answerCacheFile() = File("${answerCacheDir()}$ANSWER_CACHE_FILE_NAME")
 fun exampleCacheFile() = File("${answerCacheDir()}$EXAMPLE_CACHE_FILE_NAME")
 fun mainTemplateFile() = File("${templateDir()}$MAIN_TEMPLATE_FILE_NAME")
+fun resourcesDir() = with(files().resourcesSubDir) {
+  files().resourcesDir?.let { "${sourceDir(it)}${this}/" } ?: "${mainDir()}${this}/"
+}
+
 fun testTemplateFile() = File("${templateDir()}$TEST_TEMPLATE_FILE_NAME")
 
 fun createResourcesDirIfNotExists() = createDirsIfNotExists(resourcesDir())
 fun createAnswerCacheDirIfNotExists() = createDirsIfNotExists(answerCacheDir())
 fun createResourcesCacheDirIfNotExists() = createDirsIfNotExists(resourcesCacheDir())
+
 fun createSourceDirsIfNotExists() {
   createDirsIfNotExists(mainDir())
   createDirsIfNotExists(testDir())
 }
 
-fun resourcesDir() = files().resources?.let { "${sourceDir(it)}/" } ?: mainDir()
 
 private fun aocHomeDir() = homeOverride ?: AOC_HOME
 private fun moduleDir() = files().modulePrefix?.let { it + year() } ?: ""

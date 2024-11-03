@@ -15,13 +15,14 @@ data class Profile(
   )
 
   data class FileProperties(
-    val project: String,
+    val projectHome: String,
     val mainDir: String,
     val testDir: String,
     val mainFilePrefix: String,
     val testFilePrefix: String,
     val testFileSuffix: String,
-    val resources: String?,
+    val resourcesDir: String?,
+    val resourcesSubDir: String,
     val yearPrefix: String,
     val dayPrefix: String,
     val modulePrefix: String?,
