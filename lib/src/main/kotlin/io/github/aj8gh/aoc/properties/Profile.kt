@@ -6,6 +6,7 @@ data class Profile(
   val ide: String,
   val files: FileProperties,
   val current: CurrentProperties,
+  val writeAnswerInCode: Boolean,
 ) {
 
   data class CurrentProperties(

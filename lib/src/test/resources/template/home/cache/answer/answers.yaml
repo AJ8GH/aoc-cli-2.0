@@ -15,6 +15,9 @@ cache:
       9:
         level1: "123"
         level2: "321"
+      10:
+        level1: "123"
+        level2: "321"
   17:
     days:
       23:

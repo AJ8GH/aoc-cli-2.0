@@ -2,6 +2,7 @@
 name: "go"
 language: "go"
 ide: "code"
+writeAnswerInCode: true
 files:
   projectHome: "src/test/resources/home/project-go/"
   mainDir: ""

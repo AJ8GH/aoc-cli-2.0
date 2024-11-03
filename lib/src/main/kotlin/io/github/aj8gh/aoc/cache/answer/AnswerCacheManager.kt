@@ -17,7 +17,8 @@ private const val COMPLETION_LEVEL_1 = 1
 private const val COMPLETION_LEVEL_0 = 0
 
 private const val NUMERIC_DEFAULT = "0"
-private const val STRING_DEFAULT = ""
+private const val LONG_DEFAULT = "0L"
+private const val STRING_DEFAULT = "\"\""
 
 private const val JAVA = "java"
 private const val KOTLIN = "kt"
@@ -85,13 +86,22 @@ fun assertFuncType() = when (type()) {
   else -> "Int"
 }
 
-fun answer1OrDefault() = wrapIfString(handleLong(answer1() ?: default()))
+fun answer1OrDefault() = answer1()?.let { wrapIfString(handleLong(it)) } ?: default()
 
-fun answer2OrDefault() = wrapIfString(handleLong(answer2() ?: default()))
+fun answer2OrDefault() = answer2()?.let { wrapIfString(handleLong(it)) } ?: default()
 
-fun example1() = wrapIfString(handleLong(default()))
+fun example1() = default()
 
-fun example2() = wrapIfString(handleLong(default()))
+fun example2() = default()
+
+fun default(): String {
+  val lang = activeProfile().language
+  return when (type()) {
+    INT -> NUMERIC_DEFAULT
+    LONG -> LONG_DEFAULT.takeIf { lang == JAVA || lang == KOTLIN } ?: NUMERIC_DEFAULT
+    else -> STRING_DEFAULT
+  }
+}
 
 private fun wrapIfString(answer: String): String = answer
   .takeIf { type() != STRING }
@@ -100,13 +110,6 @@ private fun wrapIfString(answer: String): String = answer
 private fun answer1() = getAnswers().get(year(), day(), L1)
 
 private fun answer2() = getAnswers().get(year(), day(), L2)
-
-private fun default(): String {
-  return when (type()) {
-    INT, LONG -> NUMERIC_DEFAULT
-    else -> STRING_DEFAULT
-  }
-}
 
 private fun handleLong(answer: String): String {
   val lang = activeProfile().language

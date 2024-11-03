@@ -10,6 +10,7 @@ private var profile: Profile? = null
 
 fun aocProperties() = aocProperties ?: readAndSetAocProperties()
 fun activeProfile() = profile ?: readAndSetActiveProfile()
+fun forceLoadActiveProfile() = readAndSetActiveProfile()
 fun current() = activeProfile().current
 fun files() = activeProfile().files
 fun project() = files().projectHome

@@ -7,9 +7,10 @@ import io.github.aj8gh.aoc.cache.answer.cacheAnswer
 import io.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import io.github.aj8gh.aoc.cache.cacheReadme
 import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.handler.profile
 import io.github.aj8gh.aoc.command.handler.set
 import io.github.aj8gh.aoc.io.*
+import io.github.aj8gh.aoc.properties.activeProfile
+import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
 import io.github.aj8gh.aoc.properties.setActiveProfile
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -28,8 +29,12 @@ fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
 fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
   WireMock.stubFor(stub)
 
-fun givenActivePropertiesIsSetTo(profile: String) {
+fun givenActivePropertiesIsSetTo(profile: String) =
   setActiveProfile(profile)
+
+fun andWriteAnswerInCodeIsSetTo(bool: Boolean) {
+  write(activeProfile().copy(writeAnswerInCode = bool))
+  forceLoadActiveProfile()
 }
 
 fun andTheFollowingRequestStub(stub: MappingBuilder) = givenTheFollowingRequestStub(stub)

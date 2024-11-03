@@ -39,6 +39,20 @@ class CodeKtTest : BaseTest() {
     andTestFileIsUnchanged(existingTest)
   }
 
+  @ParameterizedTest
+  @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
+  fun createCodeWithoutAnswer(language: String) {
+    givenActivePropertiesIsSetTo(language)
+    givenCurrentYearDayAndLevelAre(Y16, D10, L1)
+    andWriteAnswerInCodeIsSetTo(false)
+    andCodeFilesDoNotExistForToday()
+
+    whenCreateCodeIsCalled()
+
+    thenMainFileIsCreatedAsExpected(expectedMainFile())
+    andTestFileIsCreatedAsExpected(expectedTestFile())
+  }
+
   companion object {
 
     private val noAnswersCached = Arguments.of(KT_PROFILE, Y15, D3, L1)
