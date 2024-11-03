@@ -1,9 +1,9 @@
 package io.github.aj8gh.aoc.io
 
-import io.github.aj8gh.aoc.properties.Properties
+import io.github.aj8gh.aoc.properties.Profile
 import java.io.File
 
-fun write(properties: Properties) = mapper.writeValue(activePropertiesFile(), properties)
+fun write(profile: Profile) = mapper.writeValue(activeProfileFile(), profile)
 
 fun <T> write(file: File, t: T) = mapper.writeValue(file, t)
 

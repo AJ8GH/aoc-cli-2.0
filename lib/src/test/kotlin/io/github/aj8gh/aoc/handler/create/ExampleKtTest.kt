@@ -26,7 +26,7 @@ class ExampleKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun createExampleGo(year: Int, day: Int) {
-    givenActivePropertiesIsSetTo(GO)
+    givenActivePropertiesIsSetTo(GO_PROFILE)
     givenCurrentYearDayAndLevelAre(year, day)
     andTodaysReadmeIsCached(html())
     andNoExampleExistsForToday()

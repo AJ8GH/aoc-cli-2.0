@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.io
 
+import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.properties.*
 import java.io.File
 
@@ -22,7 +23,7 @@ private val AOC_HOME = "${System.getProperty("user.home")}/.config/.aoc/"
 var homeOverride: String? = null
 
 fun aocPropertiesFile() = File("${aocHomeDir()}${AOC_PROPERTIES_FILE_NAME}")
-fun activePropertiesFile() = File("${aocHomeDir()}${aocProperties().active}")
+fun activeProfileFile() = File("${aocHomeDir()}${aocProperties().active}$EXTENSION")
 
 // Project Files
 fun readmeFile() = File("${resourcesDir()}$README_FILE_NAME")
@@ -60,7 +61,7 @@ private fun answerCacheDir() = "${cacheDir()}$ANSWER_CACHE_DIR/"
 private fun templateDir() = "${aocHomeDir()}$TEMPLATE_DIR${fileExt()}/"
 private fun sourceDir(type: String) = "${contentRootDir()}${type}${files().dayPrefix}${day()}/"
 private fun yearSourceDir() = "${files().yearPrefix}${year()}"
-private fun fileExt() = activeProperties().language
+private fun fileExt() = activeProfile().language
 private fun mainFileName() = "${files().mainFilePrefix}${day()}.${fileExt()}"
 private fun testFileName() = "${files().testFilePrefix}${day()}${files().testFileSuffix}.${fileExt()}"
 private fun createDirsIfNotExists(dir: String) = File(dir).let {

@@ -1,26 +1,31 @@
 package io.github.aj8gh.aoc.properties
 
-import io.github.aj8gh.aoc.io.activePropertiesFile
+import io.github.aj8gh.aoc.io.activeProfileFile
 import io.github.aj8gh.aoc.io.aocPropertiesFile
 import io.github.aj8gh.aoc.io.readYaml
 import io.github.aj8gh.aoc.io.write
 
 private var aocProperties: AocProperties? = null
-private var properties: Properties? = null
+private var profile: Profile? = null
 
 fun aocProperties() = aocProperties ?: readAndSetAocProperties()
-fun forceLoadAocProperties() = readAndSetAocProperties()
-fun activeProperties() = properties ?: readAndSetActiveProperties()
-fun current() = activeProperties().current
-fun files() = activeProperties().files
+fun activeProfile() = profile ?: readAndSetActiveProfile()
+fun current() = activeProfile().current
+fun files() = activeProfile().files
 fun project() = files().project
 fun year() = current().year
 fun day() = current().day
 fun level() = current().level
 
-fun updateProperties(newProperties: Properties) {
-  properties = newProperties
-  write(newProperties)
+fun updateProperties(newProfile: Profile) {
+  profile = newProfile
+  write(newProfile)
+}
+
+fun setActiveProfile(profile: String) {
+  write(aocPropertiesFile(), aocProperties().copy(active = profile))
+  readAndSetAocProperties()
+  readAndSetActiveProfile()
 }
 
 private fun readAndSetAocProperties(): AocProperties {
@@ -28,7 +33,7 @@ private fun readAndSetAocProperties(): AocProperties {
   return aocProperties!!
 }
 
-private fun readAndSetActiveProperties(): Properties {
-  properties = readYaml(activePropertiesFile(), Properties::class.java)
-  return properties!!
+private fun readAndSetActiveProfile(): Profile {
+  profile = readYaml(activeProfileFile(), Profile::class.java)
+  return profile!!
 }

@@ -2,10 +2,9 @@ package io.github.aj8gh.aoc
 
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
+import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.properties.day
-import io.github.aj8gh.aoc.properties.level
-import io.github.aj8gh.aoc.properties.year
+import io.github.aj8gh.aoc.properties.*
 import java.io.File
 import kotlin.test.assertEquals
 
@@ -63,6 +62,14 @@ fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile()
 
 fun thenTodaysExampleIsCreatedAsExpected(expected: File) =
   assertEquals(trimLines(expected), trimLines(exampleFile()))
+
+fun thenTheFollowingProfileIsActive(profile: String) {
+  assertEquals(profile, aocProperties().active)
+
+  val actual = activeProfile()
+  val expected = readYaml(File("$AOC_HOME$profile$EXTENSION"), Profile::class.java)
+  assertEquals(expected, actual)
+}
 
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!

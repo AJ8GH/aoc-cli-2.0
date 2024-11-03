@@ -4,6 +4,7 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.http.Body
+import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.io.homeOverride
 import io.github.aj8gh.aoc.io.read
@@ -28,8 +29,8 @@ const val MARKDOWN_DIR = "${TEST_RESOURCES_ROOT}markdown/"
 const val EXPECTED_CODE_DIR = "${TEST_RESOURCES_ROOT}expected-code/"
 const val MAIN_FILE = "main.txt"
 const val TEST_FILE = "test.txt"
-const val GO = "go.yaml"
-const val KT = "kt.yaml"
+const val GO_PROFILE = "go"
+const val KT_PROFILE = "kt"
 
 const val INPUT = """
       1 2 3
@@ -101,16 +102,16 @@ fun getInputMapping(year: Int, day: Int): MappingBuilder =
 
 fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
 
-fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${activeProperties().language}"
+fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${activeProfile().language}"
 
 fun expectedMainFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$MAIN_FILE")
 
 fun expectedTestFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$TEST_FILE")
 
-private fun templatePropertiesFile() = "${TEMPLATE_HOME}${aocProperties().active}"
+private fun templateActiveProfileFile() = "${TEMPLATE_HOME}${aocProperties().active}$EXTENSION"
 
 private fun resetProperties() =
-  updateProperties(readYaml(File(templatePropertiesFile()), Properties::class.java))
+  updateProperties(readYaml(File(templateActiveProfileFile()), Profile::class.java))
 
 private fun resetFiles() {
   File(AOC_HOME).deleteRecursively()

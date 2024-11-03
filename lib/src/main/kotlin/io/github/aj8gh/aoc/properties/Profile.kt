@@ -1,6 +1,6 @@
 package io.github.aj8gh.aoc.properties
 
-data class Properties(
+data class Profile(
   val name: String,
   val language: String,
   val ide: String,

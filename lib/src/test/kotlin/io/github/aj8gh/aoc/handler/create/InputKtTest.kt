@@ -31,7 +31,7 @@ class InputKtTest : BaseTest() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = [KT, GO])
+  @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun inputExistsAlready(file: String) {
     givenActivePropertiesIsSetTo(file)
     givenCurrentYearDayAndLevelAre(Y15, D2, L1)
@@ -45,7 +45,7 @@ class InputKtTest : BaseTest() {
   }
 
   @ParameterizedTest
-  @ValueSource(strings = [KT, GO])
+  @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun inputFromCache(file: String) {
     givenActivePropertiesIsSetTo(file)
     givenCurrentYearDayAndLevelAre(Y15, D3, L1)
@@ -66,15 +66,15 @@ class InputKtTest : BaseTest() {
 
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(KT, Y15, D1, L1),
-      Arguments.of(KT, Y15, D25, L2),
-      Arguments.of(KT, Y16, D1, L1),
-      Arguments.of(KT, Y17, D3, L2),
+      Arguments.of(KT_PROFILE, Y15, D1, L1),
+      Arguments.of(KT_PROFILE, Y15, D25, L2),
+      Arguments.of(KT_PROFILE, Y16, D1, L1),
+      Arguments.of(KT_PROFILE, Y17, D3, L2),
 
-      Arguments.of(GO, Y15, D1, L1),
-      Arguments.of(GO, Y15, D25, L2),
-      Arguments.of(GO, Y16, D1, L1),
-      Arguments.of(GO, Y17, D3, L2),
+      Arguments.of(GO_PROFILE, Y15, D1, L1),
+      Arguments.of(GO_PROFILE, Y15, D25, L2),
+      Arguments.of(GO_PROFILE, Y16, D1, L1),
+      Arguments.of(GO_PROFILE, Y17, D3, L2),
     )
   }
 }

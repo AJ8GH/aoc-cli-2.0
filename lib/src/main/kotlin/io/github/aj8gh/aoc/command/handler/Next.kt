@@ -4,8 +4,8 @@ import io.github.aj8gh.aoc.command.D1
 import io.github.aj8gh.aoc.command.D25
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
-import io.github.aj8gh.aoc.properties.Properties
-import io.github.aj8gh.aoc.properties.activeProperties
+import io.github.aj8gh.aoc.properties.Profile
+import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.updateProperties
 import io.github.aj8gh.aoc.util.*
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -19,8 +19,8 @@ fun next(next: Boolean) = if (next) {
   echoCurrent()
 } else Unit
 
-private fun updateCurrentProperties(): Properties {
-  val properties = activeProperties()
+private fun updateCurrentProperties(): Profile {
+  val properties = activeProfile()
 
   val year = properties.current.year
   val day = properties.current.day

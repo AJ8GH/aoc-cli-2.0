@@ -1,13 +1,10 @@
 package io.github.aj8gh.aoc
 
-import io.github.aj8gh.aoc.command.handler.answer
+import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.code
 import io.github.aj8gh.aoc.command.handler.create.example
 import io.github.aj8gh.aoc.command.handler.create.input
 import io.github.aj8gh.aoc.command.handler.create.readme
-import io.github.aj8gh.aoc.command.handler.echoCurrent
-import io.github.aj8gh.aoc.command.handler.next
-import io.github.aj8gh.aoc.command.handler.set
 
 fun whenNextIsCalledFor(next: Boolean) = next(next)
 
@@ -25,3 +22,5 @@ fun whenCreateReadmeIsCalled() = readme()
 fun whenCreateCodeIsCalled() = code()
 
 fun whenCreateExampleIsCalled() = example()
+
+fun whenProfileIsCalledWith(profile: String) = profile(profile)

@@ -7,7 +7,7 @@ import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.io.answerCacheFile
 import io.github.aj8gh.aoc.io.readYaml
 import io.github.aj8gh.aoc.io.write
-import io.github.aj8gh.aoc.properties.activeProperties
+import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.day
 import io.github.aj8gh.aoc.properties.level
 import io.github.aj8gh.aoc.properties.year
@@ -78,7 +78,7 @@ fun type() = when {
   else -> STRING
 }
 
-fun typeForLanguage() = types[type()]!![activeProperties().language]!!
+fun typeForLanguage() = types[type()]!![activeProfile().language]!!
 
 fun assertFuncType() = when (type()) {
   STRING -> ""
@@ -109,7 +109,7 @@ private fun default(): String {
 }
 
 private fun handleLong(answer: String): String {
-  val lang = activeProperties().language
+  val lang = activeProfile().language
   if (type() == LONG && (lang == JAVA || lang == KOTLIN)) {
     return answer + "L"
   }

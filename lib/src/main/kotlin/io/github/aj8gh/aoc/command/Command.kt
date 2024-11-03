@@ -38,5 +38,9 @@ enum class Command(
   ANSWER(
     arrayOf(ANSWER_SHORT, ANSWER_LONG),
     ANSWER_DESCRIPTION,
+  ),
+  PROFILE(
+    arrayOf(PROFILE_SHORT, PROFILE_LONG),
+    PROFILE_DESCRIPTION,
   )
 }

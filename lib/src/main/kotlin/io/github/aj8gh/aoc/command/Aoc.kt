@@ -7,12 +7,9 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import io.github.aj8gh.aoc.command.Command.*
-import io.github.aj8gh.aoc.command.handler.answer
+import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.create
-import io.github.aj8gh.aoc.command.handler.echoCurrent
-import io.github.aj8gh.aoc.command.handler.next
-import io.github.aj8gh.aoc.command.handler.set
-import io.github.aj8gh.aoc.util.*
+import io.github.aj8gh.aoc.util.latestYear
 
 val YEAR_RANGE = Y15..latestYear()
 val DAY_RANGE = D1..D25
@@ -36,8 +33,10 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   private val next by toOption(NEXT.names, NEXT.help).flag()
   private val echo by toOption(ECHO.names, ECHO.help).flag()
   private val answer by toOption(ANSWER.names, ANSWER.help)
+  private val profile by toOption(PROFILE.names, PROFILE.help)
 
   override fun run() {
+    profile(profile)
     set(year = year, day = day, level = level)
     next(next)
     answer(answer)
