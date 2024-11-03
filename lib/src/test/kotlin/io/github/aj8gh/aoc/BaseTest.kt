@@ -57,8 +57,8 @@ open class BaseTest {
   }
 }
 
-fun getEchoMessage(year: Int, day: Int, level: Int) =
-  "You are on year $year day $day level $level"
+fun getEchoMessage(year: Int, day: Int, level: Int, profile: String) =
+  "You are on year $year day $day level $level. Active profile: $profile"
 
 fun stubOutStream() {
   outContent = ByteArrayOutputStream()

@@ -1,9 +1,7 @@
 package io.github.aj8gh.aoc.handler
 
 import io.github.aj8gh.aoc.*
-import io.github.aj8gh.aoc.command.D1
-import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.Y15
+import io.github.aj8gh.aoc.command.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -26,14 +24,14 @@ class SetKtTest : BaseTest() {
   companion object {
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(16, 2, 2, getEchoMessage(16, 2, 2)),
-      Arguments.of(2016, 2, 2, getEchoMessage(16, 2, 2)),
-      Arguments.of(null, 2, 2, getEchoMessage(Y15, 2, 2)),
-      Arguments.of(16, null, 2, getEchoMessage(16, D1, 2)),
-      Arguments.of(16, 2, null, getEchoMessage(16, 2, L1)),
-      Arguments.of(16, null, null, getEchoMessage(16, D1, L1)),
-      Arguments.of(null, null, 2, getEchoMessage(Y15, D1, 2)),
-      Arguments.of(null, 2, null, getEchoMessage(Y15, 2, L1)),
+      Arguments.of(Y16, D2, L2, getEchoMessage(Y16, D2, L2, KT_PROFILE)),
+      Arguments.of(2016, D2, L2, getEchoMessage(Y16, D2, L2, KT_PROFILE)),
+      Arguments.of(null, D2, L2, getEchoMessage(Y15, D2, L2, KT_PROFILE)),
+      Arguments.of(Y16, null, L2, getEchoMessage(Y16, D1, L2, KT_PROFILE)),
+      Arguments.of(Y16, D2, null, getEchoMessage(Y16, D2, L1, KT_PROFILE)),
+      Arguments.of(Y16, null, null, getEchoMessage(Y16, D1, L1, KT_PROFILE)),
+      Arguments.of(null, null, L2, getEchoMessage(Y15, D1, L2, KT_PROFILE)),
+      Arguments.of(null, D2, null, getEchoMessage(Y15, D2, L1, KT_PROFILE)),
       Arguments.of(null, null, null, EMPTY_MESSAGE),
     )
   }

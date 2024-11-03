@@ -36,7 +36,7 @@ class AnswerKtTest : BaseTest() {
 
     thenTheFollowingRequestWasMade(postPattern())
     andCurrentYearDayAndLevelAre(Y15, D1, L2)
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
 
     resetAllRequests()
 
@@ -47,7 +47,7 @@ class AnswerKtTest : BaseTest() {
 
     thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
     andCurrentYearDayAndLevelAre(Y15, D1, L2)
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2))
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
   }
 
   @Test
@@ -63,7 +63,7 @@ class AnswerKtTest : BaseTest() {
     andTodaysReadmeIsCreatedCorrectly(markdown())
     andTodaysReadmeHasBeenCached(html())
     andTodaysInputExists()
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1))
+    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1, KT_PROFILE))
   }
 
   @ParameterizedTest

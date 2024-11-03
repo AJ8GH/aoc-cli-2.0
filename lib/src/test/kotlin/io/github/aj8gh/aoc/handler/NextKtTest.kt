@@ -39,7 +39,7 @@ class NextKtTest : BaseTest() {
   }
 
   private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =
-    EMPTY_MESSAGE.takeUnless { next } ?: getEchoMessage(year, day, level)
+    EMPTY_MESSAGE.takeUnless { next } ?: getEchoMessage(year, day, level, KT_PROFILE)
 
   companion object {
 
