@@ -41,7 +41,7 @@ private fun getAndCacheReadme(): String {
 private fun toMarkdown(html: String) =
   FlexmarkHtmlConverter.builder().build().convert(html)
 
-private fun format(markdown: String) = head() + markdown
+private fun format(markdown: String) = "\\" + head() + markdown
   .substringAfter(head())
   .substringAfter(head())
   .substringBefore(TAIL_HALF_COMPLETE)
