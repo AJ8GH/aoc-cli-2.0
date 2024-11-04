@@ -31,3 +31,7 @@ const val ANSWER_DESCRIPTION = "Submit answer for current level"
 const val PROFILE_SHORT = "-p"
 const val PROFILE_LONG = "--profile"
 const val PROFILE_DESCRIPTION = "Switch to the given profile"
+
+const val OPEN_SHORT = "-o"
+const val OPEN_LONG = "--open"
+const val OPEN_DESCRIPTION = "Open project with configured ide"

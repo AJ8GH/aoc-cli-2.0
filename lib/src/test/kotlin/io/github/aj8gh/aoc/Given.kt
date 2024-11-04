@@ -10,8 +10,11 @@ import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.handler.set
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.activeProfile
+import io.github.aj8gh.aoc.properties.files
 import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
 import io.github.aj8gh.aoc.properties.setActiveProfile
+import io.mockk.every
+import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -31,6 +34,13 @@ fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
 
 fun givenActivePropertiesIsSetTo(profile: String) =
   setActiveProfile(profile)
+
+fun givenTheRuntimeIsMocked(): Runtime {
+  val runtime = mockk<Runtime>()
+  val process = mockk<Process>()
+  every { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) } returns process
+  return runtime
+}
 
 fun andWriteAnswerInCodeIsSetTo(bool: Boolean) {
   write(activeProfile().copy(writeAnswerInCode = bool))

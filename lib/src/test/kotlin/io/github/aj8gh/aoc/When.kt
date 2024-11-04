@@ -24,3 +24,5 @@ fun whenCreateCodeIsCalled() = code()
 fun whenCreateExampleIsCalled() = example()
 
 fun whenProfileIsCalledWith(profile: String) = profile(profile)
+
+fun whenOpenIsCalled(runtime: Runtime) = open(runtime)

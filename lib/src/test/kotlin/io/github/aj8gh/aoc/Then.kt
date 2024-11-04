@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.*
+import io.mockk.verify
 import java.io.File
 import kotlin.test.assertEquals
 
@@ -70,6 +71,12 @@ fun thenTheFollowingProfileIsActive(profile: String) {
   val expected = readYaml(File("$AOC_HOME$profile$EXTENSION"), Profile::class.java)
   assertEquals(expected, actual)
 }
+
+fun theRuntimeIsInvoked(runtime: Runtime) =
+  verify { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) }
+
+fun thenTheRuntimeIsNotInvoked(runtime: Runtime) =
+  verify(exactly = 0) { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) }
 
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!

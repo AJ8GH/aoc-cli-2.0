@@ -44,6 +44,7 @@ subprojects {
     implementation "com.vladsch.flexmark:flexmark-html2md-converter:$flexmarkVersion"
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$jUnitVersion"
     testImplementation "com.marcinziolo:kotlin-wiremock:$wiremockVersion"
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoVersion"

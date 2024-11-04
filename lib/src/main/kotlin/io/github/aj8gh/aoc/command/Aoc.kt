@@ -34,6 +34,7 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   private val echo by toOption(ECHO.names, ECHO.help).flag()
   private val answer by toOption(ANSWER.names, ANSWER.help)
   private val profile by toOption(PROFILE.names, PROFILE.help)
+  private val open by toOption(OPEN.names, OPEN.help).flag()
 
   override fun run() {
     profile(profile)
@@ -42,6 +43,7 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
     answer(answer)
     create(create)
     echoCurrent(echo)
+    if (open) open(Runtime.getRuntime())
   }
 
   private fun toOption(

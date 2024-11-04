@@ -42,5 +42,9 @@ enum class Command(
   PROFILE(
     arrayOf(PROFILE_SHORT, PROFILE_LONG),
     PROFILE_DESCRIPTION,
+  ),
+  OPEN(
+    arrayOf(OPEN_SHORT, OPEN_LONG),
+    OPEN_DESCRIPTION,
   )
 }
