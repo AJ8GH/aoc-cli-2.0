@@ -35,10 +35,10 @@ fun givenTheFollowingRequestStub(stub: MappingBuilder): StubMapping =
 fun givenActivePropertiesIsSetTo(profile: String) =
   setActiveProfile(profile)
 
-fun givenTheRuntimeIsMocked(): Runtime {
+fun givenTheRuntimeIsMocked(command: Array<String>): Runtime {
   val runtime = mockk<Runtime>()
   val process = mockk<Process>()
-  every { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) } returns process
+  every { runtime.exec(command) } returns process
   return runtime
 }
 

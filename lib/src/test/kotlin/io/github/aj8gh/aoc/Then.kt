@@ -72,11 +72,8 @@ fun thenTheFollowingProfileIsActive(profile: String) {
   assertEquals(expected, actual)
 }
 
-fun theRuntimeIsInvoked(runtime: Runtime) =
-  verify { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) }
-
-fun thenTheRuntimeIsNotInvoked(runtime: Runtime) =
-  verify(exactly = 0) { runtime.exec(arrayOf(activeProfile().ide, files().projectHome)) }
+fun theFollowingCommandWasExecuted(runtime: Runtime, command: Array<String>) =
+  verify { runtime.exec(command) }
 
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!

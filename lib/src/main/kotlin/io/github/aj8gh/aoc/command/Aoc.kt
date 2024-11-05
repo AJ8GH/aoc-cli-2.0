@@ -9,6 +9,8 @@ import com.github.ajalt.clikt.parameters.types.int
 import io.github.aj8gh.aoc.command.Command.*
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.create
+import io.github.aj8gh.aoc.command.handler.runtime.home
+import io.github.aj8gh.aoc.command.handler.runtime.open
 import io.github.aj8gh.aoc.util.latestYear
 
 val YEAR_RANGE = Y15..latestYear()
@@ -35,11 +37,13 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   private val answer by toOption(ANSWER.names, ANSWER.help)
   private val profile by toOption(PROFILE.names, PROFILE.help)
   private val open by toOption(OPEN.names, OPEN.help).flag()
+  private val files by toOption(FILES.names, FILES.help).flag()
 
   override fun run() {
     profile(profile)
     set(year = year, day = day, level = level)
     next(next)
+    if (files) home(Runtime.getRuntime())
     answer(answer)
     create(create)
     echoCurrent(echo)

@@ -46,5 +46,9 @@ enum class Command(
   OPEN(
     arrayOf(OPEN_SHORT, OPEN_LONG),
     OPEN_DESCRIPTION,
+  ),
+  FILES(
+    arrayOf(FILES_SHORT, FILES_LONG),
+    FILES_DESCRIPTION,
   )
 }

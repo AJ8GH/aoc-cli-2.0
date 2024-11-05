@@ -5,6 +5,8 @@ import io.github.aj8gh.aoc.command.handler.create.code
 import io.github.aj8gh.aoc.command.handler.create.example
 import io.github.aj8gh.aoc.command.handler.create.input
 import io.github.aj8gh.aoc.command.handler.create.readme
+import io.github.aj8gh.aoc.command.handler.runtime.home
+import io.github.aj8gh.aoc.command.handler.runtime.open
 
 fun whenNextIsCalledFor(next: Boolean) = next(next)
 
@@ -26,3 +28,5 @@ fun whenCreateExampleIsCalled() = example()
 fun whenProfileIsCalledWith(profile: String) = profile(profile)
 
 fun whenOpenIsCalled(runtime: Runtime) = open(runtime)
+
+fun whenConfigFileIsCalled(runtime: Runtime) = home(runtime)

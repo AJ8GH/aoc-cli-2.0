@@ -22,6 +22,7 @@ private val AOC_HOME = "${System.getProperty("user.home")}/.config/.aoc/"
 
 var homeOverride: String? = null
 
+fun aocHomeDir() = homeOverride ?: AOC_HOME
 fun aocPropertiesFile() = File("${aocHomeDir()}${AOC_PROPERTIES_FILE_NAME}")
 fun activeProfileFile() = File("${aocHomeDir()}${aocProperties().active}$EXTENSION")
 
@@ -54,7 +55,6 @@ fun createSourceDirsIfNotExists() {
 }
 
 
-private fun aocHomeDir() = homeOverride ?: AOC_HOME
 private fun moduleDir() = files().modulePrefix?.let { it + year() } ?: ""
 private fun contentRootDir() = "${project()}${moduleDir()}/"
 private fun mainDir() = sourceDir("${files().mainDir}${yearSourceDir()}/")
