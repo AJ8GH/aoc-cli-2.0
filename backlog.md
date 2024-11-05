@@ -6,6 +6,7 @@
 * [ ] exception handling
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
+* [ ] print stats
 * [ ] create new projects with new properties
 * [ ] write example answers to tests
 * [ ] cache example inputs

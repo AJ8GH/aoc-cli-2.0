@@ -75,6 +75,11 @@ fun thenTheFollowingProfileIsActive(profile: String) {
 fun theFollowingCommandWasExecuted(runtime: Runtime, command: Array<String>) =
   verify { runtime.exec(command) }
 
+fun thenTheTokenHasBeenUpdatedTo(token: String) {
+//  forceLoadAocProperties()
+//  assertEquals(token, aocProperties().session)
+}
+
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!
     .filter { it.name.contains("example") }

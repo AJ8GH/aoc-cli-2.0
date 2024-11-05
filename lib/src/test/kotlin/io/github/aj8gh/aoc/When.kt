@@ -30,3 +30,5 @@ fun whenProfileIsCalledWith(profile: String) = profile(profile)
 fun whenOpenIsCalled(runtime: Runtime) = open(runtime)
 
 fun whenConfigFileIsCalled(runtime: Runtime) = home(runtime)
+
+fun whenTokenIsCalled(token: String) = token(token)

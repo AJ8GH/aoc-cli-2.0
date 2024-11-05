@@ -38,11 +38,13 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   private val profile by toOption(PROFILE.names, PROFILE.help)
   private val open by toOption(OPEN.names, OPEN.help).flag()
   private val files by toOption(FILES.names, FILES.help).flag()
+  private val token by toOption(TOKEN.names, TOKEN.help)
 
   override fun run() {
     profile(profile)
     set(year = year, day = day, level = level)
     next(next)
+    token(token)
     if (files) home(Runtime.getRuntime())
     answer(answer)
     create(create)

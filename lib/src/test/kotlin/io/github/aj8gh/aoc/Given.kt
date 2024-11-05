@@ -42,6 +42,8 @@ fun givenTheRuntimeIsMocked(command: Array<String>): Runtime {
   return runtime
 }
 
+fun givenTheCurrentTokenIs(token: String) = thenTheTokenHasBeenUpdatedTo(token)
+
 fun andWriteAnswerInCodeIsSetTo(bool: Boolean) {
   write(activeProfile().copy(writeAnswerInCode = bool))
   forceLoadActiveProfile()

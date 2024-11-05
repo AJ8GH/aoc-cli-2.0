@@ -39,3 +39,7 @@ const val OPEN_DESCRIPTION = "Open project with the configured IDE."
 const val FILES_SHORT = "-f"
 const val FILES_LONG = "--files"
 const val FILES_DESCRIPTION = "Open the aoc home directory with the configured IDE."
+
+const val TOKEN_SHORT = "-t"
+const val TOKEN_LONG = "--token"
+const val TOKEN_DESCRIPTION = "Update advent of code session token."

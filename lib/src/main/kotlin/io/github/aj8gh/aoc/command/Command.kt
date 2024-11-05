@@ -50,5 +50,9 @@ enum class Command(
   FILES(
     arrayOf(FILES_SHORT, FILES_LONG),
     FILES_DESCRIPTION,
+  ),
+  TOKEN(
+    arrayOf(TOKEN_SHORT, TOKEN_LONG),
+    TOKEN_DESCRIPTION,
   )
 }

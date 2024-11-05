@@ -6,7 +6,7 @@ import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
 import io.github.aj8gh.aoc.properties.Profile
 import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.updateProperties
+import io.github.aj8gh.aoc.properties.updateProfile
 import io.github.aj8gh.aoc.util.*
 import io.github.oshai.kotlinlogging.KotlinLogging
 
@@ -15,7 +15,7 @@ private val logger = KotlinLogging.logger {}
 fun next() = next(true)
 
 fun next(next: Boolean) = if (next) {
-  updateProperties(updateCurrentProperties())
+  updateProfile(updateCurrentProperties())
   echoCurrent()
 } else Unit
 

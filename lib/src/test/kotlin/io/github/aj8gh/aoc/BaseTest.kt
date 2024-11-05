@@ -8,7 +8,6 @@ import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.io.homeOverride
 import io.github.aj8gh.aoc.io.read
-import io.github.aj8gh.aoc.io.readYaml
 import io.github.aj8gh.aoc.properties.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -51,8 +50,9 @@ open class BaseTest {
 
   @AfterTest
   fun tearDown() {
-    resetProperties()
     resetFiles()
+    forceLoadAocProperties()
+    forceLoadActiveProfile()
     resetOut()
   }
 }
@@ -110,8 +110,8 @@ fun expectedTestFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$TEST_F
 
 private fun templateActiveProfileFile() = "${TEMPLATE_HOME}${aocProperties().active}$EXTENSION"
 
-private fun resetProperties() =
-  updateProperties(readYaml(File(templateActiveProfileFile()), Profile::class.java))
+//private fun resetProperties() =
+//  updateProfile(readYaml(File(templateActiveProfileFile()), Profile::class.java))
 
 private fun resetFiles() {
   File(AOC_HOME).deleteRecursively()

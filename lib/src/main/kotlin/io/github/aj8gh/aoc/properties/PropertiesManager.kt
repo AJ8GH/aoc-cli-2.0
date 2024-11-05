@@ -11,6 +11,7 @@ private var profile: Profile? = null
 fun aocProperties() = aocProperties ?: readAndSetAocProperties()
 fun activeProfile() = profile ?: readAndSetActiveProfile()
 fun forceLoadActiveProfile() = readAndSetActiveProfile()
+fun forceLoadAocProperties() = readAndSetAocProperties()
 fun current() = activeProfile().current
 fun files() = activeProfile().files
 fun project() = files().projectHome
@@ -18,7 +19,7 @@ fun year() = current().year
 fun day() = current().day
 fun level() = current().level
 
-fun updateProperties(newProfile: Profile) {
+fun updateProfile(newProfile: Profile) {
   profile = newProfile
   write(newProfile)
 }

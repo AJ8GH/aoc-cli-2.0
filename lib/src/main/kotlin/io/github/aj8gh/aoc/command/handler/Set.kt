@@ -2,7 +2,7 @@ package io.github.aj8gh.aoc.command.handler
 
 import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.current
-import io.github.aj8gh.aoc.properties.updateProperties
+import io.github.aj8gh.aoc.properties.updateProfile
 
 const val TWO_THOUSAND = 2_000
 
@@ -13,6 +13,6 @@ fun set(year: Int?, day: Int?, level: Int?) {
   year?.let { current().year = it.mod(TWO_THOUSAND) }
   day?.let { current().day = it }
   level?.let { current().level = it }
-  updateProperties(properties)
+  updateProfile(properties)
   echoCurrent()
 }
