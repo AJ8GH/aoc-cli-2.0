@@ -1,11 +1,9 @@
-# Notes
+# TODO
 
 * [ ] update session token `-t`
-* [ ] open active profile in vim
-* [ ] open aoc properties in vim
 * [ ] print current config / properties
 * [ ] make `$AOC_HOME` location configurable
-* [ ] error handling for http exceptions - e.g. 404 when trying to request resource files for a level not reached yet
+* [ ] exception handling
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
 * [ ] create new projects with new properties

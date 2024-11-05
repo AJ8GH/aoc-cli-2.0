@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.handler.create
+package io.github.aj8gh.aoc.command.handler.create
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest

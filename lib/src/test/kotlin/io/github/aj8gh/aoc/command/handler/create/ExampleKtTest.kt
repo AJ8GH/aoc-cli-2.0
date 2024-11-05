@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.handler.create
+package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*

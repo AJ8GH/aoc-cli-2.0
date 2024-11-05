@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.handler
+package io.github.aj8gh.aoc.command.handler
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
 import com.github.tomakehurst.wiremock.client.WireMock.*
@@ -6,7 +6,6 @@ import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
-import io.github.aj8gh.aoc.command.handler.INCORRECT
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -16,11 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource
 private const val LEVEL_KEY = "level"
 private const val ANSWER_KEY = "answer"
 private const val SESSION_KEY = "session"
-private const val TOO_HIGH = "That's not the right answer; your answer is too high."
-private const val TOO_LOW = "That's not the right answer; your answer is too low."
-private const val WRONG_LEVEL = "You don't seem to be solving the right level.  Did you already complete it?"
 private const val UNKNOWN = "UNKNOWN"
-private const val CORRECT = "Congratulations, that's the correct answer!"
 private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
 @WireMockTest(httpPort = HTTP_PORT)

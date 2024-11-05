@@ -1,4 +1,4 @@
-package io.github.aj8gh.aoc.handler
+package io.github.aj8gh.aoc.command.handler
 
 import io.github.aj8gh.aoc.*
 import org.junit.jupiter.params.ParameterizedTest

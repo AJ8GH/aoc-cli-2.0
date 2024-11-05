@@ -1,8 +1,8 @@
-package io.github.aj8gh.aoc.handler
+package io.github.aj8gh.aoc.command.handler
 
 import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
-import io.github.aj8gh.aoc.util.*
+import io.github.aj8gh.aoc.util.latestYear
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
