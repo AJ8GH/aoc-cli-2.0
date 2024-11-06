@@ -47,3 +47,7 @@ const val TOKEN_DESCRIPTION = "Update advent of code session token."
 const val VERBOSE_SHORT = "-v"
 const val VERBOSE_LONG = "--verbose"
 const val VERBOSE_DESCRIPTION = "Make output more verbose."
+
+const val STATS_SHORT = "-s"
+const val STATS_LONG = "--stats"
+const val STATS_DESCRIPTION = "Show AoC completion stats."

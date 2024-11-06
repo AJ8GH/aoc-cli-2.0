@@ -14,7 +14,7 @@ private val logger = KotlinLogging.logger {}
 
 fun next(verbose: Boolean) = next(true, verbose)
 
-fun next(next: Boolean, verbose: Boolean) = if (next) {
+fun next(flag: Boolean, verbose: Boolean) = if (flag) {
   updateProfile(updateCurrentProperties())
   echoCurrent(verbose)
 } else Unit

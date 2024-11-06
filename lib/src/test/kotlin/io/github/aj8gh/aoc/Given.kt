@@ -1,5 +1,7 @@
 package io.github.aj8gh.aoc
 
+import com.github.ajalt.mordant.table.Table
+import com.github.ajalt.mordant.terminal.Terminal
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
@@ -10,10 +12,10 @@ import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.handler.set
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.files
 import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
 import io.github.aj8gh.aoc.properties.setActiveProfile
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -40,6 +42,12 @@ fun givenTheRuntimeIsMocked(command: Array<String>): Runtime {
   val process = mockk<Process>()
   every { runtime.exec(command) } returns process
   return runtime
+}
+
+fun givenTheTerminalIsMocked(): Terminal {
+  val terminal = mockk<Terminal>(relaxUnitFun = true)
+  justRun { terminal.println(any(Table::class)) }
+  return terminal
 }
 
 fun givenTheCurrentTokenIs(token: String) = thenTheTokenHasBeenUpdatedTo(token)

@@ -6,6 +6,7 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
+import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.command.Command.*
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.create
@@ -40,16 +41,18 @@ class Aoc : CliktCommand(name = "aoc", invokeWithoutSubcommand = true) {
   private val files by toOption(FILES.names, FILES.help).flag()
   private val token by toOption(TOKEN.names, TOKEN.help)
   private val verbose by toOption(VERBOSE.names, VERBOSE.help).flag()
+  private val stats by toOption(STATS.names, STATS.help).flag()
 
   override fun run() {
     profile(profile)
     set(year = year, day = day, level = level, verbose = verbose)
-    next(next = next, verbose = verbose)
+    next(flag = next, verbose = verbose)
     token(token)
     if (files) home(Runtime.getRuntime())
     answer(answer = answer, verbose = verbose)
     create(create)
     echoCurrent(echo = echo, verbose = verbose)
+    stats(stats, Terminal(width = 100))
     if (open) open(Runtime.getRuntime())
   }
 

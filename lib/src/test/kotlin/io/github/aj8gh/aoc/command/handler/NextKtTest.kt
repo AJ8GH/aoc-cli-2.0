@@ -22,7 +22,7 @@ class NextKtTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun nextTest(
-    next: Boolean,
+    flag: Boolean,
     year: Int,
     day: Int,
     level: Int,
@@ -32,10 +32,10 @@ class NextKtTest : BaseTest() {
   ) {
     givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
 
-    whenNextIsCalledFor(next)
+    whenNextIsCalledFor(flag)
 
     thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    andTheFollowingMessageIsEchoed(expectedMessage(next, expectedYear, expectedDay, expectedLevel))
+    andTheFollowingMessageIsEchoed(expectedMessage(flag, expectedYear, expectedDay, expectedLevel))
   }
 
   private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =

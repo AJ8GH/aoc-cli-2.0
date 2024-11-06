@@ -26,4 +26,10 @@ data class Day(
     level1 = null
     level2 = null
   }
+
+  fun completion() = when {
+    level1 != null && level2 != null -> 2
+    level1 != null || level2 != null -> 1
+    else -> 0
+  }
 }

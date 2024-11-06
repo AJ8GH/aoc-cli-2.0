@@ -1,5 +1,7 @@
 package io.github.aj8gh.aoc
 
+import com.github.ajalt.mordant.table.Table
+import com.github.ajalt.mordant.terminal.Terminal
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import io.github.aj8gh.aoc.command.handler.EXTENSION
@@ -75,10 +77,15 @@ fun thenTheFollowingProfileIsActive(profile: String) {
 fun theFollowingCommandWasExecuted(runtime: Runtime, command: Array<String>) =
   verify { runtime.exec(command) }
 
-fun thenTheTokenHasBeenUpdatedTo(token: String) {
-//  forceLoadAocProperties()
-//  assertEquals(token, aocProperties().session)
+fun thenTheStatsArePrintedAsExpected(terminal: Terminal) = verify {
+  terminal.println(any(Table::class))
 }
+
+fun thenTheTerminalWasNotInvoked(terminal: Terminal) = verify(exactly = 0) {
+  terminal.println(any(String::class))
+}
+
+fun thenTheTokenHasBeenUpdatedTo(token: String) = assertEquals(token, aocProperties().session)
 
 fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
   val actual = File(resourcesDir()).listFiles()!!

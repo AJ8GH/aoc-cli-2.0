@@ -32,21 +32,22 @@ subprojects {
 
   dependencies {
     implementation "com.github.ajalt.clikt:clikt:$cliktVersion"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
+    implementation "com.vladsch.flexmark:flexmark-html2md-converter:$flexmarkVersion"
+    implementation "org.http4k:http4k-client-okhttp:$http4kVersion"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion"
     implementation "net.java.dev.jna:jna:$jnaVersion"
     implementation "net.java.dev.jna:jna-platform:$jnaVersion"
     implementation "io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion"
+    implementation "org.jetbrains:markdown:$markdownVersion"
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
     implementation "org.slf4j:slf4j-simple:$slf4jVersion"
-    implementation "org.http4k:http4k-client-okhttp:$http4kVersion"
-    implementation "org.jetbrains:markdown:$markdownVersion"
-    implementation "com.vladsch.flexmark:flexmark-html2md-converter:$flexmarkVersion"
+    runtimeOnly "com.github.ajalt.mordant:mordant:$mordantVersion"
 
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation "io.mockk:mockk:$mockkVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$jUnitVersion"
-    testImplementation "com.marcinziolo:kotlin-wiremock:$wiremockVersion"
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation "com.marcinziolo:kotlin-wiremock:$wiremockVersion"
   }
 }

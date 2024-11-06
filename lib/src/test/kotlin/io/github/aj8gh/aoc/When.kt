@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc
 
+import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.code
 import io.github.aj8gh.aoc.command.handler.create.example
@@ -8,7 +9,7 @@ import io.github.aj8gh.aoc.command.handler.create.readme
 import io.github.aj8gh.aoc.command.handler.runtime.home
 import io.github.aj8gh.aoc.command.handler.runtime.open
 
-fun whenNextIsCalledFor(next: Boolean) = next(next)
+fun whenNextIsCalledFor(flag: Boolean) = next(flag = flag, verbose = false)
 
 fun whenEchoCurrentIsCalledFor(echo: Boolean, verbose: Boolean) = echoCurrent(echo, verbose)
 
@@ -32,3 +33,5 @@ fun whenOpenIsCalled(runtime: Runtime) = open(runtime)
 fun whenConfigFileIsCalled(runtime: Runtime) = home(runtime)
 
 fun whenTokenIsCalled(token: String) = token(token)
+
+fun whenStatsIsCalled(flag: Boolean, terminal: Terminal) = stats(flag, terminal)

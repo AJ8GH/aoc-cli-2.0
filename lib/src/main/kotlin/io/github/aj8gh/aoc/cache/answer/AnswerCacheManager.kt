@@ -53,25 +53,31 @@ private val types = mapOf(
   ),
 )
 
+fun answerCache(): AnswerCache {
+  val file = answerCacheFile()
+  if (!file.exists()) write(answerCacheFile(), AnswerCache())
+  return readYaml(file, AnswerCache::class.java)
+}
+
 fun checkAnswer(answer: String) =
   handle(answer, getAnswer())
 
 fun cacheAnswer(answer: String) = cacheAnswer(level(), answer)
 
 fun cacheAnswer(level: Int, answer: String) {
-  val answers = getAnswers()
+  val answers = answerCache()
   answers.save(year(), day(), level, answer)
   writeAnswers(answers)
 }
 
 fun dayCompletion(): Int {
-  val day = getAnswers().get(year(), day())
+  val day = answerCache().get(year(), day())
   return if (day.level(L2) != null) COMPLETION_LEVEL_2
   else if (day.level(L1) != null) COMPLETION_LEVEL_1
   else COMPLETION_LEVEL_0
 }
 
-fun clearCacheForDay() = getAnswers().clear(year(), day())
+fun clearCacheForDay() = answerCache().clear(year(), day())
 
 fun type() = when {
   isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT
@@ -107,9 +113,9 @@ private fun wrapIfString(answer: String): String = answer
   .takeIf { type() != STRING }
   ?: "\"${answer}\""
 
-private fun answer1() = getAnswers().get(year(), day(), L1)
+private fun answer1() = answerCache().get(year(), day(), L1)
 
-private fun answer2() = getAnswers().get(year(), day(), L2)
+private fun answer2() = answerCache().get(year(), day(), L2)
 
 private fun handleLong(answer: String): String {
   val lang = activeProfile().language
@@ -119,13 +125,7 @@ private fun handleLong(answer: String): String {
   return answer
 }
 
-private fun getAnswer() = getAnswers().get(year(), day(), level())
-
-private fun getAnswers(): AnswerCache {
-  val file = answerCacheFile()
-  if (!file.exists()) write(answerCacheFile(), AnswerCache())
-  return readYaml(file, AnswerCache::class.java)
-}
+private fun getAnswer() = answerCache().get(year(), day(), level())
 
 private fun writeAnswers(answers: AnswerCache) = write(answerCacheFile(), answers)
 

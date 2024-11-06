@@ -58,5 +58,9 @@ enum class Command(
   VERBOSE(
     arrayOf(VERBOSE_SHORT, VERBOSE_LONG),
     VERBOSE_DESCRIPTION,
+  ),
+  STATS(
+    arrayOf(STATS_SHORT, STATS_LONG),
+    STATS_DESCRIPTION,
   )
 }

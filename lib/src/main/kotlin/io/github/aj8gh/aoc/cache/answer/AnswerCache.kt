@@ -17,4 +17,8 @@ data class AnswerCache(
   fun save(year: Int, day: Int, level: Int, answer: String) = cache
     .computeIfAbsent(year) { Year() }
     .save(day, level, answer)
+
+  fun completion() = cache.values
+    .map { it.completion() }
+    .fold(0) { a, b -> a + b }
 }
