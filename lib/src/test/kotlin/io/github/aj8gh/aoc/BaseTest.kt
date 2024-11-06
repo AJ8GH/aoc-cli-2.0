@@ -5,7 +5,11 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.http.Body
 import io.github.aj8gh.aoc.command.handler.EXTENSION
+import io.github.aj8gh.aoc.command.handler.PROFILE_HEADER
+import io.github.aj8gh.aoc.command.handler.PROPERTIES_HEADER
 import io.github.aj8gh.aoc.http.SESSION_KEY
+import io.github.aj8gh.aoc.io.activeProfileFile
+import io.github.aj8gh.aoc.io.aocPropertiesFile
 import io.github.aj8gh.aoc.io.homeOverride
 import io.github.aj8gh.aoc.io.read
 import io.github.aj8gh.aoc.properties.*
@@ -59,6 +63,12 @@ open class BaseTest {
 
 fun getEchoMessage(year: Int, day: Int, level: Int, profile: String) =
   "You are on year $year day $day level $level. Active profile: $profile"
+
+fun getVerboseEchoMessage(): String {
+  val props = read(aocPropertiesFile())
+  val profile = read(activeProfileFile())
+  return "$PROPERTIES_HEADER\n$props\n$PROFILE_HEADER\n$profile"
+}
 
 fun stubOutStream() {
   outContent = ByteArrayOutputStream()

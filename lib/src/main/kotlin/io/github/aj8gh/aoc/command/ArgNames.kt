@@ -43,3 +43,7 @@ const val FILES_DESCRIPTION = "Open the aoc home directory with the configured I
 const val TOKEN_SHORT = "-t"
 const val TOKEN_LONG = "--token"
 const val TOKEN_DESCRIPTION = "Update advent of code session token."
+
+const val VERBOSE_SHORT = "-v"
+const val VERBOSE_LONG = "--verbose"
+const val VERBOSE_DESCRIPTION = "Make output more verbose."

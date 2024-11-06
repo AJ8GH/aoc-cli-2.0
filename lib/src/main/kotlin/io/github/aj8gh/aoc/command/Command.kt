@@ -54,5 +54,9 @@ enum class Command(
   TOKEN(
     arrayOf(TOKEN_SHORT, TOKEN_LONG),
     TOKEN_DESCRIPTION,
+  ),
+  VERBOSE(
+    arrayOf(VERBOSE_SHORT, VERBOSE_LONG),
+    VERBOSE_DESCRIPTION,
   )
 }

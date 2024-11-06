@@ -6,7 +6,7 @@ import io.github.aj8gh.aoc.properties.updateProfile
 
 const val TWO_THOUSAND = 2_000
 
-fun set(year: Int?, day: Int?, level: Int?) {
+fun set(year: Int?, day: Int?, level: Int?, verbose: Boolean) {
   if (year == null && day == null && level == null) return
 
   val properties = activeProfile()
@@ -14,5 +14,5 @@ fun set(year: Int?, day: Int?, level: Int?) {
   day?.let { current().day = it }
   level?.let { current().level = it }
   updateProfile(properties)
-  echoCurrent()
+  echoCurrent(verbose)
 }

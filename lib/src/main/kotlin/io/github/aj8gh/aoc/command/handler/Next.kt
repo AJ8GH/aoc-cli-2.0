@@ -12,11 +12,11 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 
-fun next() = next(true)
+fun next(verbose: Boolean) = next(true, verbose)
 
-fun next(next: Boolean) = if (next) {
+fun next(next: Boolean, verbose: Boolean) = if (next) {
   updateProfile(updateCurrentProperties())
-  echoCurrent()
+  echoCurrent(verbose)
 } else Unit
 
 private fun updateCurrentProperties(): Profile {

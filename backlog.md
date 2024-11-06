@@ -1,6 +1,5 @@
 # TODO
 
-* [ ] update session token `-t`
 * [ ] print current config / properties
 * [ ] make `$AOC_HOME` location configurable
 * [ ] exception handling

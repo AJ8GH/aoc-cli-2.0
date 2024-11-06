@@ -12,33 +12,33 @@ const val INCORRECT = "That's not the right answer."
 const val NOT_CACHED = "Answer not found in cache."
 const val CORRECT = "Congratulations, that's the correct answer!"
 
-fun answer(answer: String?) =
-  answer?.let { checkCache(it) }
+fun answer(answer: String?, verbose: Boolean) =
+  answer?.let { checkCache(it, verbose) }
 
-private fun checkCache(answer: String) =
-  handle(checkAnswer(answer), answer)
+private fun checkCache(answer: String, verbose: Boolean) =
+  handle(checkAnswer(answer), answer, verbose)
 
-private fun submitAnswer(answer: String) {
+private fun submitAnswer(answer: String, verbose: Boolean) {
   val response = postAnswer(answer)
-  handle(response, answer)
+  handle(response, answer, verbose)
 }
 
-private fun handle(response: String, answer: String) =
+private fun handle(response: String, answer: String, verbose: Boolean) =
   with(response) {
     when {
-      contains(CORRECT) -> handleCorrect(answer)
+      contains(CORRECT) -> handleCorrect(answer, verbose)
       contains(INCORRECT) -> println(INCORRECT)
       contains(WRONG_LEVEL) -> println(WRONG_LEVEL)
       contains(TOO_HIGH) -> println(TOO_HIGH)
       contains(TOO_LOW) -> println(TOO_LOW)
-      contains(NOT_CACHED) -> submitAnswer(answer)
+      contains(NOT_CACHED) -> submitAnswer(answer, verbose)
       else -> println(response)
     }
   }
 
-private fun handleCorrect(answer: String) {
+private fun handleCorrect(answer: String, verbose: Boolean) {
   println(CORRECT)
   cacheAnswer(answer)
-  next()
+  next(verbose)
   create()
 }

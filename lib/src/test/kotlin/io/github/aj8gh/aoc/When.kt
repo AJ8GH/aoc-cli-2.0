@@ -10,12 +10,12 @@ import io.github.aj8gh.aoc.command.handler.runtime.open
 
 fun whenNextIsCalledFor(next: Boolean) = next(next)
 
-fun whenEchoCurrentIsCalledFor(echo: Boolean) = echoCurrent(echo)
+fun whenEchoCurrentIsCalledFor(echo: Boolean, verbose: Boolean) = echoCurrent(echo, verbose)
 
-fun whenAnswerIsCalledWith(answer: String) = answer(answer)
+fun whenAnswerIsCalledWith(answer: String) = answer(answer, false)
 
 fun whenSetIsCalledFor(year: Int?, day: Int?, level: Int?) =
-  set(year = year, day = day, level = level)
+  set(year = year, day = day, level = level, false)
 
 fun whenCreateInputIsCalled() = input()
 

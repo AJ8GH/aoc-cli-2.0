@@ -20,12 +20,12 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int) {
-  set(year = year, day = day, level = L1)
+  set(year = year, day = day, level = L1, false)
   stubOutStream()
 }
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
-  set(year = year, day = day, level = level)
+  set(year = year, day = day, level = level, false)
   stubOutStream()
 }
 
