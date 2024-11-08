@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 @WireMockTest(httpPort = HTTP_PORT)
-class ReadmeKtTest : BaseTest() {
+class ReadmeCreateHandlerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("readmeNotExistsNotCached")

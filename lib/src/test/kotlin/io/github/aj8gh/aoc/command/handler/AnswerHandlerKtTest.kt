@@ -19,7 +19,7 @@ private const val UNKNOWN = "UNKNOWN"
 private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
 @WireMockTest(httpPort = HTTP_PORT)
-class AnswerKtTest : BaseTest() {
+class AnswerHandlerKtTest : BaseTest() {
 
   @Test
   fun answer_HappyPath_NoCache() {

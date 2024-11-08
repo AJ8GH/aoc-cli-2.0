@@ -5,11 +5,14 @@ import io.github.aj8gh.aoc.io.inputCacheFile
 import io.github.aj8gh.aoc.io.read
 import io.github.aj8gh.aoc.io.write
 
-fun getCachedInput(): String? =
-  if (inputCacheFile().exists()) read(inputCacheFile())
-  else null
+class InputCache {
 
-fun cacheInput(input: String) {
-  createResourcesCacheDirIfNotExists()
-  write(inputCacheFile(), input)
+  fun getCachedInput(): String? =
+    if (inputCacheFile().exists()) read(inputCacheFile())
+    else null
+
+  fun cacheInput(input: String) {
+    createResourcesCacheDirIfNotExists()
+    write(inputCacheFile(), input)
+  }
 }

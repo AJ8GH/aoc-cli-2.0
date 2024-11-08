@@ -4,7 +4,6 @@ import com.github.ajalt.mordant.table.Table
 import com.github.ajalt.mordant.terminal.Terminal
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
-import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.*
 import io.mockk.verify
@@ -57,8 +56,6 @@ fun thenMainFileIsCreatedAsExpected(expected: String) = assertEquals(expected, m
 
 fun andTestFileIsCreatedAsExpected(expected: String) = assertEquals(expected, testFile().readText())
 
-fun andMainFileIsCreatedAsExpected(expected: String) = thenMainFileIsCreatedAsExpected(expected)
-
 fun thenMainFileIsUnchanged(expected: String) = assertEquals(expected, mainFile().readText())
 
 fun andTestFileIsUnchanged(expected: String) = assertEquals(expected, testFile().readText())
@@ -86,20 +83,6 @@ fun thenTheTerminalWasNotInvoked(terminal: Terminal) = verify(exactly = 0) {
 }
 
 fun thenTheTokenHasBeenUpdatedTo(token: String) = assertEquals(token, aocProperties().session)
-
-fun thenTodaysExamplesAreCreatedAsExpected(expected: Array<File>) {
-  val actual = File(resourcesDir()).listFiles()!!
-    .filter { it.name.contains("example") }
-
-  assertEquals(expected.size, actual.size)
-
-  for (i in expected.indices) {
-    assertEquals(
-      trimLines(expected[i]),
-      trimLines(actual[i]),
-    )
-  }
-}
 
 private fun trimLines(file: File) = file
   .readLines().joinToString { it.trimEnd() }

@@ -12,21 +12,26 @@ const val ANSWER_KEY = "answer"
 const val SESSION_KEY = "session"
 const val COOKIE = "Cookie"
 
-fun call(request: Request) = OkHttpClient()
-  .newCall(request)
-  .execute()
-  .use(::handle)
+class AocClient {
 
-fun url(endpoint: String) =
-  "${aocProperties().url}/20${year()}/day/${day()}$endpoint"
+  fun get(endpoint: String) = call(getRequest(endpoint))
 
-fun getRequest(endpoint: String) = Request.Builder()
-  .get()
-  .url(url(endpoint))
-  .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
-  .build()
+  fun call(request: Request) = OkHttpClient()
+    .newCall(request)
+    .execute()
+    .use(::handle)
 
-private fun handle(response: Response) =
-  if (!response.isSuccessful)
-    throw RuntimeException("${response.code} error, ${response.body?.string()}")
-  else response.body!!.string()
+  fun url(endpoint: String) =
+    "${aocProperties().url}/20${year()}/day/${day()}$endpoint"
+
+  private fun getRequest(endpoint: String) = Request.Builder()
+    .get()
+    .url(url(endpoint))
+    .addHeader(COOKIE, "$SESSION_KEY=${aocProperties().session}")
+    .build()
+
+  private fun handle(response: Response) =
+    if (!response.isSuccessful)
+      throw RuntimeException("${response.code} error, ${response.body?.string()}")
+    else response.body!!.string()
+}

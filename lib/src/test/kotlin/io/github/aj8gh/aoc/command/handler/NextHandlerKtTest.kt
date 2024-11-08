@@ -17,7 +17,7 @@ private val CLOCK = Clock.fixed(
 
 private val LATEST_YEAR = latestYear(CLOCK)
 
-class NextKtTest : BaseTest() {
+class NextHandlerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")

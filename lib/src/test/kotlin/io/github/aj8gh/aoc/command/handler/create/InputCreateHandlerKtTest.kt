@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 
 @WireMockTest(httpPort = HTTP_PORT)
-class InputKtTest : BaseTest() {
+class InputCreateHandlerKtTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
