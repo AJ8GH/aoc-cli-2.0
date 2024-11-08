@@ -4,7 +4,6 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.http.Body
-import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.command.handler.PROFILE_HEADER
 import io.github.aj8gh.aoc.command.handler.PROPERTIES_HEADER
 import io.github.aj8gh.aoc.http.SESSION_KEY
@@ -117,11 +116,6 @@ fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${activeProfile().language}"
 fun expectedMainFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$MAIN_FILE")
 
 fun expectedTestFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$TEST_FILE")
-
-private fun templateActiveProfileFile() = "${TEMPLATE_HOME}${aocProperties().active}$EXTENSION"
-
-//private fun resetProperties() =
-//  updateProfile(readYaml(File(templateActiveProfileFile()), Profile::class.java))
 
 private fun resetFiles() {
   File(AOC_HOME).deleteRecursively()

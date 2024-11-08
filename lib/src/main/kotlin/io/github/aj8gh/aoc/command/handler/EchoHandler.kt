@@ -9,10 +9,13 @@ import io.github.aj8gh.aoc.properties.aocProperties
 const val PROPERTIES_HEADER = "AoC Properties"
 const val PROFILE_HEADER = "Active Profile"
 
-fun echoCurrent(verbose: Boolean) = echoCurrent(true, verbose)
+class EchoHandler {
 
-fun echoCurrent(echo: Boolean, verbose: Boolean) {
-  if (echo) {
+  fun echoCurrent(verbose: Boolean) = echoCurrent(true, verbose)
+
+  fun echoCurrent(echo: Boolean, verbose: Boolean) {
+    if (!echo) return
+
     if (verbose) {
       val props = read(aocPropertiesFile())
       val profile = read(activeProfileFile())

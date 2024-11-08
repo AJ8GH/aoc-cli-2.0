@@ -1,8 +1,9 @@
 package io.github.aj8gh.aoc.io
 
-import io.github.aj8gh.aoc.command.handler.EXTENSION
 import io.github.aj8gh.aoc.properties.*
 import java.io.File
+
+const val EXTENSION = ".yaml"
 
 private const val CACHE_DIR = "cache/"
 private const val FILE_CACHE_DIR = "files/"

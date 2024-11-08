@@ -9,7 +9,8 @@ import io.github.aj8gh.aoc.cache.answer.cacheAnswer
 import io.github.aj8gh.aoc.cache.answer.clearCacheForDay
 import io.github.aj8gh.aoc.cache.cacheReadme
 import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.handler.set
+import io.github.aj8gh.aoc.command.handler.EchoHandler
+import io.github.aj8gh.aoc.command.handler.SetHandler
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
@@ -21,13 +22,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+val setHandler = SetHandler(EchoHandler())
+
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int) {
-  set(year = year, day = day, level = L1, false)
+  setHandler.set(year = year, day = day, level = L1, false)
   stubOutStream()
 }
 
 fun givenCurrentYearDayAndLevelAre(year: Int, day: Int, level: Int) {
-  set(year = year, day = day, level = level, false)
+  setHandler.set(year = year, day = day, level = level, false)
   stubOutStream()
 }
 
