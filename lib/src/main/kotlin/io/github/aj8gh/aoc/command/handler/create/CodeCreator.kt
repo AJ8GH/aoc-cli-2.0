@@ -1,6 +1,6 @@
 package io.github.aj8gh.aoc.command.handler.create
 
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
+import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.day
@@ -15,13 +15,13 @@ private const val ANSWER_2_PLACEHOLDER = "\${ANSWER_2}"
 private const val EXAMPLE_1_PLACEHOLDER = "\${EXAMPLE_1}"
 private const val EXAMPLE_2_PLACEHOLDER = "\${EXAMPLE_2}"
 
-class CodeCreator(private val answerCacheManager: AnswerCacheManager) {
+class CodeCreator(private val answerCache: AnswerCache) {
 
   fun create() {
     createSourceDirsIfNotExists()
-    val answer1 = answerCacheManager.answer1OrDefault()
-    val answer2 = answerCacheManager.answer2OrDefault()
-    val default = answerCacheManager.default()
+    val answer1 = answerCache.answer1OrDefault()
+    val answer2 = answerCache.answer2OrDefault()
+    val default = answerCache.default()
     val answers = Pair(answer1, answer2)
     val mainAnswers = answers.takeIf { activeProfile().writeAnswerInCode } ?: Pair(default, default)
 
@@ -36,9 +36,9 @@ class CodeCreator(private val answerCacheManager: AnswerCacheManager) {
   private fun format(text: String, answers: Pair<String, String>) = text
     .replace(YEAR_PLACEHOLDER, year().toString())
     .replace(DAY_PLACEHOLDER, day().toString())
-    .replace(TYPE_PLACEHOLDER, answerCacheManager.typeForLanguage())
+    .replace(TYPE_PLACEHOLDER, answerCache.typeForLanguage())
     .replace(ANSWER_1_PLACEHOLDER, answers.first)
     .replace(ANSWER_2_PLACEHOLDER, answers.second)
-    .replace(EXAMPLE_1_PLACEHOLDER, answerCacheManager.example1())
-    .replace(EXAMPLE_2_PLACEHOLDER, answerCacheManager.example2())
+    .replace(EXAMPLE_1_PLACEHOLDER, answerCache.example1())
+    .replace(EXAMPLE_2_PLACEHOLDER, answerCache.example2())
 }

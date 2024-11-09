@@ -7,9 +7,9 @@ class CreateHandler(
   private val codeCreator: CodeCreator
 ) {
 
-  fun create(create: Boolean) = if (create) create() else Unit
+  fun handle(create: Boolean) = if (create) handle() else Unit
 
-  fun create() {
+  fun handle() {
     inputCreator.create()
     readmeCreator.create()
     exampleCreator.create()

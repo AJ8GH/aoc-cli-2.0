@@ -1,13 +1,12 @@
 package io.github.aj8gh.aoc.test.steps
 
 import com.github.ajalt.mordant.table.Table
-import com.github.ajalt.mordant.terminal.Terminal
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
 import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.test.outContent
 import io.github.aj8gh.aoc.properties.*
+import io.github.aj8gh.aoc.test.context.CONTEXT
+import io.github.aj8gh.aoc.test.outContent
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.verify
 import java.io.File
@@ -22,12 +21,8 @@ class Then {
     return this
   }
 
-  fun theExpectedCheckCacheResponseIsReturned(
-    answerCacheManager: AnswerCacheManager,
-    response: String,
-    answer: String,
-  ): Then {
-    assertEquals(response, answerCacheManager.checkAnswer(answer))
+  fun theExpectedCheckCacheResponseIsReturned(response: String, answer: String): Then {
+    assertEquals(response, CONTEXT.cache.answer.checkAnswer(answer))
     return this
   }
 
@@ -108,18 +103,18 @@ class Then {
     return this
   }
 
-  fun theFollowingCommandWasExecuted(runtime: Runtime, command: Array<String>): Then {
-    verify { runtime.exec(command) }
+  fun theFollowingCommandWasExecuted(command: Array<String>): Then {
+    verify { CONTEXT.exec.runtime.exec(command) }
     return this
   }
 
-  fun theStatsArePrintedAsExpected(terminal: Terminal): Then {
-    verify { terminal.println(any(Table::class)) }
+  fun theStatsArePrintedAsExpected(): Then {
+    verify { CONTEXT.exec.terminal.println(any(Table::class)) }
     return this
   }
 
-  fun theTerminalWasNotInvoked(terminal: Terminal): Then {
-    verify(exactly = 0) { terminal.println(any(String::class)) }
+  fun theTerminalWasNotInvoked(): Then {
+    verify(exactly = 0) { CONTEXT.exec.terminal.println(any(String::class)) }
     return this
   }
 

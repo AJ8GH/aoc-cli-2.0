@@ -1,20 +1,17 @@
 package io.github.aj8gh.aoc.test.steps
 
 import com.github.ajalt.mordant.table.Table
-import com.github.ajalt.mordant.terminal.Terminal
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
-import io.github.aj8gh.aoc.test.ANSWER
 import io.github.aj8gh.aoc.cache.ReadmeCache
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
 import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.handler.EchoHandler
 import io.github.aj8gh.aoc.command.handler.NOT_CACHED
-import io.github.aj8gh.aoc.command.handler.SetHandler
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.activeProfile
 import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
 import io.github.aj8gh.aoc.properties.setActiveProfile
+import io.github.aj8gh.aoc.test.ANSWER
+import io.github.aj8gh.aoc.test.context.CONTEXT
 import io.github.aj8gh.aoc.test.stubOutStream
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.every
@@ -25,8 +22,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class Given {
-
-  private val setHandler = SetHandler(EchoHandler())
 
   fun theFollowingRequestStub(stub: MappingBuilder): Given {
     stubFor(stub)
@@ -79,30 +74,30 @@ class Given {
   }
 
   fun currentYearDayAndLevelAre(year: Int, day: Int): Given {
-    setHandler.set(year = year, day = day, level = L1, false)
+    CONTEXT.handler.set.handle(year = year, day = day, level = L1, false)
     stubOutStream()
     return this
   }
 
   fun currentYearDayAndLevelAre(year: Int, day: Int, level: Int): Given {
-    setHandler.set(year = year, day = day, level = level, false)
+    CONTEXT.handler.set.handle(year = year, day = day, level = level, false)
     stubOutStream()
     return this
   }
 
-  fun todaysAnswerIsNotCached(subject: AnswerCacheManager, answer: String): Given {
-    assertEquals(NOT_CACHED, subject.checkAnswer(answer))
+  fun todaysAnswerIsNotCached(answer: String): Given {
+    assertEquals(NOT_CACHED, CONTEXT.cache.answer.checkAnswer(answer))
     return this
   }
 
-  fun theRuntimeIsMocked(runtime: Runtime, command: Array<String>): Given {
+  fun theRuntimeIsMocked(command: Array<String>): Given {
     val process = mockk<Process>()
-    every { runtime.exec(command) } returns process
+    every { CONTEXT.exec.runtime.exec(command) } returns process
     return this
   }
 
-  fun theTerminalIsMocked(terminal: Terminal): Given {
-    justRun { terminal.println(any(Table::class)) }
+  fun theTerminalIsMocked(): Given {
+    justRun { CONTEXT.exec.terminal.println(any(Table::class)) }
     return this
   }
 
@@ -125,9 +120,8 @@ class Given {
   }
 
   fun todaysCompletionLevelIs(level: Int): Given {
-    val cacheManager = AnswerCacheManager()
-    if (level == 0) cacheManager.clearCacheForDay()
-    else (1..level).forEach { cacheManager.cacheAnswer(it, ANSWER) }
+    if (level == 0) CONTEXT.cache.answer.clearCacheForDay()
+    else (1..level).forEach { CONTEXT.cache.answer.cacheAnswer(it, ANSWER) }
     return this
   }
 

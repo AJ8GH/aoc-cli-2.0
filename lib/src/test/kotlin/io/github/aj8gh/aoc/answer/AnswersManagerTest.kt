@@ -1,11 +1,10 @@
 package io.github.aj8gh.aoc.answer
 
-import io.github.aj8gh.aoc.test.BaseTest
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
 import io.github.aj8gh.aoc.command.handler.CORRECT
 import io.github.aj8gh.aoc.command.handler.INCORRECT
 import io.github.aj8gh.aoc.command.handler.TOO_HIGH
 import io.github.aj8gh.aoc.command.handler.TOO_LOW
+import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -15,22 +14,20 @@ import org.junit.jupiter.params.provider.MethodSource
 
 private const val ANSWER = "321"
 
-class AnswerCacheManagerTest : BaseTest() {
-
-  private val subject = AnswerCacheManager()
+class AnswersManagerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun cache(year: Int, day: Int, level: Int, expectedResponse: String, answer: String) {
     GIVEN
       .currentYearDayAndLevelAre(year, day, level)
-      .todaysAnswerIsNotCached(subject, answer)
+      .todaysAnswerIsNotCached(answer)
 
     WHEN
-      .theAnswerIsCached(subject, ANSWER)
+      .theAnswerIsCached(ANSWER)
 
     THEN
-      .theExpectedCheckCacheResponseIsReturned(subject, expectedResponse, answer)
+      .theExpectedCheckCacheResponseIsReturned(expectedResponse, answer)
   }
 
 

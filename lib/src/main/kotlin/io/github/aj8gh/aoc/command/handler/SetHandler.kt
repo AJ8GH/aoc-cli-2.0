@@ -8,12 +8,12 @@ private const val TWO_THOUSAND = 2_000
 
 class SetHandler(private val echoHandler: EchoHandler) {
 
-  fun set(year: Int?, day: Int?, level: Int?, verbose: Boolean) {
+  fun handle(year: Int?, day: Int?, level: Int?, verbose: Boolean = false) {
     if (year == null && day == null && level == null) return
 
     setNewValues(year, day, level)
     updateProfile(activeProfile())
-    echoHandler.echoCurrent(verbose)
+    echoHandler.handle(verbose)
   }
 
   private fun setNewValues(year: Int?, day: Int?, level: Int?) {

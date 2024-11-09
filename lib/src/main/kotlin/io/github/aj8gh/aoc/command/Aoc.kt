@@ -37,16 +37,16 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(
 
   override fun run() {
     val h = context.handler
-    h.profileHandler.profile(profile)
-    h.setHandler.set(year = year, day = day, level = level, verbose = verbose)
-    h.nextHandler.next(flag = next, verbose = verbose)
-    h.tokenHandler.token(token)
-    h.filesHandler.files(files)
-    h.answerHandler.answer(answer = answer, verbose = verbose)
-    h.createHandler.create(create)
-    h.echoHandler.echoCurrent(echo = echo, verbose = verbose)
-    h.statHandler.stats(stats)
-    h.openHandler.open(open)
+    h.profile.handle(profile)
+    h.set.handle(year = year, day = day, level = level, verbose = verbose)
+    h.next.handle(flag = next, verbose = verbose)
+    h.token.handle(token)
+    h.files.handle(files)
+    h.answer.handle(answer = answer, verbose = verbose)
+    h.create.handle(create)
+    h.echo.handle(echo = echo, verbose = verbose)
+    h.stats.handle(stats)
+    h.open.handle(open)
   }
 
   private fun toIntOption(

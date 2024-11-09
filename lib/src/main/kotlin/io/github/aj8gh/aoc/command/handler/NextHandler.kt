@@ -14,11 +14,11 @@ private val logger = KotlinLogging.logger {}
 
 class NextHandler(private val echoHandler: EchoHandler) {
 
-  fun next(verbose: Boolean) = next(true, verbose)
+  fun handle(verbose: Boolean) = handle(true, verbose)
 
-  fun next(flag: Boolean, verbose: Boolean) = if (flag) {
+  fun handle(flag: Boolean, verbose: Boolean) = if (flag) {
     updateProfile(updateCurrentProperties())
-    echoHandler.echoCurrent(verbose)
+    echoHandler.handle(verbose)
   } else Unit
 
   private fun updateCurrentProperties(): Profile {

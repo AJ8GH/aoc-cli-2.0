@@ -3,7 +3,7 @@ package io.github.aj8gh.aoc.context
 import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.cache.InputCache
 import io.github.aj8gh.aoc.cache.ReadmeCache
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
+import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
@@ -22,16 +22,16 @@ data class ApplicationContext(
 ) {
 
   data class Handler(
-    val setHandler: SetHandler,
-    val statHandler: StatHandler,
-    val tokenHandler: TokenHandler,
-    val profileHandler: ProfileHandler,
-    val nextHandler: NextHandler,
-    val echoHandler: EchoHandler,
-    val createHandler: CreateHandler,
-    val filesHandler: FilesHandler,
-    val openHandler: OpenHandler,
-    val answerHandler: AnswerHandler,
+    val set: SetHandler,
+    val stats: StatsHandler,
+    val token: TokenHandler,
+    val profile: ProfileHandler,
+    val next: NextHandler,
+    val echo: EchoHandler,
+    val create: CreateHandler,
+    val files: FilesHandler,
+    val open: OpenHandler,
+    val answer: AnswerHandler,
   )
 
   data class Exec(
@@ -41,22 +41,22 @@ data class ApplicationContext(
   )
 
   data class Client(
-    val aocClient: AocClient,
-    val answerClient: AnswerClient,
-    val inputClient: InputClient,
-    val readmeClient: AocClient,
+    val aoc: AocClient,
+    val answer: AnswerClient,
+    val input: InputClient,
+    val readme: AocClient,
   )
 
   data class Creator(
-    val inputCreator: InputCreator,
-    val readmeCreator: ReadmeCreator,
-    val exampleCreator: ExampleCreator,
-    val codeCreator: CodeCreator,
+    val input: InputCreator,
+    val readme: ReadmeCreator,
+    val example: ExampleCreator,
+    val code: CodeCreator,
   )
 
   data class Cache(
-    val answerCacheManager: AnswerCacheManager,
-    val inputCache: InputCache,
-    val readmeCache: ReadmeCache,
+    val answer: AnswerCache,
+    val input: InputCache,
+    val readme: ReadmeCache,
   )
 }

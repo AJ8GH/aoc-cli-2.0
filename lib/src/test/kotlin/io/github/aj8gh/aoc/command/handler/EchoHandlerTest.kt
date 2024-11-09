@@ -19,7 +19,7 @@ class EchoHandlerTest : BaseTest() {
   @MethodSource("inputProvider")
   fun echoTest(echo: Boolean, expected: String, verbose: Boolean) {
     WHEN
-      .echoCurrentIsCalledFor(echo, verbose)
+      .echoIsCalledFor(echo, verbose)
 
     THEN
       .theFollowingMessageIsEchoed(expected)

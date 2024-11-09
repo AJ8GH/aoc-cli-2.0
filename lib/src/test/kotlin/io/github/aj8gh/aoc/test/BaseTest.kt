@@ -3,6 +3,8 @@ package io.github.aj8gh.aoc.test
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.http.Body
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.io.homeOverride
@@ -73,8 +75,8 @@ fun html(year: Int, day: Int) = read("${HTML_DIR}y$year/d$day.html")
 
 fun readmeRequestMapping(response: String) = readmeRequestMapping(response, year(), day())
 
-fun readmeRequestMapping(response: String, year: Int, day: Int) = WireMock.get(readmeUrl(year, day))
-  .withCookie(SESSION_KEY, WireMock.matching(SESSION))
+fun readmeRequestMapping(response: String, year: Int, day: Int) = get(readmeUrl(year, day))
+  .withCookie(SESSION_KEY, matching(SESSION))
   .willReturn(
     ResponseDefinitionBuilder.responseDefinition()
       .withResponseBody(Body(response))
@@ -91,8 +93,8 @@ fun inputUrl(year: Int, day: Int) = "/20$year/day/$day/input"
 fun getInputMapping(): MappingBuilder = getInputMapping(year(), day())
 
 fun getInputMapping(year: Int, day: Int): MappingBuilder =
-  WireMock.get(inputUrl(year, day))
-    .withCookie(SESSION_KEY, WireMock.matching(SESSION))
+  get(inputUrl(year, day))
+    .withCookie(SESSION_KEY, matching(SESSION))
     .willReturn(
       ResponseDefinitionBuilder.responseDefinition()
         .withStatus(200)

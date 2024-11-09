@@ -1,6 +1,6 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
+import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.command.handler.create.CreateHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 
@@ -12,12 +12,12 @@ const val NOT_CACHED = "Answer not found in cache."
 const val CORRECT = "Congratulations, that's the correct answer!"
 
 class AnswerHandler(
-  private val cacheManager: AnswerCacheManager,
+  private val cacheManager: AnswerCache,
   private val client: AnswerClient,
   private val createHandler: CreateHandler
 ) {
 
-  fun answer(answer: String?, verbose: Boolean) =
+  fun handle(answer: String?, verbose: Boolean) =
     answer?.let { checkCache(it, verbose) }
 
   private fun checkCache(answer: String, verbose: Boolean) =
@@ -44,7 +44,7 @@ class AnswerHandler(
   private fun handleCorrect(answer: String, verbose: Boolean) {
     println(CORRECT)
     cacheManager.cacheAnswer(answer)
-    NextHandler(EchoHandler()).next(verbose)
-    createHandler.create()
+    NextHandler(EchoHandler()).handle(verbose)
+    createHandler.handle()
   }
 }

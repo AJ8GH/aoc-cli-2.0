@@ -6,7 +6,7 @@ import io.github.aj8gh.aoc.properties.aocProperties
 import io.github.aj8gh.aoc.properties.forceLoadAocProperties
 
 class TokenHandler {
-  fun token(token: String?) {
+  fun handle(token: String?) {
     token?.let {
       val props = aocProperties().copy(session = it)
       write(aocPropertiesFile(), props)

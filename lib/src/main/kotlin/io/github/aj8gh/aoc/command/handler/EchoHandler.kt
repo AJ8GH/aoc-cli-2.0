@@ -11,9 +11,9 @@ const val PROFILE_HEADER = "Active Profile"
 
 class EchoHandler {
 
-  fun echoCurrent(verbose: Boolean) = echoCurrent(true, verbose)
+  fun handle(verbose: Boolean) = handle(true, verbose)
 
-  fun echoCurrent(echo: Boolean, verbose: Boolean) {
+  fun handle(echo: Boolean, verbose: Boolean) {
     if (!echo) return
 
     if (verbose) {

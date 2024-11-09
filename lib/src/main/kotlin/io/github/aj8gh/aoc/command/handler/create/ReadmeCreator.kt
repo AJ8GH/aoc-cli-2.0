@@ -2,7 +2,7 @@ package io.github.aj8gh.aoc.command.handler.create
 
 import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
 import io.github.aj8gh.aoc.cache.ReadmeCache
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
+import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.http.ReadmeClient
 import io.github.aj8gh.aoc.io.*
 import java.io.File
@@ -20,7 +20,7 @@ private const val HEADER_NEW = ""
 class ReadmeCreator(
   private val cache: ReadmeCache,
   private val client: ReadmeClient,
-  private val answerCacheManager: AnswerCacheManager,
+  private val answerCache: AnswerCache,
 ) {
 
   fun create() {
@@ -34,7 +34,7 @@ class ReadmeCreator(
     else read(readmeCacheFile())
 
   private fun isReadmeStale(file: File) =
-    cache.readmeLevel(file) < answerCacheManager.dayCompletion()
+    cache.readmeLevel(file) < answerCache.dayCompletion()
 
   private fun getAndCacheReadme(): String {
     val html = client.getReadme()

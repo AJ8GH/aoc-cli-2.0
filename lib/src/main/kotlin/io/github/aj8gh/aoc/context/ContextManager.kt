@@ -3,7 +3,7 @@ package io.github.aj8gh.aoc.context
 import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.cache.InputCache
 import io.github.aj8gh.aoc.cache.ReadmeCache
-import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
+import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
@@ -14,15 +14,12 @@ import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
 import io.github.aj8gh.aoc.http.ReadmeClient
 
-private const val TEST_PROFILE = "TEST"
-private const val DEV_PROFILE = "DEV"
-private const val PROD_PROFILE = "PROD"
-
 open class ContextManager {
 
-  fun context(profile: String? = DEV_PROFILE): ApplicationContext {
-    val terminal = terminal()
-    val runtime = runtime()
+  fun context(
+    terminal: Terminal = terminal(),
+    runtime: Runtime = runtime(),
+  ): ApplicationContext {
     val executor = executor(runtime)
 
     val answerCacheManager = answerCacheManager()
@@ -59,16 +56,16 @@ open class ContextManager {
 
     return ApplicationContext(
       ApplicationContext.Handler(
-        setHandler = setHandler,
-        answerHandler = answerHandler,
-        profileHandler = profileHandler,
-        tokenHandler = tokenHandler,
-        createHandler = createHandler,
-        echoHandler = echoHandler,
-        filesHandler = filesHandler,
-        nextHandler = nextHandler,
-        openHandler = openHandler,
-        statHandler = statHandler,
+        set = setHandler,
+        answer = answerHandler,
+        profile = profileHandler,
+        token = tokenHandler,
+        create = createHandler,
+        echo = echoHandler,
+        files = filesHandler,
+        next = nextHandler,
+        open = openHandler,
+        stats = statHandler,
       ),
       ApplicationContext.Exec(
         terminal = terminal,
@@ -76,21 +73,21 @@ open class ContextManager {
         executor = executor,
       ),
       ApplicationContext.Client(
-        aocClient = aocClient,
-        answerClient = answerClient,
-        inputClient = inputClient,
-        readmeClient = aocClient,
+        aoc = aocClient,
+        answer = answerClient,
+        input = inputClient,
+        readme = aocClient,
       ),
       ApplicationContext.Creator(
-        inputCreator = inputCreator,
-        readmeCreator = readmeCreator,
-        exampleCreator = exampleCreator,
-        codeCreator = codeCreator,
+        input = inputCreator,
+        readme = readmeCreator,
+        example = exampleCreator,
+        code = codeCreator,
       ),
       ApplicationContext.Cache(
-        answerCacheManager = answerCacheManager,
-        inputCache = inputCache,
-        readmeCache = readmeCache,
+        answer = answerCacheManager,
+        input = inputCache,
+        readme = readmeCache,
       )
     )
   }
@@ -99,7 +96,7 @@ open class ContextManager {
   private fun runtime() = Runtime.getRuntime()
   private fun executor(runtime: Runtime) = Executor(runtime)
 
-  private fun answerCacheManager() = AnswerCacheManager()
+  private fun answerCacheManager() = AnswerCache()
   private fun readmeCache() = ReadmeCache()
   private fun inputCache() = InputCache()
 
@@ -111,11 +108,11 @@ open class ContextManager {
   private fun readmeCreator(
     readmeCache: ReadmeCache,
     readmeClient: ReadmeClient,
-    answerCacheManager: AnswerCacheManager,
-  ) = ReadmeCreator(readmeCache, readmeClient, answerCacheManager)
+    answerCache: AnswerCache,
+  ) = ReadmeCreator(readmeCache, readmeClient, answerCache)
 
   private fun exampleCreator() = ExampleCreator()
-  private fun codeCreator(answerCacheManager: AnswerCacheManager) = CodeCreator(answerCacheManager)
+  private fun codeCreator(answerCache: AnswerCache) = CodeCreator(answerCache)
 
   private fun aocClient() = AocClient()
   private fun answerClient(aocClient: AocClient) = AnswerClient(aocClient)
@@ -125,9 +122,9 @@ open class ContextManager {
   private fun setHandler(echoHandler: EchoHandler) = SetHandler(echoHandler)
 
   private fun statHandler(
-    answerCacheManager: AnswerCacheManager,
+    answerCache: AnswerCache,
     terminal: Terminal,
-  ) = StatHandler(answerCacheManager, terminal)
+  ) = StatsHandler(answerCache, terminal)
 
   private fun tokenHandler() = TokenHandler()
   private fun profileHandler() = ProfileHandler()
@@ -145,8 +142,8 @@ open class ContextManager {
   private fun openHandler(executor: Executor) = OpenHandler(executor)
 
   private fun answerHandler(
-    answerCacheManager: AnswerCacheManager,
+    answerCache: AnswerCache,
     answerClient: AnswerClient,
     createHandler: CreateHandler,
-  ) = AnswerHandler(answerCacheManager, answerClient, createHandler)
+  ) = AnswerHandler(answerCache, answerClient, createHandler)
 }
