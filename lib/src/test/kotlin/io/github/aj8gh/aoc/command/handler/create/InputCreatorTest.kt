@@ -3,59 +3,71 @@ package io.github.aj8gh.aoc.command.handler.create
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
-import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.http.SESSION_KEY
+import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 
 @WireMockTest(httpPort = HTTP_PORT)
-class InputCreateHandlerKtTest : BaseTest() {
+class InputCreatorTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun input(language: String, year: Int, day: Int, level: Int) {
-    givenActivePropertiesIsSetTo(language)
-    givenCurrentYearDayAndLevelAre(year, day, level)
-    andTodaysInputFileDoesNotExist()
-    andTodaysInputIsNotCached()
-    andTheFollowingRequestStub(getInputMapping())
+    GIVEN
+      .activeProfileIs(language)
+      .currentYearDayAndLevelAre(year, day, level)
+      .todaysInputFileDoesNotExist()
+      .todaysInputIsNotCached()
+      .theFollowingRequestStub(getInputMapping())
 
-    whenCreateInputIsCalled()
+    WHEN
+      .createInputIsCalled()
 
-    thenTheFollowingRequestWasMade(getRequestDefinition())
-    andTodaysInputExists()
-    andTodaysInputIsCached()
+    THEN
+      .theFollowingRequestWasMade(getRequestDefinition())
+      .todaysInputExists()
+      .todaysInputIsCached()
   }
 
   @ParameterizedTest
   @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun inputExistsAlready(file: String) {
-    givenActivePropertiesIsSetTo(file)
-    givenCurrentYearDayAndLevelAre(Y15, D2, L1)
-    andTodaysInputIsNotCached()
-    andTodaysInputFileAlreadyExists()
+    GIVEN
+      .activeProfileIs(file)
+      .currentYearDayAndLevelAre(Y15, D2, L1)
+      .todaysInputIsNotCached()
+      .todaysInputFileAlreadyExists()
 
-    whenCreateInputIsCalled()
+    WHEN
+      .createInputIsCalled()
 
-    thenNoRequestsWereMadeForUrl(inputUrl())
-    andTodaysInputExists()
+    THEN
+      .noRequestsWereMadeForUrl(inputUrl())
+      .todaysInputExists()
   }
 
   @ParameterizedTest
   @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun inputFromCache(file: String) {
-    givenActivePropertiesIsSetTo(file)
-    givenCurrentYearDayAndLevelAre(Y15, D3, L1)
-    andTodaysInputFileDoesNotExist()
-    andTodaysInputIsCached()
+    GIVEN
+      .activeProfileIs(file)
+      .currentYearDayAndLevelAre(Y15, D3, L1)
+      .todaysInputFileDoesNotExist()
+      .todaysInputIsCached()
 
-    whenCreateInputIsCalled()
+    WHEN
+      .createInputIsCalled()
 
-    thenTodaysInputExists()
-    andNoRequestsWereMadeForUrl(inputUrl())
+    THEN
+      .todaysInputExists()
+      .noRequestsWereMadeForUrl(inputUrl())
   }
 
   private fun getRequestDefinition(): RequestPatternBuilder =

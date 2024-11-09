@@ -1,56 +1,69 @@
 package io.github.aj8gh.aoc.command.handler.create
 
-import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.io.mainFile
 import io.github.aj8gh.aoc.io.testFile
+import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 
-class CodeCreateHandlerKtTest : BaseTest() {
+class CodeCreatorTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun createCode(language: String, year: Int, day: Int, level: Int) {
-    givenActivePropertiesIsSetTo(language)
-    givenCurrentYearDayAndLevelAre(year, day, level)
-    andCodeFilesDoNotExistForToday()
+    GIVEN
+      .activeProfileIs(language)
+      .currentYearDayAndLevelAre(year, day, level)
+      .codeFilesDoNotExistForToday()
 
-    whenCreateCodeIsCalled()
+    WHEN
+      .createCodeIsCalled()
 
-    thenMainFileIsCreatedAsExpected(expectedMainFile())
-    andTestFileIsCreatedAsExpected(expectedTestFile())
+    THEN
+      .mainFileIsCreatedAsExpected(expectedMainFile())
+      .testFileIsCreatedAsExpected(expectedTestFile())
   }
 
   @ParameterizedTest
   @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun createCodeFilesExist(language: String) {
-    givenActivePropertiesIsSetTo(language)
-    givenCurrentYearDayAndLevelAre(Y15, D2, L1)
-    andCodeFilesExistForToday()
+    GIVEN
+      .activeProfileIs(language)
+      .currentYearDayAndLevelAre(Y15, D2, L1)
+      .codeFilesExistForToday()
+
     val existingMain = mainFile().readText()
     val existingTest = testFile().readText()
 
-    whenCreateCodeIsCalled()
+    WHEN
+      .createCodeIsCalled()
 
-    thenMainFileIsUnchanged(existingMain)
-    andTestFileIsUnchanged(existingTest)
+    THEN
+      .mainFileIsUnchanged(existingMain)
+      .testFileIsUnchanged(existingTest)
   }
 
   @ParameterizedTest
   @ValueSource(strings = [KT_PROFILE, GO_PROFILE])
   fun createCodeWithoutAnswer(language: String) {
-    givenActivePropertiesIsSetTo(language)
-    givenCurrentYearDayAndLevelAre(Y16, D10, L1)
-    andWriteAnswerInCodeIsSetTo(false)
-    andCodeFilesDoNotExistForToday()
+    GIVEN
+      .activeProfileIs(language)
+      .currentYearDayAndLevelAre(Y16, D10, L1)
+      .writeAnswerInCodeIsSetTo(false)
+      .codeFilesDoNotExistForToday()
 
-    whenCreateCodeIsCalled()
+    WHEN
+      .createCodeIsCalled()
 
-    thenMainFileIsCreatedAsExpected(expectedMainFile())
-    andTestFileIsCreatedAsExpected(expectedTestFile())
+    THEN
+      .mainFileIsCreatedAsExpected(expectedMainFile())
+      .testFileIsCreatedAsExpected(expectedTestFile())
   }
 
   companion object {

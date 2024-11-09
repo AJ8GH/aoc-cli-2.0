@@ -1,39 +1,51 @@
 package io.github.aj8gh.aoc.command.handler.create
 
-import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.EXAMPLE_DIR
+import io.github.aj8gh.aoc.test.GO_PROFILE
 import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.test.html
 import io.github.aj8gh.aoc.properties.day
 import io.github.aj8gh.aoc.properties.year
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.File
 
-class ExampleCreateHandlerKtTest : BaseTest() {
+class ExampleCreatorTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun createExample(year: Int, day: Int) {
-    givenCurrentYearDayAndLevelAre(year, day)
-    andTodaysReadmeIsCached(html())
-    andNoExampleExistsForToday()
+    GIVEN
+      .currentYearDayAndLevelAre(year, day)
+      .todaysReadmeIsCached(html())
+      .noExampleExistsForToday()
 
-    whenCreateExampleIsCalled()
+    WHEN
+      .createExampleIsCalled()
 
-    thenTodaysExampleIsCreatedAsExpected(expectedExamples())
+    THEN
+      .todaysExampleIsCreatedAsExpected(expectedExamples())
   }
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun createExampleGo(year: Int, day: Int) {
-    givenActivePropertiesIsSetTo(GO_PROFILE)
-    givenCurrentYearDayAndLevelAre(year, day)
-    andTodaysReadmeIsCached(html())
-    andNoExampleExistsForToday()
+    GIVEN
+      .activeProfileIs(GO_PROFILE)
+      .currentYearDayAndLevelAre(year, day)
+      .todaysReadmeIsCached(html())
+      .noExampleExistsForToday()
 
-    whenCreateExampleIsCalled()
+    WHEN
+      .createExampleIsCalled()
 
-    thenTodaysExampleIsCreatedAsExpected(expectedExamples())
+    THEN
+      .todaysExampleIsCreatedAsExpected(expectedExamples())
   }
 
   private fun expectedExamples() = File("${EXAMPLE_DIR}y${year()}/d${day()}/example.txt")

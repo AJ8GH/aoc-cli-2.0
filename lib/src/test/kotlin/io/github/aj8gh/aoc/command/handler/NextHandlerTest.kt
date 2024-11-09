@@ -1,7 +1,13 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.EMPTY_MESSAGE
+import io.github.aj8gh.aoc.test.KT_PROFILE
 import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.test.getEchoMessage
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import io.github.aj8gh.aoc.util.latestYear
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -17,7 +23,7 @@ private val CLOCK = Clock.fixed(
 
 private val LATEST_YEAR = latestYear(CLOCK)
 
-class NextHandlerKtTest : BaseTest() {
+class NextHandlerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
@@ -30,12 +36,15 @@ class NextHandlerKtTest : BaseTest() {
     expectedDay: Int,
     expectedLevel: Int,
   ) {
-    givenCurrentYearDayAndLevelAre(year = year, day = day, level = level)
+    GIVEN
+      .currentYearDayAndLevelAre(year = year, day = day, level = level)
 
-    whenNextIsCalledFor(flag)
+    WHEN
+      .nextIsCalledFor(flag)
 
-    thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    andTheFollowingMessageIsEchoed(expectedMessage(flag, expectedYear, expectedDay, expectedLevel))
+    THEN
+      .currentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
+      .theFollowingMessageIsEchoed(expectedMessage(flag, expectedYear, expectedDay, expectedLevel))
   }
 
   private fun expectedMessage(next: Boolean, year: Int, day: Int, level: Int) =

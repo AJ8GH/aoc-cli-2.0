@@ -1,21 +1,28 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.GO_PROFILE
+import io.github.aj8gh.aoc.test.KT_PROFILE
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class ProfileTest : BaseTest() {
+class ProfileHandlerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputSource")
   fun profile(currentProfile: String, newProfile: String) {
-    givenActivePropertiesIsSetTo(currentProfile)
+    GIVEN.activeProfileIs(currentProfile)
 
-    whenProfileIsCalledWith(newProfile)
+    WHEN
+      .profileIsCalledWith(newProfile)
 
-    thenTheFollowingProfileIsActive(newProfile)
-    andTheFollowingMessageIsEchoed("Active profile is now \"$newProfile\"")
+    THEN
+      .theFollowingProfileIsActive(newProfile)
+      .theFollowingMessageIsEchoed("Active profile is now \"$newProfile\"")
   }
 
   companion object {

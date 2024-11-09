@@ -1,21 +1,28 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.EMPTY_MESSAGE
+import io.github.aj8gh.aoc.test.KT_PROFILE
 import io.github.aj8gh.aoc.command.D1
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.Y15
+import io.github.aj8gh.aoc.test.getEchoMessage
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class EchoHandlerKtTest : BaseTest() {
+class EchoHandlerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun echoTest(echo: Boolean, expected: String, verbose: Boolean) {
-    whenEchoCurrentIsCalledFor(echo, verbose)
+    WHEN
+      .echoCurrentIsCalledFor(echo, verbose)
 
-    thenTheFollowingMessageIsEchoed(expected)
+    THEN
+      .theFollowingMessageIsEchoed(expected)
   }
 
   companion object {

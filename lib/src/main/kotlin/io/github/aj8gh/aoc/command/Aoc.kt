@@ -41,7 +41,7 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(
     h.setHandler.set(year = year, day = day, level = level, verbose = verbose)
     h.nextHandler.next(flag = next, verbose = verbose)
     h.tokenHandler.token(token)
-    h.fileHandler.files(files)
+    h.filesHandler.files(files)
     h.answerHandler.answer(answer = answer, verbose = verbose)
     h.createHandler.create(create)
     h.echoHandler.echoCurrent(echo = echo, verbose = verbose)

@@ -7,7 +7,7 @@ import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
-import io.github.aj8gh.aoc.command.handler.runtime.FileHandler
+import io.github.aj8gh.aoc.command.handler.runtime.FilesHandler
 import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
@@ -29,7 +29,7 @@ data class ApplicationContext(
     val nextHandler: NextHandler,
     val echoHandler: EchoHandler,
     val createHandler: CreateHandler,
-    val fileHandler: FileHandler,
+    val filesHandler: FilesHandler,
     val openHandler: OpenHandler,
     val answerHandler: AnswerHandler,
   )

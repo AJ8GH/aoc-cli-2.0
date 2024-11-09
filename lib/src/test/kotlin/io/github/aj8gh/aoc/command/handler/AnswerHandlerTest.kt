@@ -4,8 +4,11 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.response
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
-import io.github.aj8gh.aoc.*
 import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -19,70 +22,85 @@ private const val UNKNOWN = "UNKNOWN"
 private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
 @WireMockTest(httpPort = HTTP_PORT)
-class AnswerHandlerKtTest : BaseTest() {
+class AnswerHandlerTest : BaseTest() {
 
   @Test
   fun answer_HappyPath_NoCache() {
-    givenTheFollowingRequestStub(postMapping(CORRECT))
-    andTheFollowingRequestStub(readmeRequestMapping(html()))
-    andTheFollowingRequestStub(getInputMapping())
+    GIVEN
+      .theFollowingRequestStub(postMapping(CORRECT))
+      .theFollowingRequestStub(readmeRequestMapping(html()))
+      .theFollowingRequestStub(getInputMapping())
 
-    whenAnswerIsCalledWith(ANSWER)
+    WHEN
+      .answerIsCalledWith(ANSWER)
 
-    thenTheFollowingRequestWasMade(postPattern())
-    andCurrentYearDayAndLevelAre(Y15, D1, L2)
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
+    THEN
+      .theFollowingRequestWasMade(postPattern())
+      .currentYearDayAndLevelAre(Y15, D1, L2)
+      .theFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
 
     resetAllRequests()
-
     // Answer should now be cached
-    givenCurrentYearDayAndLevelAre(Y15, D1, L1)
 
-    whenAnswerIsCalledWith(ANSWER)
+    GIVEN
+      .currentYearDayAndLevelAre(Y15, D1, L1)
 
-    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    andCurrentYearDayAndLevelAre(Y15, D1, L2)
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
+    WHEN
+      .answerIsCalledWith(ANSWER)
+
+    THEN
+      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .currentYearDayAndLevelAre(Y15, D1, L2)
+      .theFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D1, L2, KT_PROFILE))
   }
 
   @Test
   fun answer_HappyPath_Cached() {
-    givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
-    andTheFollowingRequestStub(getInputMapping(Y15, D2))
-    andTheFollowingRequestStub(readmeRequestMapping(html(Y15, D2), Y15, D2))
+    GIVEN
+      .currentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+      .theFollowingRequestStub(getInputMapping(Y15, D2))
+      .theFollowingRequestStub(readmeRequestMapping(html(Y15, D2), Y15, D2))
 
-    whenAnswerIsCalledWith(ANSWER)
+    WHEN
+      .answerIsCalledWith(ANSWER)
 
-    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    andCurrentYearDayAndLevelAre(Y15, D2, L1)
-    andTodaysReadmeIsCreatedCorrectly(markdown())
-    andTodaysReadmeHasBeenCached(html())
-    andTodaysInputExists()
-    andTheFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1, KT_PROFILE))
+    THEN
+      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .currentYearDayAndLevelAre(Y15, D2, L1)
+      .todaysReadmeIsCreatedCorrectly(markdown())
+      .todaysReadmeHasBeenCached(html())
+      .todaysInputExists()
+      .theFollowingMessagesAreEchoed(CORRECT, getEchoMessage(Y15, D2, L1, KT_PROFILE))
   }
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun answer_SadPath_Cached(answer: String, expectedResponse: String) {
-    givenCurrentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
+    GIVEN
+      .currentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
 
-    whenAnswerIsCalledWith(answer)
+    WHEN
+      .answerIsCalledWith(answer)
 
-    thenNoRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
-    andCurrentYearDayAndLevelAre(Y15, D1, L2)
-    andTheFollowingMessageIsEchoed(expectedResponse)
+    THEN
+      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .currentYearDayAndLevelAre(Y15, D1, L2)
+      .theFollowingMessageIsEchoed(expectedResponse)
   }
 
   @ParameterizedTest
   @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, UNKNOWN])
   fun answer_SadPath_NoCache(expectedResponse: String) {
-    givenTheFollowingRequestStub(postMapping(expectedResponse))
+    GIVEN
+      .theFollowingRequestStub(postMapping(expectedResponse))
 
-    whenAnswerIsCalledWith(ANSWER)
+    WHEN
+      .answerIsCalledWith(ANSWER)
 
-    thenTheFollowingRequestWasMade(postPattern())
-    andCurrentYearDayAndLevelAre(Y15, D1, L1)
-    andTheFollowingMessageIsEchoed(expectedResponse)
+    THEN
+      .theFollowingRequestWasMade(postPattern())
+      .currentYearDayAndLevelAre(Y15, D1, L1)
+      .theFollowingMessageIsEchoed(expectedResponse)
   }
 
   private fun postMapping(response: String) = post(urlPathEqualTo(DEFAULT_ANSWER_URL))

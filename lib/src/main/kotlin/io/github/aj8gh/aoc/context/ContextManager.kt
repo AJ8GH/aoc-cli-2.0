@@ -7,7 +7,7 @@ import io.github.aj8gh.aoc.cache.answer.AnswerCacheManager
 import io.github.aj8gh.aoc.command.handler.*
 import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
-import io.github.aj8gh.aoc.command.handler.runtime.FileHandler
+import io.github.aj8gh.aoc.command.handler.runtime.FilesHandler
 import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
@@ -18,7 +18,7 @@ private const val TEST_PROFILE = "TEST"
 private const val DEV_PROFILE = "DEV"
 private const val PROD_PROFILE = "PROD"
 
-class ContextManager {
+open class ContextManager {
 
   fun context(profile: String? = DEV_PROFILE): ApplicationContext {
     val terminal = terminal()
@@ -53,7 +53,7 @@ class ContextManager {
       codeCreator,
     )
 
-    val fileHandler = fileHandler(executor)
+    val filesHandler = filesHandler(executor)
     val openHandler = openHandler(executor)
     val answerHandler = answerHandler(answerCacheManager, answerClient, createHandler)
 
@@ -65,7 +65,7 @@ class ContextManager {
         tokenHandler = tokenHandler,
         createHandler = createHandler,
         echoHandler = echoHandler,
-        fileHandler = fileHandler,
+        filesHandler = filesHandler,
         nextHandler = nextHandler,
         openHandler = openHandler,
         statHandler = statHandler,
@@ -141,7 +141,7 @@ class ContextManager {
     codeCreator: CodeCreator,
   ) = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator)
 
-  private fun fileHandler(executor: Executor) = FileHandler(executor)
+  private fun filesHandler(executor: Executor) = FilesHandler(executor)
   private fun openHandler(executor: Executor) = OpenHandler(executor)
 
   private fun answerHandler(

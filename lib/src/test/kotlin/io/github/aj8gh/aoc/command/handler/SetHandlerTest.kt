@@ -1,24 +1,33 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.*
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.EMPTY_MESSAGE
+import io.github.aj8gh.aoc.test.KT_PROFILE
 import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.test.getEchoMessage
+import io.github.aj8gh.aoc.test.steps.GIVEN
+import io.github.aj8gh.aoc.test.steps.THEN
+import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class SetHandlerKtTest : BaseTest() {
+class SetHandlerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun setTest(year: Int?, day: Int?, level: Int?, message: String) {
+    GIVEN
     val expectedYear = year?.mod(2000) ?: Y15
     val expectedDay = day ?: D1
     val expectedLevel = level ?: L1
 
-    whenSetIsCalledFor(year = year, day = day, level = level)
+    WHEN
+      .setIsCalledFor(year = year, day = day, level = level)
 
-    thenCurrentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-    andTheFollowingMessageIsEchoed(message)
+    THEN
+      .currentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
+      .theFollowingMessageIsEchoed(message)
   }
 
   companion object {
