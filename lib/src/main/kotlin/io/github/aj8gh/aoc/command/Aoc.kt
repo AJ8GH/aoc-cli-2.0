@@ -7,10 +7,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import io.github.aj8gh.aoc.command.Command.*
-import io.github.aj8gh.aoc.command.handler.*
-import io.github.aj8gh.aoc.command.handler.create.CreateHandler
-import io.github.aj8gh.aoc.command.handler.runtime.FileHandler
-import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
+import io.github.aj8gh.aoc.context.ApplicationContext
 import io.github.aj8gh.aoc.util.latestYear
 
 private const val APP_NAME = "aoc"
@@ -19,18 +16,7 @@ val YEAR_RANGE = Y15..latestYear()
 val DAY_RANGE = D1..D25
 val LEVEL_RANGE = L1..L2
 
-class Aoc(
-  private val setHandler: SetHandler,
-  private val statHandler: StatHandler,
-  private val tokenHandler: TokenHandler,
-  private val profileHandler: ProfileHandler,
-  private val nextHandler: NextHandler,
-  private val echoHandler: EchoHandler,
-  private val createHandler: CreateHandler,
-  private val fileHandler: FileHandler,
-  private val openHandler: OpenHandler,
-  private val answerHandler: AnswerHandler,
-) : CliktCommand(
+class Aoc(private val context: ApplicationContext) : CliktCommand(
   name = APP_NAME,
   invokeWithoutSubcommand = true,
 ) {
@@ -50,16 +36,17 @@ class Aoc(
   private val verbose by toOption(VERBOSE.names, VERBOSE.help).flag()
 
   override fun run() {
-    profileHandler.profile(profile)
-    setHandler.set(year = year, day = day, level = level, verbose = verbose)
-    nextHandler.next(flag = next, verbose = verbose)
-    tokenHandler.token(token)
-    fileHandler.files(files)
-    answerHandler.answer(answer = answer, verbose = verbose)
-    createHandler.create(create)
-    echoHandler.echoCurrent(echo = echo, verbose = verbose)
-    statHandler.stats(stats)
-    openHandler.open(open)
+    val h = context.handler
+    h.profileHandler.profile(profile)
+    h.setHandler.set(year = year, day = day, level = level, verbose = verbose)
+    h.nextHandler.next(flag = next, verbose = verbose)
+    h.tokenHandler.token(token)
+    h.fileHandler.files(files)
+    h.answerHandler.answer(answer = answer, verbose = verbose)
+    h.createHandler.create(create)
+    h.echoHandler.echoCurrent(echo = echo, verbose = verbose)
+    h.statHandler.stats(stats)
+    h.openHandler.open(open)
   }
 
   private fun toIntOption(
