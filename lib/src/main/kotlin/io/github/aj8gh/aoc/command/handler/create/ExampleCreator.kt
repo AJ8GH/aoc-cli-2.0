@@ -1,9 +1,7 @@
 package io.github.aj8gh.aoc.command.handler.create
 
-import io.github.aj8gh.aoc.io.createResourcesDirIfNotExists
-import io.github.aj8gh.aoc.io.exampleFile
-import io.github.aj8gh.aoc.io.readmeCacheFile
-import io.github.aj8gh.aoc.io.write
+import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Writer
 
 private const val EXAMPLE_IDENTIFIER = "for example"
 private const val LARGER_EXAMPLE_IDENTIFIER = "consider this larger example"
@@ -20,15 +18,18 @@ private const val EMPTY_STRING = ""
 
 private var identifier = EXAMPLE_IDENTIFIER
 
-class ExampleCreator {
+class ExampleCreator(
+  private val files: FileManager,
+  private val writer: Writer,
+) {
 
   fun create() {
-    if (!readmeCacheFile().exists()) return
-    val html = readmeCacheFile().readText()
+    if (!files.readmeCacheFile().exists()) return
+    val html = files.readmeCacheFile().readText()
     if (!findExampleIdentifier(html.lowercase())) return
     val example = sanitiseExample(buildExample(html.lines()))
-    createResourcesDirIfNotExists()
-    write(exampleFile(), example)
+    files.createResourcesDirIfNotExists()
+    writer.write(files.exampleFile(), example)
   }
 
   private fun buildExample(lines: List<String>): String {

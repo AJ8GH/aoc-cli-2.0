@@ -2,14 +2,13 @@ package io.github.aj8gh.aoc.test
 
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
-import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.http.Body
 import io.github.aj8gh.aoc.http.SESSION_KEY
-import io.github.aj8gh.aoc.io.homeOverride
-import io.github.aj8gh.aoc.io.read
-import io.github.aj8gh.aoc.properties.*
+import io.github.aj8gh.aoc.test.context.PROPS
+import io.github.aj8gh.aoc.test.context.PROPS_FILES
+import io.github.aj8gh.aoc.test.context.READER
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
@@ -52,8 +51,8 @@ open class BaseTest {
   @AfterTest
   fun tearDown() {
     resetFiles()
-    forceLoadAocProperties()
-    forceLoadActiveProfile()
+    PROPS.forceLoadAocProperties()
+    PROPS.forceLoadActiveProfile()
     resetOut()
   }
 }
@@ -70,10 +69,10 @@ fun outContent() = outContent.toString().trim()
 
 fun testInput() = INPUT.trimIndent().trim()
 
-fun html() = html(year(), day())
-fun html(year: Int, day: Int) = read("${HTML_DIR}y$year/d$day.html")
+fun html() = html(PROPS.year(), PROPS.day())
+fun html(year: Int, day: Int) = READER.read("${HTML_DIR}y$year/d$day.html")
 
-fun readmeRequestMapping(response: String) = readmeRequestMapping(response, year(), day())
+fun readmeRequestMapping(response: String) = readmeRequestMapping(response, PROPS.year(), PROPS.day())
 
 fun readmeRequestMapping(response: String, year: Int, day: Int) = get(readmeUrl(year, day))
   .withCookie(SESSION_KEY, matching(SESSION))
@@ -82,15 +81,15 @@ fun readmeRequestMapping(response: String, year: Int, day: Int) = get(readmeUrl(
       .withResponseBody(Body(response))
   )
 
-fun readmeUrl() = readmeUrl(year(), day())
+fun readmeUrl() = readmeUrl(PROPS.year(), PROPS.day())
 
 fun readmeUrl(year: Int, day: Int) = "/20$year/day/$day"
 
-fun inputUrl() = "/20${year()}/day/${day()}/input"
+fun inputUrl() = "/20${PROPS.year()}/day/${PROPS.day()}/input"
 
 fun inputUrl(year: Int, day: Int) = "/20$year/day/$day/input"
 
-fun getInputMapping(): MappingBuilder = getInputMapping(year(), day())
+fun getInputMapping(): MappingBuilder = getInputMapping(PROPS.year(), PROPS.day())
 
 fun getInputMapping(year: Int, day: Int): MappingBuilder =
   get(inputUrl(year, day))
@@ -101,13 +100,13 @@ fun getInputMapping(year: Int, day: Int): MappingBuilder =
         .withResponseBody(Body(testInput()))
     )
 
-fun markdown() = read("${MARKDOWN_DIR}y${year()}/d${day()}.md")
+fun markdown() = READER.read("${MARKDOWN_DIR}y${PROPS.year()}/d${PROPS.day()}.md")
 
-fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${activeProfile().language}"
+fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${PROPS.activeProfile().language}"
 
-fun expectedMainFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$MAIN_FILE")
+fun expectedMainFile() = READER.read("${expectedCodeDir()}/y${PROPS.year()}/d${PROPS.day()}/$MAIN_FILE")
 
-fun expectedTestFile() = read("${expectedCodeDir()}/y${year()}/d${day()}/$TEST_FILE")
+fun expectedTestFile() = READER.read("${expectedCodeDir()}/y${PROPS.year()}/d${PROPS.day()}/$TEST_FILE")
 
 private fun resetFiles() {
   File(AOC_HOME).deleteRecursively()
@@ -117,6 +116,6 @@ private fun resetFiles() {
 private fun resetOut() = System.setOut(originalOut)
 
 private fun overrideAndLoadProperties() {
-  homeOverride = AOC_HOME
-  aocProperties()
+  PROPS_FILES.homeOverride = AOC_HOME
+  PROPS.aocProperties()
 }

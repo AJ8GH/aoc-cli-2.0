@@ -4,9 +4,10 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.http.SESSION_KEY
-import io.github.aj8gh.aoc.io.read
-import io.github.aj8gh.aoc.properties.year
 import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.test.context.CONTEXT
+import io.github.aj8gh.aoc.test.context.PROPS
+import io.github.aj8gh.aoc.test.context.READER
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -139,9 +140,15 @@ class ReadmeCreaorTest : BaseTest() {
       .todaysReadmeIsCreatedCorrectly(markdownForLevel(cacheLevel))
   }
 
-  private fun htmlAtLevel(level: Int) = read("${HTML_DIR}y${year()}/level/l$level.html")
+  private fun htmlAtLevel(level: Int): String {
+    val path = "${HTML_DIR}y${PROPS.year()}/level/l$level.html"
+    return READER.read(path)
+  }
 
-  private fun markdownForLevel(level: Int) = read("${MARKDOWN_DIR}y${year()}/level/l$level.md")
+  private fun markdownForLevel(level: Int): String {
+    val path = "${MARKDOWN_DIR}y${PROPS.year()}/level/l$level.md"
+    return READER.read(path)
+  }
 
   private fun requestPattern() = getRequestedFor(urlEqualTo(readmeUrl()))
     .withCookie(SESSION_KEY, matching(SESSION))

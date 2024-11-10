@@ -1,12 +1,11 @@
 package io.github.aj8gh.aoc.command.handler.create
 
+import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.EXAMPLE_DIR
 import io.github.aj8gh.aoc.test.GO_PROFILE
-import io.github.aj8gh.aoc.command.*
+import io.github.aj8gh.aoc.test.context.PROPS
 import io.github.aj8gh.aoc.test.html
-import io.github.aj8gh.aoc.properties.day
-import io.github.aj8gh.aoc.properties.year
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -48,7 +47,8 @@ class ExampleCreatorTest : BaseTest() {
       .todaysExampleIsCreatedAsExpected(expectedExamples())
   }
 
-  private fun expectedExamples() = File("${EXAMPLE_DIR}y${year()}/d${day()}/example.txt")
+  private fun expectedExamples() =
+    File("${EXAMPLE_DIR}y${PROPS.year()}/d${PROPS.day()}/example.txt")
 
   companion object {
     @JvmStatic

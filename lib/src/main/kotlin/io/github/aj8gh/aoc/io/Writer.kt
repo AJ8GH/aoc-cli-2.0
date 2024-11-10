@@ -1,10 +1,16 @@
 package io.github.aj8gh.aoc.io
 
 import io.github.aj8gh.aoc.properties.Profile
+import io.github.aj8gh.aoc.properties.PropertyFileManager
 import java.io.File
 
-fun write(profile: Profile) = mapper.writeValue(activeProfileFile(), profile)
+class Writer(
+  private val propsFiles: PropertyFileManager
+) {
 
-fun <T> write(file: File, t: T) = mapper.writeValue(file, t)
+  fun write(profile: Profile) = mapper.writeValue(propsFiles.activeProfileFile(), profile)
 
-fun write(file: File, content: String) = file.writeText(content)
+  fun <T> write(file: File, t: T) = mapper.writeValue(file, t)
+
+  fun write(file: File, content: String) = file.writeText(content)
+}

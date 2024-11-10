@@ -1,31 +1,31 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.io.activeProfileFile
-import io.github.aj8gh.aoc.io.aocPropertiesFile
-import io.github.aj8gh.aoc.io.read
-import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.aocProperties
+import io.github.aj8gh.aoc.io.Reader
+import io.github.aj8gh.aoc.properties.PropertiesManager
+import io.github.aj8gh.aoc.properties.PropertyFileManager
 
 const val PROPERTIES_HEADER = "AoC Properties"
 const val PROFILE_HEADER = "Active Profile"
 
-class EchoHandler {
+class EchoHandler(
+  private val props: PropertiesManager,
+  private val propsFiles: PropertyFileManager,
+  private val reader: Reader,
+) {
 
   fun handle(verbose: Boolean) = handle(true, verbose)
 
   fun handle(echo: Boolean, verbose: Boolean) {
     if (!echo) return
+    val aocProps = reader.read(propsFiles.aocPropertiesFile())
+    val profile = reader.read(propsFiles.activeProfileFile())
 
     if (verbose) {
-      val props = read(aocPropertiesFile())
-      val profile = read(activeProfileFile())
-      println("$PROPERTIES_HEADER\n${props}\n$PROFILE_HEADER\n${profile}")
+      println("$PROPERTIES_HEADER\n${aocProps}\n$PROFILE_HEADER\n${profile}")
     } else {
-      val env = activeProfile().current
-      println(
-        "You are on year ${env.year} day ${env.day} level ${env.level}. "
-            + "Active profile: ${aocProperties().active}"
-      )
+      val env = props.activeProfile().current
+      val active = props.aocProperties().active
+      println("You are on year ${env.year} day ${env.day} level ${env.level}. Active profile: $active")
     }
   }
 }

@@ -1,11 +1,13 @@
 package io.github.aj8gh.aoc.command.handler.runtime
 
-import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.files
+import io.github.aj8gh.aoc.properties.PropertiesManager
 
-class OpenHandler(private val executor: Executor) {
+class OpenHandler(
+  private val props: PropertiesManager,
+  private val executor: Executor,
+) {
   fun handle(flag: Boolean) {
     if (!flag) return
-    executor.exec(arrayOf(activeProfile().ide, files().projectHome))
+    executor.exec(arrayOf(props.activeProfile().ide, props.files().projectHome))
   }
 }

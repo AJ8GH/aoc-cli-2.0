@@ -12,16 +12,17 @@ const val NOT_CACHED = "Answer not found in cache."
 const val CORRECT = "Congratulations, that's the correct answer!"
 
 class AnswerHandler(
-  private val cacheManager: AnswerCache,
+  private val cache: AnswerCache,
   private val client: AnswerClient,
-  private val createHandler: CreateHandler
+  private val createHandler: CreateHandler,
+  private val nextHandler: NextHandler,
 ) {
 
   fun handle(answer: String?, verbose: Boolean) =
     answer?.let { checkCache(it, verbose) }
 
   private fun checkCache(answer: String, verbose: Boolean) =
-    handle(cacheManager.checkAnswer(answer), answer, verbose)
+    handle(cache.checkAnswer(answer), answer, verbose)
 
   private fun submitAnswer(answer: String, verbose: Boolean) {
     val response = client.postAnswer(answer)
@@ -43,8 +44,8 @@ class AnswerHandler(
 
   private fun handleCorrect(answer: String, verbose: Boolean) {
     println(CORRECT)
-    cacheManager.cacheAnswer(answer)
-    NextHandler(EchoHandler()).handle(verbose)
+    cache.cacheAnswer(answer)
+    nextHandler.handle(verbose)
     createHandler.handle()
   }
 }

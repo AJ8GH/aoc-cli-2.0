@@ -4,7 +4,9 @@ import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
 import io.github.aj8gh.aoc.cache.ReadmeCache
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.http.ReadmeClient
-import io.github.aj8gh.aoc.io.*
+import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Reader
+import io.github.aj8gh.aoc.io.Writer
 import java.io.File
 
 private const val TAIL_COMPLETE = "At this point, you should [return to your Advent calendar]"
@@ -21,17 +23,20 @@ class ReadmeCreator(
   private val cache: ReadmeCache,
   private val client: ReadmeClient,
   private val answerCache: AnswerCache,
+  private val reader: Reader,
+  private val writer: Writer,
+  private val files: FileManager,
 ) {
 
   fun create() {
-    if (!isReadmeStale(readmeFile())) return
-    createResourcesDirIfNotExists()
-    write(readmeFile(), format(toMarkdown(checkCacheOrGet())))
+    if (!isReadmeStale(files.readmeFile())) return
+    files.createResourcesDirIfNotExists()
+    writer.write(files.readmeFile(), format(toMarkdown(checkCacheOrGet())))
   }
 
   private fun checkCacheOrGet() =
-    if (isReadmeStale(readmeCacheFile())) getAndCacheReadme()
-    else read(readmeCacheFile())
+    if (isReadmeStale(files.readmeCacheFile())) getAndCacheReadme()
+    else reader.read(files.readmeCacheFile())
 
   private fun isReadmeStale(file: File) =
     cache.readmeLevel(file) < answerCache.dayCompletion()

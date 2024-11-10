@@ -1,16 +1,19 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.io.aocPropertiesFile
-import io.github.aj8gh.aoc.io.write
-import io.github.aj8gh.aoc.properties.aocProperties
-import io.github.aj8gh.aoc.properties.forceLoadAocProperties
+import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.properties.PropertiesManager
+import io.github.aj8gh.aoc.properties.PropertyFileManager
 
-class TokenHandler {
+class TokenHandler(
+  private val props: PropertiesManager,
+  private val propsFiles: PropertyFileManager,
+  private val writer: Writer,
+) {
   fun handle(token: String?) {
     token?.let {
-      val props = aocProperties().copy(session = it)
-      write(aocPropertiesFile(), props)
-      forceLoadAocProperties()
+      val newProps = props.aocProperties().copy(session = it)
+      writer.write(propsFiles.aocPropertiesFile(), newProps)
+      props.forceLoadAocProperties()
     }
   }
 }

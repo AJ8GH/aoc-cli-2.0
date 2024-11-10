@@ -12,6 +12,11 @@ import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
+import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Reader
+import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.properties.PropertiesManager
+import io.github.aj8gh.aoc.properties.PropertyFileManager
 
 data class ApplicationContext(
   val handler: Handler,
@@ -19,6 +24,8 @@ data class ApplicationContext(
   val client: Client,
   val creator: Creator,
   val cache: Cache,
+  val manager: Manager,
+  val io: Io,
 ) {
 
   data class Handler(
@@ -58,5 +65,16 @@ data class ApplicationContext(
     val answer: AnswerCache,
     val input: InputCache,
     val readme: ReadmeCache,
+  )
+
+  data class Manager(
+    val file: FileManager,
+    val props: PropertiesManager,
+    val propsFiles: PropertyFileManager,
+  )
+
+  data class Io(
+    val reader: Reader,
+    val writer: Writer,
   )
 }

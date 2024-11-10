@@ -3,9 +3,12 @@ package io.github.aj8gh.aoc.test.steps
 import com.github.ajalt.mordant.table.Table
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
-import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.properties.*
+import io.github.aj8gh.aoc.io.EXTENSION
+import io.github.aj8gh.aoc.properties.Profile
 import io.github.aj8gh.aoc.test.context.CONTEXT
+import io.github.aj8gh.aoc.test.context.FILES
+import io.github.aj8gh.aoc.test.context.PROPS
+import io.github.aj8gh.aoc.test.context.READER
 import io.github.aj8gh.aoc.test.outContent
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.verify
@@ -15,9 +18,9 @@ import kotlin.test.assertEquals
 class Then {
 
   fun currentYearDayAndLevelAre(expectedYear: Int, expectedDay: Int, expectedLevel: Int): Then {
-    assertEquals(expectedYear, year())
-    assertEquals(expectedDay, day())
-    assertEquals(expectedLevel, level())
+    assertEquals(expectedYear, PROPS.year())
+    assertEquals(expectedDay, PROPS.day())
+    assertEquals(expectedLevel, PROPS.level())
     return this
   }
 
@@ -51,7 +54,7 @@ class Then {
   }
 
   fun todaysInputExists(): Then {
-    assertEquals(testInput(), read(inputFile()).trim())
+    assertEquals(testInput(), READER.read(FILES.inputFile()).trim())
     return this
   }
 
@@ -61,44 +64,45 @@ class Then {
   }
 
   fun todaysReadmeIsCreatedCorrectly(markdown: String): Then {
-    assertEquals(markdown.trim(), read(readmeFile()))
+    assertEquals(markdown.trim(), READER.read(FILES.readmeFile()))
     return this
   }
 
   fun todaysReadmeHasBeenCached(expected: String): Then {
-    assertEquals(expected, read(readmeCacheFile()))
+    assertEquals(expected, READER.read(FILES.readmeCacheFile()))
     return this
   }
 
   fun mainFileIsCreatedAsExpected(expected: String): Then {
-    assertEquals(expected, mainFile().readText())
+    assertEquals(expected, FILES.mainFile().readText())
     return this
   }
 
   fun testFileIsCreatedAsExpected(expected: String): Then {
-    assertEquals(expected, testFile().readText())
+    assertEquals(expected, FILES.testFile().readText())
     return this
   }
 
   fun mainFileIsUnchanged(expected: String): Then {
-    assertEquals(expected, mainFile().readText())
+    assertEquals(expected, FILES.mainFile().readText())
     return this
   }
 
   fun testFileIsUnchanged(expected: String): Then {
-    assertEquals(expected, testFile().readText())
+    assertEquals(expected, FILES.testFile().readText())
     return this
   }
 
   fun todaysExampleIsCreatedAsExpected(expected: File): Then {
-    assertEquals(trimLines(expected), trimLines(exampleFile()))
+    assertEquals(trimLines(expected), trimLines(FILES.exampleFile()))
     return this
   }
 
   fun theFollowingProfileIsActive(profile: String): Then {
-    assertEquals(profile, aocProperties().active)
-    val actual = activeProfile()
-    val expected = readYaml(File("${io.github.aj8gh.aoc.test.AOC_HOME}$profile$EXTENSION"), Profile::class.java)
+    assertEquals(profile, PROPS.aocProperties().active)
+    val actual = PROPS.activeProfile()
+    val file = File("${io.github.aj8gh.aoc.test.AOC_HOME}$profile$EXTENSION")
+    val expected = READER.readYaml(file, Profile::class.java)
     assertEquals(expected, actual)
     return this
   }
@@ -119,7 +123,7 @@ class Then {
   }
 
   fun theTokenHasBeenUpdatedTo(token: String): Then {
-    assertEquals(token, aocProperties().session)
+    assertEquals(token, PROPS.aocProperties().session)
     return this
   }
 

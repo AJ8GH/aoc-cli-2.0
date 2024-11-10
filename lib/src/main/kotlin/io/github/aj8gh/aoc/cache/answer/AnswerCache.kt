@@ -4,13 +4,10 @@ import io.github.aj8gh.aoc.cache.answer.AnswerType.*
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
 import io.github.aj8gh.aoc.command.handler.*
-import io.github.aj8gh.aoc.io.answerCacheFile
-import io.github.aj8gh.aoc.io.readYaml
-import io.github.aj8gh.aoc.io.write
-import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.day
-import io.github.aj8gh.aoc.properties.level
-import io.github.aj8gh.aoc.properties.year
+import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Reader
+import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.properties.PropertiesManager
 
 private const val COMPLETION_LEVEL_2 = 2
 private const val COMPLETION_LEVEL_1 = 1
@@ -53,20 +50,25 @@ private val types = mapOf(
   ),
 )
 
-class AnswerCache {
+class AnswerCache(
+  private val files: FileManager,
+  private val writer: Writer,
+  private val reader: Reader,
+  private val props: PropertiesManager,
+) {
 
   fun answerCache(): Answers {
-    val file = answerCacheFile()
-    if (!file.exists()) write(answerCacheFile(), Answers())
-    return readYaml(file, Answers::class.java)
+    val file = files.answerCacheFile()
+    if (!file.exists()) writer.write(files.answerCacheFile(), Answers())
+    return reader.readYaml(file, Answers::class.java)
   }
 
   fun checkAnswer(answer: String) = handle(answer, getAnswer())
 
-  fun cacheAnswer(answer: String) = cacheAnswer(level(), answer)
+  fun cacheAnswer(answer: String) = cacheAnswer(props.level(), answer)
 
   fun dayCompletion(): Int {
-    val day = answerCache().get(year(), day())
+    val day = answerCache().get(props.year(), props.day())
     return if (day.level(L2) != null) COMPLETION_LEVEL_2
     else if (day.level(L1) != null) COMPLETION_LEVEL_1
     else COMPLETION_LEVEL_0
@@ -74,11 +76,11 @@ class AnswerCache {
 
   fun cacheAnswer(level: Int, answer: String) {
     val answers = answerCache()
-    answers.save(year(), day(), level, answer)
+    answers.save(props.year(), props.day(), level, answer)
     writeAnswers(answers)
   }
 
-  fun clearCacheForDay() = answerCache().clear(year(), day())
+  fun clearCacheForDay() = answerCache().clear(props.year(), props.day())
 
   fun type() = when {
     isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT
@@ -86,7 +88,7 @@ class AnswerCache {
     else -> STRING
   }
 
-  fun typeForLanguage() = types[type()]!![activeProfile().language]!!
+  fun typeForLanguage() = types[type()]!![props.activeProfile().language]!!
 
   fun assertFuncType() = when (type()) {
     STRING -> ""
@@ -102,7 +104,7 @@ class AnswerCache {
   fun example2() = default()
 
   fun default(): String {
-    val lang = activeProfile().language
+    val lang = props.activeProfile().language
     return when (type()) {
       INT -> NUMERIC_DEFAULT
       LONG -> LONG_DEFAULT.takeIf { lang == JAVA || lang == KOTLIN } ?: NUMERIC_DEFAULT
@@ -114,21 +116,21 @@ class AnswerCache {
     .takeIf { type() != STRING }
     ?: "\"${answer}\""
 
-  private fun answer1() = answerCache().get(year(), day(), L1)
+  private fun answer1() = answerCache().get(props.year(), props.day(), L1)
 
-  private fun answer2() = answerCache().get(year(), day(), L2)
+  private fun answer2() = answerCache().get(props.year(), props.day(), L2)
 
   private fun handleLong(answer: String): String {
-    val lang = activeProfile().language
+    val lang = props.activeProfile().language
     if (type() == LONG && (lang == JAVA || lang == KOTLIN)) {
       return answer + "L"
     }
     return answer
   }
 
-  private fun getAnswer() = answerCache().get(year(), day(), level())
+  private fun getAnswer() = answerCache().get(props.year(), props.day(), props.level())
 
-  private fun writeAnswers(answers: Answers) = write(answerCacheFile(), answers)
+  private fun writeAnswers(answers: Answers) = writer.write(files.answerCacheFile(), answers)
 
   private fun handle(answer: String, cachedAnswer: String?) =
     with(cachedAnswer) {

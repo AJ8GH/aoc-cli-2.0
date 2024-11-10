@@ -1,24 +1,25 @@
 package io.github.aj8gh.aoc.command.handler
 
-import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.current
-import io.github.aj8gh.aoc.properties.updateProfile
+import io.github.aj8gh.aoc.properties.PropertiesManager
 
 private const val TWO_THOUSAND = 2_000
 
-class SetHandler(private val echoHandler: EchoHandler) {
+class SetHandler(
+  private val props: PropertiesManager,
+  private val echoHandler: EchoHandler
+) {
 
   fun handle(year: Int?, day: Int?, level: Int?, verbose: Boolean = false) {
     if (year == null && day == null && level == null) return
 
     setNewValues(year, day, level)
-    updateProfile(activeProfile())
+    props.updateProfile(props.activeProfile())
     echoHandler.handle(verbose)
   }
 
   private fun setNewValues(year: Int?, day: Int?, level: Int?) {
-    year?.let { current().year = it.mod(TWO_THOUSAND) }
-    day?.let { current().day = it }
-    level?.let { current().level = it }
+    year?.let { props.current().year = it.mod(TWO_THOUSAND) }
+    day?.let { props.current().day = it }
+    level?.let { props.current().level = it }
   }
 }

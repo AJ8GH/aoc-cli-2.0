@@ -1,9 +1,8 @@
 package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.command.*
-import io.github.aj8gh.aoc.io.mainFile
-import io.github.aj8gh.aoc.io.testFile
 import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.test.context.FILES
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -38,8 +37,8 @@ class CodeCreatorTest : BaseTest() {
       .currentYearDayAndLevelAre(Y15, D2, L1)
       .codeFilesExistForToday()
 
-    val existingMain = mainFile().readText()
-    val existingTest = testFile().readText()
+    val existingMain = FILES.mainFile().readText()
+    val existingTest = FILES.testFile().readText()
 
     WHEN
       .createCodeIsCalled()

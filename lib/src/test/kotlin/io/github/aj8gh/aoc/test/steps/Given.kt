@@ -3,15 +3,10 @@ package io.github.aj8gh.aoc.test.steps
 import com.github.ajalt.mordant.table.Table
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
-import io.github.aj8gh.aoc.cache.ReadmeCache
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.handler.NOT_CACHED
-import io.github.aj8gh.aoc.io.*
-import io.github.aj8gh.aoc.properties.activeProfile
-import io.github.aj8gh.aoc.properties.forceLoadActiveProfile
-import io.github.aj8gh.aoc.properties.setActiveProfile
 import io.github.aj8gh.aoc.test.ANSWER
-import io.github.aj8gh.aoc.test.context.CONTEXT
+import io.github.aj8gh.aoc.test.context.*
 import io.github.aj8gh.aoc.test.stubOutStream
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.every
@@ -29,7 +24,7 @@ class Given {
   }
 
   fun activeProfileIs(profile: String): Given {
-    setActiveProfile(profile)
+    PROPS.setActiveProfile(profile)
     return this
   }
 
@@ -39,37 +34,37 @@ class Given {
   }
 
   fun todaysInputFileDoesNotExist(): Given {
-    assertFalse { inputFile().exists() }
+    assertFalse { FILES.inputFile().exists() }
     return this
   }
 
   fun todaysInputIsCached(): Given {
-    assertEquals(testInput(), read(inputCacheFile()).trim())
+    assertEquals(testInput(), READER.read(FILES.inputCacheFile()).trim())
     return this
   }
 
   fun todaysInputIsNotCached(): Given {
-    assertFalse(inputCacheFile().exists())
+    assertFalse(FILES.inputCacheFile().exists())
     return this
   }
 
   fun noReadmeExistsForToday(): Given {
-    assertFalse { readmeFile().exists() }
+    assertFalse { FILES.readmeFile().exists() }
     return this
   }
 
   fun todaysReadmeIsNotCached(): Given {
-    assertFalse { readmeCacheFile().exists() }
+    assertFalse { FILES.readmeCacheFile().exists() }
     return this
   }
 
   fun todaysReadmeIsCached(html: String): Given {
-    ReadmeCache().cacheReadme(html)
+    CONTEXT.cache.readme.cacheReadme(html)
     return this
   }
 
   fun noExampleExistsForToday(): Given {
-    assertFalse { exampleFile().exists() }
+    assertFalse { FILES.exampleFile().exists() }
     return this
   }
 
@@ -103,19 +98,19 @@ class Given {
 
 
   fun writeAnswerInCodeIsSetTo(bool: Boolean): Given {
-    write(activeProfile().copy(writeAnswerInCode = bool))
-    forceLoadActiveProfile()
+    WRITER.write(PROPS.activeProfile().copy(writeAnswerInCode = bool))
+    PROPS.forceLoadActiveProfile()
     return this
   }
 
   fun todaysInputFileAlreadyExists(): Given {
-    assertEquals(testInput(), read(inputFile()).trim())
+    assertEquals(testInput(), READER.read(FILES.inputFile()).trim())
     return this
   }
 
   fun todaysReadmeExists(markdown: String): Given {
-    createResourcesDirIfNotExists()
-    write(readmeFile(), markdown)
+    FILES.createResourcesDirIfNotExists()
+    WRITER.write(FILES.readmeFile(), markdown)
     return this
   }
 
@@ -126,14 +121,14 @@ class Given {
   }
 
   fun codeFilesDoNotExistForToday(): Given {
-    assertFalse { mainFile().exists() }
-    assertFalse { testFile().exists() }
+    assertFalse { FILES.mainFile().exists() }
+    assertFalse { FILES.testFile().exists() }
     return this
   }
 
   fun codeFilesExistForToday(): Given {
-    assertTrue { mainFile().exists() }
-    assertTrue { testFile().exists() }
+    assertTrue { FILES.mainFile().exists() }
+    assertTrue { FILES.testFile().exists() }
     return this
   }
 }
