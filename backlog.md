@@ -1,7 +1,7 @@
 # TODO
 
-* [ ] refactor with classes, context, properties, profiles
 * [ ] exception handling
+* [ ] refactor terminal output
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
 * [ ] create new projects with new properties

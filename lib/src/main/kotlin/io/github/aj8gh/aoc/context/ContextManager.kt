@@ -54,12 +54,7 @@ open class ContextManager {
     val tokenHandler = tokenHandler(propertiesManager, propertyFileManager, writer)
     val profileHandler = profileHandler(propertiesManager)
     val nextHandler = nextHandler(propertiesManager, echoHandler)
-    val createHandler = createHandler(
-      inputCreator,
-      readmeCreator,
-      exampleCreator,
-      codeCreator,
-    )
+    val createHandler = createHandler(inputCreator, readmeCreator, exampleCreator, codeCreator)
 
     val filesHandler = filesHandler(propertiesManager, propertyFileManager, executor)
     val openHandler = openHandler(propertiesManager, executor)

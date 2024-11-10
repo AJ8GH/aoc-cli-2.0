@@ -91,6 +91,12 @@ class Given {
     return this
   }
 
+  fun theRuntimeWillThrowAnException(command: Array<String>, message: String): Given {
+    val exception = RuntimeException(message)
+    every { CONTEXT.exec.runtime.exec(command) } throws exception
+    return this
+  }
+
   fun theTerminalIsMocked(): Given {
     justRun { CONTEXT.exec.terminal.println(any(Table::class)) }
     return this

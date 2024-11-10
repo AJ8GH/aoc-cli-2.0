@@ -1,6 +1,8 @@
 package io.github.aj8gh.aoc.test.steps
 
+import io.github.aj8gh.aoc.command.OPEN_SHORT
 import io.github.aj8gh.aoc.test.context.CONTEXT
+import io.github.aj8gh.aoc.test.context.RUNNER
 
 class When {
 
@@ -11,7 +13,7 @@ class When {
   fun answerIsCalledWith(answer: String) = CONTEXT.handler.answer.handle(answer, false)
   fun theAnswerIsCached(answer: String) = CONTEXT.cache.answer.cacheAnswer(answer)
   fun profileIsCalledWith(profile: String) = CONTEXT.handler.profile.handle(profile)
-  fun openIsCalled() = CONTEXT.handler.open.handle(true)
+  fun openIsCalled() = RUNNER.run(arrayOf(OPEN_SHORT))
   fun configFileIsCalled() = CONTEXT.handler.files.handle(true)
   fun tokenIsCalled(token: String) = CONTEXT.handler.token.handle(token)
   fun statsIsCalled(flag: Boolean) = CONTEXT.handler.stats.handle(flag)

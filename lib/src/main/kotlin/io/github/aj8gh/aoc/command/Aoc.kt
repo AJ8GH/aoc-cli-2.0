@@ -16,10 +16,7 @@ val YEAR_RANGE = Y15..latestYear()
 val DAY_RANGE = D1..D25
 val LEVEL_RANGE = L1..L2
 
-class Aoc(private val context: ApplicationContext) : CliktCommand(
-  name = APP_NAME,
-  invokeWithoutSubcommand = true,
-) {
+class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAME) {
 
   private val year by toIntOption(YEAR.names, YEAR.help, YEAR.completion, YEAR_RANGE)
   private val day by toIntOption(DAY.names, DAY.help, DAY.completion, DAY_RANGE)
