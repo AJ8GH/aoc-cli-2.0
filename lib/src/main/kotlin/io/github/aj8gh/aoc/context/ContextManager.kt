@@ -14,6 +14,7 @@ import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
 import io.github.aj8gh.aoc.http.ReadmeClient
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
@@ -32,6 +33,7 @@ open class ContextManager {
     val writer = writer(propertyFileManager)
     val propertiesManager = propertiesManager(writer, reader, propertyFileManager)
     val fileManager = fileManager(propertiesManager, propertyFileManager)
+    val logger = logger(writer, fileManager)
 
     val answerCache = answerCacheManager(fileManager, propertiesManager, reader, writer)
     val inputCache = inputCache(fileManager, reader, writer)
@@ -59,6 +61,8 @@ open class ContextManager {
     val filesHandler = filesHandler(propertiesManager, propertyFileManager, executor)
     val openHandler = openHandler(propertiesManager, executor)
     val answerHandler = answerHandler(answerCache, answerClient, createHandler, nextHandler)
+
+    System.setProperty("log-name", fileManager.errorLogFile().absolutePath)
 
     return ApplicationContext(
       handler = ApplicationContext.Handler(
@@ -103,6 +107,7 @@ open class ContextManager {
       io = ApplicationContext.Io(
         reader = reader,
         writer = writer,
+        log = logger,
       ),
     )
   }
@@ -122,6 +127,7 @@ open class ContextManager {
 
   private fun reader() = Reader()
   private fun writer(propertyFileManager: PropertyFileManager) = Writer(propertyFileManager)
+  private fun logger(writer: Writer, fileManager: FileManager) = Logger(writer, fileManager)
 
   private fun terminal() = Terminal(width = 100)
   private fun runtime() = Runtime.getRuntime()

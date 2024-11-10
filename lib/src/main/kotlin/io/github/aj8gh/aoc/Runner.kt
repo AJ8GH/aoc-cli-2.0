@@ -17,7 +17,7 @@ class Runner(
     try {
       aoc.main(args)
     } catch (e: Exception) {
-      println("Error executing command: \"${e.message}\"")
+      context.io.log.error(e)
     }
   }
 }

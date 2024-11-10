@@ -10,9 +10,11 @@ private const val CACHE_DIR = "cache/"
 private const val FILE_CACHE_DIR = "files/"
 private const val ANSWER_CACHE_DIR = "answer/"
 private const val TEMPLATE_DIR = "template/"
+private const val LOG_DIR = "log/"
 private const val ANSWER_CACHE_FILE_NAME = "answers.yaml"
 private const val EXAMPLE_CACHE_FILE_NAME = "examples.yaml"
 private const val INPUT_FILE_NAME = "input.txt"
+private const val ERROR_LOG_FILE = "error.log"
 private const val EXAMPLE_FILE_NAME = "example.txt"
 private const val README_CACHE_FILE_NAME = "README.html"
 private const val README_FILE_NAME = "README.md"
@@ -37,10 +39,12 @@ class FileManager(
   fun answerCacheFile() = File("${answerCacheDir()}$ANSWER_CACHE_FILE_NAME")
   fun exampleCacheFile() = File("${answerCacheDir()}$EXAMPLE_CACHE_FILE_NAME")
   fun mainTemplateFile() = File("${templateDir()}$MAIN_TEMPLATE_FILE_NAME")
+  fun errorLogFile() = File("${logDir()}$ERROR_LOG_FILE")
 
   fun testTemplateFile() = File("${templateDir()}$TEST_TEMPLATE_FILE_NAME")
   fun createResourcesDirIfNotExists() = createDirsIfNotExists(resourcesDir())
   fun createAnswerCacheDirIfNotExists() = createDirsIfNotExists(answerCacheDir())
+  fun createLogDirIfNotExists() = createDirsIfNotExists(logDir())
   fun createResourcesCacheDirIfNotExists() = createDirsIfNotExists(resourcesCacheDir())
   fun createSourceDirsIfNotExists() {
     createDirsIfNotExists(mainDir())
@@ -59,6 +63,7 @@ class FileManager(
   private fun mainDir() = sourceDir("${props.files().mainDir}${yearSourceDir()}/")
   private fun testDir() = sourceDir("${props.files().testDir}${yearSourceDir()}/")
   private fun cacheDir() = "${propsFiles.aocHomeDir()}$CACHE_DIR"
+  private fun logDir() = "${propsFiles.aocHomeDir()}$LOG_DIR"
   private fun resourcesCacheDir() = "${cacheDir()}$FILE_CACHE_DIR/y${props.year()}/d${props.day()}/"
   private fun answerCacheDir() = "${cacheDir()}$ANSWER_CACHE_DIR/"
   private fun templateDir() = "${propsFiles.aocHomeDir()}$TEMPLATE_DIR${fileExt()}/"

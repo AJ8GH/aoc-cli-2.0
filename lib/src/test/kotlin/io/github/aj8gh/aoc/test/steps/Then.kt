@@ -14,6 +14,7 @@ import io.github.aj8gh.aoc.test.testInput
 import io.mockk.verify
 import java.io.File
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class Then {
 
@@ -112,13 +113,20 @@ class Then {
     return this
   }
 
+  fun theTerminalWasInvokedWith(message: String): Then {
+    verify { CONTEXT.exec.terminal.println(message) }
+    return this
+  }
+
   fun theStatsArePrintedAsExpected(): Then {
     verify { CONTEXT.exec.terminal.println(any(Table::class)) }
     return this
   }
 
-  fun theTerminalWasNotInvoked(): Then {
-    verify(exactly = 0) { CONTEXT.exec.terminal.println(any(String::class)) }
+  fun theStackTraceIsLogged(): Then {
+    val errorLogFile = FILES.errorLogFile()
+    assertTrue { errorLogFile.exists() }
+    assertTrue { errorLogFile.readText().isNotEmpty() }
     return this
   }
 

@@ -102,6 +102,11 @@ class Given {
     return this
   }
 
+  fun theTerminalWillThrowAnException(message: String): Given {
+    val exception = RuntimeException(message)
+    every { CONTEXT.exec.terminal.println(any(Table::class)) } throws exception
+    return this
+  }
 
   fun writeAnswerInCodeIsSetTo(bool: Boolean): Given {
     WRITER.write(PROPS.activeProfile().copy(writeAnswerInCode = bool))

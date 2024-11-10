@@ -13,6 +13,7 @@ import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
@@ -76,5 +77,6 @@ data class ApplicationContext(
   data class Io(
     val reader: Reader,
     val writer: Writer,
+    val log: Logger,
   )
 }

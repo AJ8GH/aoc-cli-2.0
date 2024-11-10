@@ -30,7 +30,6 @@ class AnswersManagerTest : BaseTest() {
       .theExpectedCheckCacheResponseIsReturned(expectedResponse, answer)
   }
 
-
   companion object {
 
     @JvmStatic
