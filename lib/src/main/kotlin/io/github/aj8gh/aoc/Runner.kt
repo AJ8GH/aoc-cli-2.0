@@ -11,7 +11,9 @@ class Runner(
   private val aoc: Aoc = Aoc(context)
 ) {
 
-  fun run(args: Array<String>) {
+  fun run(args: Array<String>) = run(args.toList())
+
+  fun run(args: List<String>) {
     try {
       aoc.main(args)
     } catch (e: Exception) {

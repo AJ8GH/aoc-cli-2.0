@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.STATS_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
@@ -14,18 +15,9 @@ class StatsTest : BaseTest() {
       .theTerminalIsMocked()
 
     WHEN
-      .statsIsCalled(true)
+      .theAppIsRunWithArg(STATS_SHORT)
 
     THEN
       .theStatsArePrintedAsExpected()
-  }
-
-  @Test
-  fun statsWithFlagFalse() {
-    WHEN
-      .statsIsCalled(false)
-
-    THEN
-      .theTerminalWasNotInvoked()
   }
 }

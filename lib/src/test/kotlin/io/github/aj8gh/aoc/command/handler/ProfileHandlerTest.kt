@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.PROFILE_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.GO_PROFILE
 import io.github.aj8gh.aoc.test.KT_PROFILE
@@ -15,10 +16,11 @@ class ProfileHandlerTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputSource")
   fun profile(currentProfile: String, newProfile: String) {
-    GIVEN.activeProfileIs(currentProfile)
+    GIVEN
+      .activeProfileIs(currentProfile)
 
     WHEN
-      .profileIsCalledWith(newProfile)
+      .theAppIsRunWithArgs(listOf(PROFILE_SHORT, newProfile))
 
     THEN
       .theFollowingProfileIsActive(newProfile)

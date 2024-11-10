@@ -32,7 +32,7 @@ class AnswerHandlerTest : BaseTest() {
       .theFollowingRequestStub(getInputMapping())
 
     WHEN
-      .answerIsCalledWith(ANSWER)
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
       .theFollowingRequestWasMade(postPattern())
@@ -46,7 +46,7 @@ class AnswerHandlerTest : BaseTest() {
       .currentYearDayAndLevelAre(Y15, D1, L1)
 
     WHEN
-      .answerIsCalledWith(ANSWER)
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
       .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
@@ -62,7 +62,7 @@ class AnswerHandlerTest : BaseTest() {
       .theFollowingRequestStub(readmeRequestMapping(html(Y15, D2), Y15, D2))
 
     WHEN
-      .answerIsCalledWith(ANSWER)
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
       .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
@@ -80,7 +80,7 @@ class AnswerHandlerTest : BaseTest() {
       .currentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
 
     WHEN
-      .answerIsCalledWith(answer)
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, answer))
 
     THEN
       .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
@@ -95,7 +95,7 @@ class AnswerHandlerTest : BaseTest() {
       .theFollowingRequestStub(postMapping(expectedResponse))
 
     WHEN
-      .answerIsCalledWith(ANSWER)
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
       .theFollowingRequestWasMade(postPattern())

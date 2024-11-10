@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.TOKEN_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.SESSION
 import io.github.aj8gh.aoc.test.steps.GIVEN
@@ -17,7 +18,7 @@ class TokenTest : BaseTest() {
       .theCurrentTokenIs(SESSION)
 
     WHEN
-      .tokenIsCalled(NEW_TOKEN)
+      .theAppIsRunWithArgs(listOf(TOKEN_SHORT, NEW_TOKEN))
 
     THEN
       .theTokenHasBeenUpdatedTo(NEW_TOKEN)

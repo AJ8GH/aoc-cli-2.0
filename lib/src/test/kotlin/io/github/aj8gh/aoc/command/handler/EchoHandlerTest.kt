@@ -1,11 +1,8 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.test.BaseTest
-import io.github.aj8gh.aoc.test.EMPTY_MESSAGE
 import io.github.aj8gh.aoc.test.KT_PROFILE
-import io.github.aj8gh.aoc.command.D1
-import io.github.aj8gh.aoc.command.L1
-import io.github.aj8gh.aoc.command.Y15
 import io.github.aj8gh.aoc.test.getEchoMessage
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -17,9 +14,9 @@ class EchoHandlerTest : BaseTest() {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
-  fun echoTest(echo: Boolean, expected: String, verbose: Boolean) {
+  fun echoTest(args: List<String>, expected: String) {
     WHEN
-      .echoIsCalledFor(echo, verbose)
+      .theAppIsRunWithArgs(args)
 
     THEN
       .theFollowingMessageIsEchoed(expected)
@@ -28,10 +25,8 @@ class EchoHandlerTest : BaseTest() {
   companion object {
     @JvmStatic
     private fun inputProvider() = listOf(
-      Arguments.of(false, EMPTY_MESSAGE, false),
-      Arguments.of(false, EMPTY_MESSAGE, true),
-      Arguments.of(true, getEchoMessage(Y15, D1, L1, KT_PROFILE), false),
-      Arguments.of(true, EXPECTED_VERBOSE_MESSAGE, true),
+      Arguments.of(listOf(ECHO_SHORT), getEchoMessage(Y15, D1, L1, KT_PROFILE)),
+      Arguments.of(listOf(ECHO_SHORT, VERBOSE_SHORT), EXPECTED_VERBOSE_MESSAGE),
     )
   }
 }

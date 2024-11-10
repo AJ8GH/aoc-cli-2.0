@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler.runtime
 
+import io.github.aj8gh.aoc.command.FILES_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.context.PROPS
 import io.github.aj8gh.aoc.test.context.PROPS_FILES
@@ -18,7 +19,7 @@ class FilesHandlerTest : BaseTest() {
       .theRuntimeIsMocked(command)
 
     WHEN
-      .configFileIsCalled()
+      .theAppIsRunWithArg(FILES_SHORT)
 
     THEN
       .theFollowingCommandWasExecuted(command)

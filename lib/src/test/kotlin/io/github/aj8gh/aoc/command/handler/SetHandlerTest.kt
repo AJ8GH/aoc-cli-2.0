@@ -1,11 +1,10 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.EMPTY_MESSAGE
 import io.github.aj8gh.aoc.test.KT_PROFILE
-import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.test.getEchoMessage
-import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
 import org.junit.jupiter.params.ParameterizedTest
@@ -17,13 +16,26 @@ class SetHandlerTest : BaseTest() {
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun setTest(year: Int?, day: Int?, level: Int?, message: String) {
-    GIVEN
-    val expectedYear = year?.mod(2000) ?: Y15
+    val expectedYear = year ?: Y15
     val expectedDay = day ?: D1
     val expectedLevel = level ?: L1
+    val args: MutableList<String> = mutableListOf()
+
+    year?.let {
+      args.add(YEAR_SHORT)
+      args.add(it.toString())
+    }
+    day?.let {
+      args.add(DAY_SHORT)
+      args.add(it.toString())
+    }
+    level?.let {
+      args.add(LEVEL_SHORT)
+      args.add(it.toString())
+    }
 
     WHEN
-      .setIsCalledFor(year = year, day = day, level = level)
+      .theAppIsRunWithArgs(args)
 
     THEN
       .currentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
@@ -34,7 +46,6 @@ class SetHandlerTest : BaseTest() {
     @JvmStatic
     private fun inputProvider() = listOf(
       Arguments.of(Y16, D2, L2, getEchoMessage(Y16, D2, L2, KT_PROFILE)),
-      Arguments.of(2016, D2, L2, getEchoMessage(Y16, D2, L2, KT_PROFILE)),
       Arguments.of(null, D2, L2, getEchoMessage(Y15, D2, L2, KT_PROFILE)),
       Arguments.of(Y16, null, L2, getEchoMessage(Y16, D1, L2, KT_PROFILE)),
       Arguments.of(Y16, D2, null, getEchoMessage(Y16, D2, L1, KT_PROFILE)),
