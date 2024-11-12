@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler
 
+import io.github.aj8gh.aoc.io.Console
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import io.github.aj8gh.aoc.properties.PropertyFileManager
@@ -11,21 +12,22 @@ class EchoHandler(
   private val props: PropertiesManager,
   private val propsFiles: PropertyFileManager,
   private val reader: Reader,
+  private val console: Console,
 ) {
 
   fun handle(verbose: Boolean) = handle(true, verbose)
 
-  fun handle(echo: Boolean, verbose: Boolean) {
-    if (!echo) return
+  fun handle(flag: Boolean, verbose: Boolean) {
+    if (!flag) return
     val aocProps = reader.read(propsFiles.aocPropertiesFile())
     val profile = reader.read(propsFiles.activeProfileFile())
 
     if (verbose) {
-      println("$PROPERTIES_HEADER\n${aocProps}\n$PROFILE_HEADER\n${profile}")
+      console.echo("$PROPERTIES_HEADER\n${aocProps}\n$PROFILE_HEADER\n${profile}")
     } else {
       val env = props.activeProfile().current
       val active = props.aocProperties().active
-      println("You are on year ${env.year} day ${env.day} level ${env.level}. Active profile: $active")
+      console.echo("You are on year ${env.year} day ${env.day} level ${env.level}. Active profile: $active")
     }
   }
 }

@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.util
 
+import io.github.aj8gh.aoc.context.DateManager
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -8,13 +9,14 @@ import java.time.Instant
 import java.time.ZoneId
 import kotlin.test.assertEquals
 
-class DateUtilKtTest {
+class DateManagerKtTest {
 
   @ParameterizedTest
   @MethodSource("inputProvider")
   fun test(date: String, expected: Int) {
     val clock = Clock.fixed(Instant.parse(date), ZoneId.systemDefault())
-    val actual = latestYear(clock)
+    val subject = DateManager(clock)
+    val actual = subject.latestYear()
     assertEquals(expected, actual)
   }
 

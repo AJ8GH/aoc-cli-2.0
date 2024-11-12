@@ -1,6 +1,5 @@
 package io.github.aj8gh.aoc.test.steps
 
-import com.github.ajalt.mordant.table.Table
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import io.github.aj8gh.aoc.io.EXTENSION
@@ -109,17 +108,7 @@ class Then {
   }
 
   fun theFollowingCommandWasExecuted(command: Array<String>): Then {
-    verify { CONTEXT.exec.runtime.exec(command) }
-    return this
-  }
-
-  fun theTerminalWasInvokedWith(message: String): Then {
-    verify { CONTEXT.exec.terminal.println(message) }
-    return this
-  }
-
-  fun theStatsArePrintedAsExpected(): Then {
-    verify { CONTEXT.exec.terminal.println(any(Table::class)) }
+    verify { CONTEXT.system.runtime.exec(command) }
     return this
   }
 
@@ -132,6 +121,16 @@ class Then {
 
   fun theTokenHasBeenUpdatedTo(token: String): Then {
     assertEquals(token, PROPS.aocProperties().session)
+    return this
+  }
+
+  fun theStatsAreOutputToTheTerminal(): Then {
+    val out = outContent()
+    for (year in CONTEXT.manager.date.yearRange()) {
+      val completion = CONTEXT.cache.answer.cache().year(year).completion()
+      assertTrue { out.contains(year.toString()) }
+      assertTrue { out.contains(completion.toString()) }
+    }
     return this
   }
 

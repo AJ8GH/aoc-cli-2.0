@@ -7,7 +7,6 @@ import io.github.aj8gh.aoc.test.getEchoMessage
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
-import io.github.aj8gh.aoc.util.latestYear
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -20,7 +19,7 @@ private val CLOCK = Clock.fixed(
   ZoneId.systemDefault()
 )
 
-private val LATEST_YEAR = latestYear(CLOCK)
+private val LATEST_YEAR = 23
 
 class NextHandlerTest : BaseTest() {
 

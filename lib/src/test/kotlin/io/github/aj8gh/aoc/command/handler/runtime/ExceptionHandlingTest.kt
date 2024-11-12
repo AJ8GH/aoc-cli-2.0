@@ -1,7 +1,6 @@
 package io.github.aj8gh.aoc.command.handler.runtime
 
 import io.github.aj8gh.aoc.command.OPEN_SHORT
-import io.github.aj8gh.aoc.command.STATS_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.context.FILES
 import io.github.aj8gh.aoc.test.context.PROPS
@@ -26,19 +25,6 @@ class ExceptionHandlingTest : BaseTest() {
 
     THEN
       .theFollowingCommandWasExecuted(command)
-      .theFollowingMessagesAreEchoed(logMessage)
-      .theStackTraceIsLogged()
-  }
-
-  @Test
-  fun stats_SadPath() {
-    GIVEN
-      .theTerminalWillThrowAnException(message)
-
-    WHEN
-      .theAppIsRunWithArg(STATS_SHORT)
-
-    THEN
       .theFollowingMessagesAreEchoed(logMessage)
       .theStackTraceIsLogged()
   }

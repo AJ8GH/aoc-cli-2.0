@@ -57,7 +57,7 @@ class AnswerCache(
   private val props: PropertiesManager,
 ) {
 
-  fun answerCache(): Answers {
+  fun cache(): Answers {
     val file = files.answerCacheFile()
     if (!file.exists()) writer.write(files.answerCacheFile(), Answers())
     return reader.readYaml(file, Answers::class.java)
@@ -68,19 +68,19 @@ class AnswerCache(
   fun cacheAnswer(answer: String) = cacheAnswer(props.level(), answer)
 
   fun dayCompletion(): Int {
-    val day = answerCache().get(props.year(), props.day())
+    val day = cache().get(props.year(), props.day())
     return if (day.level(L2) != null) COMPLETION_LEVEL_2
     else if (day.level(L1) != null) COMPLETION_LEVEL_1
     else COMPLETION_LEVEL_0
   }
 
   fun cacheAnswer(level: Int, answer: String) {
-    val answers = answerCache()
+    val answers = cache()
     answers.save(props.year(), props.day(), level, answer)
     writeAnswers(answers)
   }
 
-  fun clearCacheForDay() = answerCache().clear(props.year(), props.day())
+  fun clearCacheForDay() = cache().clear(props.year(), props.day())
 
   fun type() = when {
     isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT
@@ -116,9 +116,9 @@ class AnswerCache(
     .takeIf { type() != STRING }
     ?: "\"${answer}\""
 
-  private fun answer1() = answerCache().get(props.year(), props.day(), L1)
+  private fun answer1() = cache().get(props.year(), props.day(), L1)
 
-  private fun answer2() = answerCache().get(props.year(), props.day(), L2)
+  private fun answer2() = cache().get(props.year(), props.day(), L2)
 
   private fun handleLong(answer: String): String {
     val lang = props.activeProfile().language
@@ -128,7 +128,7 @@ class AnswerCache(
     return answer
   }
 
-  private fun getAnswer() = answerCache().get(props.year(), props.day(), props.level())
+  private fun getAnswer() = cache().get(props.year(), props.day(), props.level())
 
   private fun writeAnswers(answers: Answers) = writer.write(files.answerCacheFile(), answers)
 

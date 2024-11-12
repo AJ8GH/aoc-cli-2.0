@@ -1,6 +1,5 @@
 package io.github.aj8gh.aoc.test.steps
 
-import com.github.ajalt.mordant.table.Table
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.stubFor
 import io.github.aj8gh.aoc.command.L1
@@ -10,7 +9,6 @@ import io.github.aj8gh.aoc.test.context.*
 import io.github.aj8gh.aoc.test.stubOutStream
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.every
-import io.mockk.justRun
 import io.mockk.mockk
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -87,24 +85,13 @@ class Given {
 
   fun theRuntimeIsMocked(command: Array<String>): Given {
     val process = mockk<Process>()
-    every { CONTEXT.exec.runtime.exec(command) } returns process
+    every { CONTEXT.system.runtime.exec(command) } returns process
     return this
   }
 
   fun theRuntimeWillThrowAnException(command: Array<String>, message: String): Given {
     val exception = RuntimeException(message)
-    every { CONTEXT.exec.runtime.exec(command) } throws exception
-    return this
-  }
-
-  fun theTerminalIsMocked(): Given {
-    justRun { CONTEXT.exec.terminal.println(any(Table::class)) }
-    return this
-  }
-
-  fun theTerminalWillThrowAnException(message: String): Given {
-    val exception = RuntimeException(message)
-    every { CONTEXT.exec.terminal.println(any(Table::class)) } throws exception
+    every { CONTEXT.system.runtime.exec(command) } throws exception
     return this
   }
 

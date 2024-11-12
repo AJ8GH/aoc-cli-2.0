@@ -1,8 +1,9 @@
 package io.github.aj8gh.aoc.io
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.File
 
-class Reader {
+class Reader(private val mapper: ObjectMapper) {
 
   fun <T> readYaml(name: File, type: Class<T>): T = mapper.readValue(read(name), type)
 

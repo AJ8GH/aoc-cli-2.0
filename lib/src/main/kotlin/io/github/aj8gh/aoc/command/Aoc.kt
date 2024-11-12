@@ -8,19 +8,14 @@ import com.github.ajalt.clikt.parameters.types.choice
 import com.github.ajalt.clikt.parameters.types.int
 import io.github.aj8gh.aoc.command.Command.*
 import io.github.aj8gh.aoc.context.ApplicationContext
-import io.github.aj8gh.aoc.util.latestYear
 
 private const val APP_NAME = "aoc"
 
-val YEAR_RANGE = Y15..latestYear()
-val DAY_RANGE = D1..D25
-val LEVEL_RANGE = L1..L2
-
 class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAME) {
 
-  private val year by toIntOption(YEAR.names, YEAR.help, YEAR.completion, YEAR_RANGE)
-  private val day by toIntOption(DAY.names, DAY.help, DAY.completion, DAY_RANGE)
-  private val level by toIntOption(LEVEL.names, LEVEL.help, LEVEL.completion, LEVEL_RANGE)
+  private val year by toIntOption(YEAR.names, YEAR.help, context.manager.date.yearRange())
+  private val day by toIntOption(DAY.names, DAY.help, context.manager.date.dayRange())
+  private val level by toIntOption(LEVEL.names, LEVEL.help, context.manager.date.levelRange())
   private val token by toOption(TOKEN.names, TOKEN.help)
   private val answer by toOption(ANSWER.names, ANSWER.help)
   private val profile by toOption(PROFILE.names, PROFILE.help)
@@ -41,7 +36,7 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAM
     h.files.handle(files)
     h.answer.handle(answer = answer, verbose = verbose)
     h.create.handle(create)
-    h.echo.handle(echo = echo, verbose = verbose)
+    h.echo.handle(flag = echo, verbose = verbose)
     h.stats.handle(stats)
     h.open.handle(open)
   }
@@ -49,9 +44,8 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAM
   private fun toIntOption(
     names: Array<String>,
     help: String,
-    completion: Fixed?,
     choices: IntRange,
-  ) = toOption(names = names, help = help, completion = completion)
+  ) = toOption(names = names, help = help, completion = toCandidates(choices))
     .choice(*toStringArray(choices))
     .int()
 
@@ -64,4 +58,10 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAM
   private fun toStringArray(ints: IntRange) = ints
     .map { it.toString() }
     .toTypedArray()
+
+  private fun toCandidates(intRange: IntRange) = Fixed(
+    intRange
+      .map(Int::toString)
+      .toSet()
+  )
 }

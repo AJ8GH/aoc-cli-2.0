@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.command.handler.create
 
+import io.github.aj8gh.aoc.io.Console
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Writer
 
@@ -21,6 +22,7 @@ private var identifier = EXAMPLE_IDENTIFIER
 class ExampleCreator(
   private val files: FileManager,
   private val writer: Writer,
+  private val console: Console,
 ) {
 
   fun create() {
@@ -76,7 +78,7 @@ class ExampleCreator(
     }
 
     else -> {
-      println("Example not found")
+      console.echo("Example not found")
       false
     }
   }

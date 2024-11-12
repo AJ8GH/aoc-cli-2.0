@@ -2,23 +2,24 @@ package io.github.aj8gh.aoc.command.handler
 
 import com.github.ajalt.mordant.table.Table
 import com.github.ajalt.mordant.table.table
-import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
-import io.github.aj8gh.aoc.command.YEAR_RANGE
+import io.github.aj8gh.aoc.context.DateManager
+import io.github.aj8gh.aoc.io.Console
 
 class StatsHandler(
   private val answerCache: AnswerCache,
-  private val terminal: Terminal,
+  private val console: Console,
+  private val dateManager: DateManager,
 ) {
 
   fun handle(flag: Boolean) {
     if (!flag) return
-    terminal.println(buildTable())
+    console.echo(buildTable())
   }
 
   private fun buildTable(): Table {
-    val cache = answerCache.answerCache()
-    val stats = YEAR_RANGE.map { Stats(year = it, completion = cache.year(it).completion()) }
+    val cache = answerCache.cache()
+    val stats = dateManager.yearRange().map { Stats(it, cache.year(it).completion()) }
     val years = stats.map { "Yr ${it.year}" }
     val completions = stats.map { "${it.completion}/50" }
 

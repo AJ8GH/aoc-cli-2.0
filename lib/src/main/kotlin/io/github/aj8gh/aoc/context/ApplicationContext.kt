@@ -1,5 +1,6 @@
 package io.github.aj8gh.aoc.context
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.cache.InputCache
 import io.github.aj8gh.aoc.cache.ReadmeCache
@@ -12,16 +13,14 @@ import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
-import io.github.aj8gh.aoc.io.FileManager
-import io.github.aj8gh.aoc.io.Logger
-import io.github.aj8gh.aoc.io.Reader
-import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import io.github.aj8gh.aoc.properties.PropertyFileManager
+import java.time.Clock
 
 data class ApplicationContext(
   val handler: Handler,
-  val exec: Exec,
+  val system: System,
   val client: Client,
   val creator: Creator,
   val cache: Cache,
@@ -42,10 +41,10 @@ data class ApplicationContext(
     val answer: AnswerHandler,
   )
 
-  data class Exec(
-    val terminal: Terminal,
+  data class System(
     val runtime: Runtime,
     val executor: Executor,
+    val clock: Clock,
   )
 
   data class Client(
@@ -72,11 +71,15 @@ data class ApplicationContext(
     val file: FileManager,
     val props: PropertiesManager,
     val propsFiles: PropertyFileManager,
+    val date: DateManager,
   )
 
   data class Io(
     val reader: Reader,
     val writer: Writer,
     val log: Logger,
+    val console: Console,
+    val terminal: Terminal,
+    val mapper: ObjectMapper,
   )
 }

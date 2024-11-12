@@ -1,8 +1,9 @@
 # TODO
 
-* [ ] refactor terminal output
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
+* [ ] improve logging -> info logs, location, timestamp, appending
+* [ ] add application properties yaml
 * [ ] create new projects with new properties
 * [ ] make `$AOC_HOME` location configurable
 * [ ] write example answers to tests

@@ -1,11 +1,21 @@
 package io.github.aj8gh.aoc.test.context
 
-import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.Runner
 import io.github.aj8gh.aoc.context.ContextManager
 import io.mockk.mockk
+import java.time.Clock
+import java.time.Instant
+import java.time.Instant.parse
+import java.time.ZoneOffset.UTC
 
-val CONTEXT = ContextManager().context(mockk<Terminal>(), mockk<Runtime>())
+val FIXED_INSTANT: Instant = parse("2024-01-01T00:00:00Z")
+val FIXED_ZONE_ID = UTC!!
+
+val CONTEXT = ContextManager().context(
+  runtime = mockk<Runtime>(),
+  clock = Clock.fixed(FIXED_INSTANT, FIXED_ZONE_ID)
+)
+
 val RUNNER = Runner(context = CONTEXT)
 
 val FILES = CONTEXT.manager.file

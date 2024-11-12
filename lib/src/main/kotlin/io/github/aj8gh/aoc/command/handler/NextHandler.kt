@@ -4,9 +4,9 @@ import io.github.aj8gh.aoc.command.D1
 import io.github.aj8gh.aoc.command.D25
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
+import io.github.aj8gh.aoc.context.DateManager
 import io.github.aj8gh.aoc.properties.Profile
 import io.github.aj8gh.aoc.properties.PropertiesManager
-import io.github.aj8gh.aoc.util.latestYear
 import io.github.oshai.kotlinlogging.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
@@ -14,6 +14,7 @@ private val logger = KotlinLogging.logger {}
 class NextHandler(
   private val props: PropertiesManager,
   private val echoHandler: EchoHandler,
+  private val dateManager: DateManager,
 ) {
 
   fun handle(verbose: Boolean) = handle(true, verbose)
@@ -30,7 +31,7 @@ class NextHandler(
     }
 
     if (props.day() == D25) {
-      if (props.year() == latestYear()) {
+      if (props.year() == dateManager.latestYear()) {
         logger.warn { "You're already as far as you can go!" }
       } else {
         props.activeProfile().current.year++
