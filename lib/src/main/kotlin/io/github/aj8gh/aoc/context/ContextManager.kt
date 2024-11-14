@@ -37,7 +37,7 @@ open class ContextManager {
     val writer = Writer(propertyFileManager, mapper)
     val propertiesManager = PropertiesManager(writer, reader, propertyFileManager)
     val fileManager = FileManager(propertiesManager, propertyFileManager)
-    val logger = Logger(writer, fileManager)
+    val logger = Logger(writer, fileManager, console, clock)
     val dateManager = DateManager(clock)
 
     val answerCache = AnswerCache(fileManager, writer, reader, propertiesManager)

@@ -14,7 +14,7 @@ private const val LOG_DIR = "log/"
 private const val ANSWER_CACHE_FILE_NAME = "answers.yaml"
 private const val EXAMPLE_CACHE_FILE_NAME = "examples.yaml"
 private const val INPUT_FILE_NAME = "input.txt"
-private const val ERROR_LOG_FILE = "error.log"
+private const val LOG_FILE = "aoc.log"
 private const val EXAMPLE_FILE_NAME = "example.txt"
 private const val README_CACHE_FILE_NAME = "README.html"
 private const val README_FILE_NAME = "README.md"
@@ -39,7 +39,7 @@ class FileManager(
   fun answerCacheFile() = File("${answerCacheDir()}$ANSWER_CACHE_FILE_NAME")
   fun exampleCacheFile() = File("${answerCacheDir()}$EXAMPLE_CACHE_FILE_NAME")
   fun mainTemplateFile() = File("${templateDir()}$MAIN_TEMPLATE_FILE_NAME")
-  fun errorLogFile() = File("${logDir()}$ERROR_LOG_FILE")
+  fun logFile() = File("${logDir()}$LOG_FILE")
 
   fun testTemplateFile() = File("${templateDir()}$TEST_TEMPLATE_FILE_NAME")
   fun createResourcesDirIfNotExists() = createDirsIfNotExists(resourcesDir())

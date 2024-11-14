@@ -15,4 +15,6 @@ class Writer(
   fun <T> write(file: File, t: T) = mapper.writeValue(file, t)
 
   fun write(file: File, content: String) = file.writeText(content)
+
+  fun append(file: File, content: String) = file.appendText(content)
 }

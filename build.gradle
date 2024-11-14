@@ -10,8 +10,8 @@ allprojects {
   apply plugin: 'org.jetbrains.kotlin.jvm'
 
   repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
   }
 
   group = groupId

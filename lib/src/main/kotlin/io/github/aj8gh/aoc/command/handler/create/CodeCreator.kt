@@ -19,6 +19,7 @@ class CodeCreator(
   private val files: FileManager,
   private val props: PropertiesManager,
   private val writer: Writer,
+//  private val log: Logger,
 ) {
 
   fun create() {

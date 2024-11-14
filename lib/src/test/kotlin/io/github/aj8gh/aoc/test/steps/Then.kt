@@ -113,7 +113,7 @@ class Then {
   }
 
   fun theStackTraceIsLogged(): Then {
-    val errorLogFile = FILES.errorLogFile()
+    val errorLogFile = FILES.logFile()
     assertTrue { errorLogFile.exists() }
     assertTrue { errorLogFile.readText().isNotEmpty() }
     return this
