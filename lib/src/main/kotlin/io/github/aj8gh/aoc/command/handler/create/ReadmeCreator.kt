@@ -5,6 +5,7 @@ import io.github.aj8gh.aoc.cache.ReadmeCache
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.http.ReadmeClient
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import java.io.File
@@ -26,10 +27,14 @@ class ReadmeCreator(
   private val reader: Reader,
   private val writer: Writer,
   private val files: FileManager,
+  private val log: Logger,
 ) {
 
   fun create() {
-    if (!isReadmeStale(files.readmeFile())) return
+    if (!isReadmeStale(files.readmeFile())) {
+      log.debug("README file ${files.inputFile()} is up to date, skipping README generation")
+      return
+    }
     files.createResourcesDirIfNotExists()
     writer.write(files.readmeFile(), format(toMarkdown(checkCacheOrGet())))
   }

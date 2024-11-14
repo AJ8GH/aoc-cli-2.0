@@ -49,16 +49,16 @@ open class ContextManager {
     val inputClient = InputClient(aocClient)
     val readmeClient = ReadmeClient(aocClient)
 
-    val inputCreator = InputCreator(inputCache, inputClient, writer, fileManager)
-    val readmeCreator = ReadmeCreator(readmeCache, readmeClient, answerCache, reader, writer, fileManager)
+    val inputCreator = InputCreator(inputCache, inputClient, writer, fileManager, logger.of(InputCreator::class.simpleName))
+    val readmeCreator = ReadmeCreator(readmeCache, readmeClient, answerCache, reader, writer, fileManager, logger.of(ReadmeCreator::class.simpleName))
     val exampleCreator = ExampleCreator(fileManager, writer, console)
-    val codeCreator = CodeCreator(answerCache, fileManager, propertiesManager, writer)
+    val codeCreator = CodeCreator(answerCache, fileManager, propertiesManager, writer, logger.of(CodeCreator::class.simpleName))
 
     val echoHandler = EchoHandler(propertiesManager, propertyFileManager, reader, console)
     val setHandler = SetHandler(propertiesManager, echoHandler)
     val statHandler = StatsHandler(answerCache, console, dateManager)
 
-    val tokenHandler = TokenHandler(propertiesManager, propertyFileManager, writer)
+    val tokenHandler = TokenHandler(propertiesManager, propertyFileManager, writer, logger.of(TokenHandler::class.simpleName))
     val profileHandler = ProfileHandler(propertiesManager)
     val nextHandler = NextHandler(propertiesManager, echoHandler, dateManager)
     val createHandler = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator)

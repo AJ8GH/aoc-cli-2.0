@@ -2,7 +2,7 @@
 
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
-* [ ] improve logging -> info logs, location, timestamp, appending
+* [ ] Add more logging -> all http calls and file writes, cache operations
 * [ ] add application properties yaml
 * [ ] create new projects with new properties
 * [ ] make `$AOC_HOME` location configurable

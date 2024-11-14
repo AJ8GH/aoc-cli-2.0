@@ -2,6 +2,7 @@ package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import java.io.File
@@ -19,7 +20,7 @@ class CodeCreator(
   private val files: FileManager,
   private val props: PropertiesManager,
   private val writer: Writer,
-//  private val log: Logger,
+  private val log: Logger,
 ) {
 
   fun create() {
@@ -37,7 +38,11 @@ class CodeCreator(
   }
 
   private fun generate(file: File, template: File, answers: Pair<String, String>) {
-    if (!file.exists()) writer.write(file, format(template.readText(), answers))
+    if (file.exists()) {
+      log.debug("File ${file.absolutePath} already exists, skipping code generation")
+      return
+    }
+    writer.write(file, format(template.readText(), answers))
   }
 
   private fun format(text: String, answers: Pair<String, String>) = text

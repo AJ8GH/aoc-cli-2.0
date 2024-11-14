@@ -17,7 +17,7 @@ class Runner(
     try {
       aoc.main(args)
     } catch (e: Exception) {
-      context.io.log.error(e)
+      context.io.log.error(e, this::class.simpleName)
     }
   }
 }
