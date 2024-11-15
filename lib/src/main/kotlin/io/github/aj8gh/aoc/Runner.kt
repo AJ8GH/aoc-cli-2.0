@@ -5,6 +5,8 @@ import io.github.aj8gh.aoc.command.Aoc
 import io.github.aj8gh.aoc.context.ApplicationContext
 import io.github.aj8gh.aoc.context.ContextManager
 
+private const val MESSAGE = "Error executing command: \"%s\". View stack trace in log file: %s"
+
 class Runner(
   private val contextManager: ContextManager = ContextManager(),
   private val context: ApplicationContext = contextManager.context(),
@@ -17,7 +19,9 @@ class Runner(
     try {
       aoc.main(args)
     } catch (e: Exception) {
-      context.io.log.error(e, this::class.simpleName)
+      val logFile = context.manager.file.logFile().absolutePath
+      context.io.console.echo(MESSAGE.format(e.message, logFile))
+      context.io.log.of(this::class.simpleName).error(e)
     }
   }
 }

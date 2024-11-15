@@ -9,6 +9,7 @@ import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.test.context.PROPS
 import io.github.aj8gh.aoc.test.context.PROPS_FILES
 import io.github.aj8gh.aoc.test.context.READER
+import io.github.aj8gh.aoc.test.context.buildContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
@@ -44,6 +45,7 @@ open class BaseTest {
 
   @BeforeTest
   fun setUp() {
+    buildContext()
     overrideAndLoadProperties()
     stubOutStream()
   }

@@ -24,6 +24,7 @@ private const val TEST_TEMPLATE_FILE_NAME = "test.txt"
 class FileManager(
   private val props: PropertiesManager,
   private val propsFiles: PropertyFileManager,
+  private val log: Logger? = null,
 ) {
 
   // Project Files
@@ -73,6 +74,11 @@ class FileManager(
   private fun mainFileName() = "${props.files().mainFilePrefix}${props.day()}.${fileExt()}"
   private fun testFileName() = "${props.files().testFilePrefix}${props.day()}${props.files().testFileSuffix}.${fileExt()}"
   private fun createDirsIfNotExists(dir: String) = File(dir).let {
-    if (!it.exists()) it.mkdirs()
+    if (!it.exists()) {
+      log?.warn("Creating directory ${it.absolutePath}")
+      it.mkdirs()
+    }
   }
+
+  fun with(log: Logger) = FileManager(props, propsFiles, log)
 }

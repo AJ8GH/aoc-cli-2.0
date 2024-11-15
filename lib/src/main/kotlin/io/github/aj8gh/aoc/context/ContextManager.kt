@@ -21,13 +21,13 @@ import io.github.aj8gh.aoc.properties.PropertiesManager
 import io.github.aj8gh.aoc.properties.PropertyFileManager
 import java.time.Clock
 
-open class ContextManager {
+class ContextManager {
 
   fun context(
     terminal: Terminal = Terminal(width = 100),
     runtime: Runtime = Runtime.getRuntime(),
     mapper: ObjectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule(),
-    clock: Clock = Clock.systemUTC()
+    clock: Clock = Clock.systemUTC(),
   ): ApplicationContext {
 
     val console = Console(terminal)
@@ -35,16 +35,21 @@ open class ContextManager {
     val reader = Reader(mapper)
     val propertyFileManager = PropertyFileManager(reader)
     val writer = Writer(propertyFileManager, mapper)
-    val propertiesManager = PropertiesManager(writer, reader, propertyFileManager)
-    val fileManager = FileManager(propertiesManager, propertyFileManager)
-    val logger = Logger(writer, fileManager, console, clock)
+
+    val tempPropertiesManager = PropertiesManager(writer, reader, propertyFileManager)
+    val tempFileManager = FileManager(tempPropertiesManager, propertyFileManager)
+    tempFileManager.createLogDirIfNotExists()
+
+    val logger = Logger(writer, tempFileManager, console, clock)
+    val propertiesManager = PropertiesManager(writer, reader, propertyFileManager, logger.of(PropertiesManager::class.simpleName))
+    val fileManager = FileManager(propertiesManager, propertyFileManager, logger.of(PropertyFileManager::class.simpleName))
     val dateManager = DateManager(clock)
 
     val answerCache = AnswerCache(fileManager, writer, reader, propertiesManager)
     val inputCache = InputCache(fileManager, reader, writer)
     val readmeCache = ReadmeCache(fileManager, writer, reader)
 
-    val aocClient = AocClient(propertiesManager)
+    val aocClient = AocClient(propertiesManager, logger.of(AocClient::class.simpleName))
     val answerClient = AnswerClient(aocClient, propertiesManager)
     val inputClient = InputClient(aocClient)
     val readmeClient = ReadmeClient(aocClient)

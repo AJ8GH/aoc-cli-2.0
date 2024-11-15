@@ -11,21 +11,21 @@ import kotlin.test.Test
 
 class ExceptionHandlingTest : BaseTest() {
 
-  private val logMessage = "ERROR - 2024-01-01T00:00:00Z - Error executing command: \"This is a test exception!\". View stack trace in log file: ${FILES.logFile()}"
-  private val message = "This is a test exception!"
-  private val command = arrayOf(PROPS.activeProfile().ide, PROPS.files().projectHome)
-
   @Test
   fun open_SadPath() {
     GIVEN
-      .theRuntimeWillThrowAnException(command, message)
+      .theRuntimeWillThrowAnException(command(), message())
 
     WHEN
       .theAppIsRunWithArg(OPEN_SHORT)
 
     THEN
-      .theFollowingCommandWasExecuted(command)
-      .theFollowingMessagesAreEchoed(logMessage)
+      .theFollowingCommandWasExecuted(command())
+      .theFollowingMessagesAreEchoed(logMessage())
       .theStackTraceIsLogged()
   }
+
+  private fun logMessage() = "Error executing command: \"This is a test exception!\". View stack trace in log file: ${FILES.logFile().absolutePath}"
+  private fun message() = "This is a test exception!"
+  private fun command() = arrayOf(PROPS.activeProfile().ide, PROPS.files().projectHome)
 }

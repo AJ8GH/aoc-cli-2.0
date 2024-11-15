@@ -113,9 +113,9 @@ class Then {
   }
 
   fun theStackTraceIsLogged(): Then {
-    val errorLogFile = FILES.logFile()
-    assertTrue { errorLogFile.exists() }
-    assertTrue { errorLogFile.readText().isNotEmpty() }
+    val logFile = FILES.logFile()
+    assertTrue { logFile.exists() }
+    assertTrue { logFile.readText().isNotEmpty() }
     return this
   }
 

@@ -11,7 +11,7 @@ class Logger(
   private val files: FileManager,
   private val console: Console,
   private val clock: Clock,
-  private val consoleLevel: Level = ERROR,
+  private val consoleLevel: Level = NONE,
   private val fileLevel: Level = DEBUG,
   private val className: String? = Logger::class.simpleName,
 ) {
@@ -20,17 +20,16 @@ class Logger(
   fun debug(message: String) = logToConsoleAndFile(DEBUG, message)
   fun info(message: String) = logToConsoleAndFile(INFO, message)
   fun warn(message: String) = logToConsoleAndFile(WARN, message)
+  fun error(message: String) = logToConsoleAndFile(ERROR, message)
 
-  fun error(e: Exception, name: String? = className) {
+  fun error(e: Exception) {
     val timestamp = clock.instant()
-    logToConsole(ERROR, format(ERROR, timestamp, consoleErrorMessage(e.message), name))
-    logToFile(ERROR, format(ERROR, timestamp, stackTrace(e), name))
+    val message = "${e.message}\n${stackTrace(e)}"
+    logToConsole(ERROR, format(ERROR, timestamp, message))
+    logToFile(ERROR, format(ERROR, timestamp, message))
   }
 
   private fun isLevelEnabled(level: Level, messageLevel: Level) = level.value <= messageLevel.value
-
-  private fun consoleErrorMessage(message: String?) =
-    "Error executing command: \"$message\". View stack trace in log file: ${files.logFile()}"
 
   private fun logToConsoleAndFile(level: Level, message: String) {
     val timestamp = clock.instant()
@@ -45,12 +44,11 @@ class Logger(
 
   private fun logToFile(level: Level, message: String) {
     if (!isLevelEnabled(level = fileLevel, messageLevel = level)) return
-    files.createLogDirIfNotExists()
     writer.append(files.logFile(), message)
   }
 
-  private fun format(level: Level, timestamp: Instant, message: String, name: String? = className) =
-    "$level - $timestamp - $name - $message\n"
+  private fun format(level: Level, timestamp: Instant, message: String) =
+    "$level - $timestamp - $className - $message\n"
 
   private fun stackTrace(e: Exception): String {
     val sw = StringWriter()
@@ -59,13 +57,19 @@ class Logger(
     return sw.toString()
   }
 
-  enum class Level(val value: Int) {
+  enum class Level(
+    val value: Int,
+    private val padding: String = ""
+  ) {
+
     TRACE(0),
     DEBUG(1),
-    INFO(2),
-    WARN(3),
+    INFO(2, " "),
+    WARN(3, " "),
     ERROR(4),
-    NONE(5),
+    NONE(5, " ");
+
+    override fun toString() = "${this.name}${this.padding}"
   }
 
   fun of(className: String?) = Logger(
