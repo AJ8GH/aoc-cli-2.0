@@ -1,10 +1,9 @@
 package io.github.aj8gh.aoc.http
 
-private const val INPUT_ENDPOINT = "/input"
-
 class InputClient(
-  private val aocClient: AocClient
+  private val aocClient: AocClient,
+  private val endpoint: String,
 ) {
 
-  fun getInput() = aocClient.get(INPUT_ENDPOINT)
+  fun getInput() = aocClient.get(endpoint)
 }

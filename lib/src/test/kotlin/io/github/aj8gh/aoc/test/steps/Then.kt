@@ -2,12 +2,11 @@ package io.github.aj8gh.aoc.test.steps
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
-import io.github.aj8gh.aoc.io.EXTENSION
 import io.github.aj8gh.aoc.properties.Profile
-import io.github.aj8gh.aoc.test.context.CONTEXT
-import io.github.aj8gh.aoc.test.context.FILES
-import io.github.aj8gh.aoc.test.context.PROPS
-import io.github.aj8gh.aoc.test.context.READER
+import io.github.aj8gh.aoc.test.context.context
+import io.github.aj8gh.aoc.test.context.files
+import io.github.aj8gh.aoc.test.context.props
+import io.github.aj8gh.aoc.test.context.reader
 import io.github.aj8gh.aoc.test.outContent
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.verify
@@ -18,14 +17,14 @@ import kotlin.test.assertTrue
 class Then {
 
   fun currentYearDayAndLevelAre(expectedYear: Int, expectedDay: Int, expectedLevel: Int): Then {
-    assertEquals(expectedYear, PROPS.year())
-    assertEquals(expectedDay, PROPS.day())
-    assertEquals(expectedLevel, PROPS.level())
+    assertEquals(expectedYear, props.year())
+    assertEquals(expectedDay, props.day())
+    assertEquals(expectedLevel, props.level())
     return this
   }
 
   fun theExpectedCheckCacheResponseIsReturned(response: String, answer: String): Then {
-    assertEquals(response, CONTEXT.cache.answer.checkAnswer(answer))
+    assertEquals(response, context.cache.answer.checkAnswer(answer))
     return this
   }
 
@@ -54,7 +53,7 @@ class Then {
   }
 
   fun todaysInputExists(): Then {
-    assertEquals(testInput(), READER.read(FILES.inputFile()).trim())
+    assertEquals(testInput(), reader.read(files.inputFile()).trim())
     return this
   }
 
@@ -64,70 +63,69 @@ class Then {
   }
 
   fun todaysReadmeIsCreatedCorrectly(markdown: String): Then {
-    assertEquals(markdown.trim(), READER.read(FILES.readmeFile()))
+    assertEquals(markdown.trim(), reader.read(files.readme()))
     return this
   }
 
   fun todaysReadmeHasBeenCached(expected: String): Then {
-    assertEquals(expected, READER.read(FILES.readmeCacheFile()))
+    assertEquals(expected, reader.read(files.readmeCacheFile()))
     return this
   }
 
   fun mainFileIsCreatedAsExpected(expected: String): Then {
-    assertEquals(expected, FILES.mainFile().readText())
+    assertEquals(expected, files.mainFile().readText())
     return this
   }
 
   fun testFileIsCreatedAsExpected(expected: String): Then {
-    assertEquals(expected, FILES.testFile().readText())
+    assertEquals(expected, files.testFile().readText())
     return this
   }
 
   fun mainFileIsUnchanged(expected: String): Then {
-    assertEquals(expected, FILES.mainFile().readText())
+    assertEquals(expected, files.mainFile().readText())
     return this
   }
 
   fun testFileIsUnchanged(expected: String): Then {
-    assertEquals(expected, FILES.testFile().readText())
+    assertEquals(expected, files.testFile().readText())
     return this
   }
 
   fun todaysExampleIsCreatedAsExpected(expected: File): Then {
-    assertEquals(trimLines(expected), trimLines(FILES.exampleFile()))
+    assertEquals(trimLines(expected), trimLines(files.exampleFile()))
     return this
   }
 
   fun theFollowingProfileIsActive(profile: String): Then {
-    assertEquals(profile, PROPS.aocProperties().active)
-    val actual = PROPS.activeProfile()
-    val file = File("${io.github.aj8gh.aoc.test.AOC_HOME}$profile$EXTENSION")
-    val expected = READER.readYaml(file, Profile::class.java)
+    assertEquals(profile, props.aocProperties().active)
+    val actual = props.activeProfile()
+    val expected = reader.readYaml(files.activeProfileFile(), Profile::class.java)
     assertEquals(expected, actual)
     return this
   }
 
   fun theFollowingCommandWasExecuted(command: Array<String>): Then {
-    verify { CONTEXT.system.runtime.exec(command) }
+    verify { context.system.runtime.exec(command) }
     return this
   }
 
   fun theStackTraceIsLogged(): Then {
-    val logFile = FILES.logFile()
+    val logFile = files.logFile()
     assertTrue { logFile.exists() }
     assertTrue { logFile.readText().isNotEmpty() }
     return this
   }
 
   fun theTokenHasBeenUpdatedTo(token: String): Then {
-    assertEquals(token, PROPS.aocProperties().session)
+    assertEquals(token, props.aocProperties().session)
     return this
   }
 
   fun theStatsAreOutputToTheTerminal(): Then {
     val out = outContent()
-    for (year in CONTEXT.manager.date.yearRange()) {
-      val completion = CONTEXT.cache.answer.cache().year(year).completion()
+    for (year in context.manager.date.yearRange()) {
+      val completion = context.cache.answer.cache().year(year).completion()
       assertTrue { out.contains(year.toString()) }
       assertTrue { out.contains(completion.toString()) }
     }

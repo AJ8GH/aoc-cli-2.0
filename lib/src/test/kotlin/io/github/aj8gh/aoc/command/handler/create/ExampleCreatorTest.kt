@@ -4,7 +4,7 @@ import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.test.BaseTest
 import io.github.aj8gh.aoc.test.EXAMPLE_DIR
 import io.github.aj8gh.aoc.test.GO_PROFILE
-import io.github.aj8gh.aoc.test.context.PROPS
+import io.github.aj8gh.aoc.test.context.props
 import io.github.aj8gh.aoc.test.html
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
@@ -48,7 +48,7 @@ class ExampleCreatorTest : BaseTest() {
   }
 
   private fun expectedExamples() =
-    File("${EXAMPLE_DIR}y${PROPS.year()}/d${PROPS.day()}/example.txt")
+    File("${EXAMPLE_DIR}y${props.year()}/d${props.day()}/example.txt")
 
   companion object {
     @JvmStatic

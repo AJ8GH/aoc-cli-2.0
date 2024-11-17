@@ -5,9 +5,8 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import io.github.aj8gh.aoc.command.*
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.test.*
-import io.github.aj8gh.aoc.test.context.CONTEXT
-import io.github.aj8gh.aoc.test.context.PROPS
-import io.github.aj8gh.aoc.test.context.READER
+import io.github.aj8gh.aoc.test.context.props
+import io.github.aj8gh.aoc.test.context.reader
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -141,13 +140,13 @@ class ReadmeCreaorTest : BaseTest() {
   }
 
   private fun htmlAtLevel(level: Int): String {
-    val path = "${HTML_DIR}y${PROPS.year()}/level/l$level.html"
-    return READER.read(path)
+    val path = "${HTML_DIR}y${props.year()}/level/l$level.html"
+    return reader.read(path)
   }
 
   private fun markdownForLevel(level: Int): String {
-    val path = "${MARKDOWN_DIR}y${PROPS.year()}/level/l$level.md"
-    return READER.read(path)
+    val path = "${MARKDOWN_DIR}y${props.year()}/level/l$level.md"
+    return reader.read(path)
   }
 
   private fun requestPattern() = getRequestedFor(urlEqualTo(readmeUrl()))

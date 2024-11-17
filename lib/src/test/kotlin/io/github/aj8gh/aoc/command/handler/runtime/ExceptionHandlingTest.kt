@@ -2,8 +2,7 @@ package io.github.aj8gh.aoc.command.handler.runtime
 
 import io.github.aj8gh.aoc.command.OPEN_SHORT
 import io.github.aj8gh.aoc.test.BaseTest
-import io.github.aj8gh.aoc.test.context.FILES
-import io.github.aj8gh.aoc.test.context.PROPS
+import io.github.aj8gh.aoc.test.context.props
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -21,11 +20,11 @@ class ExceptionHandlingTest : BaseTest() {
 
     THEN
       .theFollowingCommandWasExecuted(command())
-      .theFollowingMessagesAreEchoed(logMessage())
+      .theFollowingMessageIsEchoed(logMessage())
       .theStackTraceIsLogged()
   }
 
-  private fun logMessage() = "Error executing command: \"This is a test exception!\". View stack trace in log file: ${FILES.logFile().absolutePath}"
+  private fun logMessage() = "Error executing command: \"This is a test exception!\""
   private fun message() = "This is a test exception!"
-  private fun command() = arrayOf(PROPS.activeProfile().ide, PROPS.files().projectHome)
+  private fun command() = arrayOf(props.activeProfile().ide, props.files().projectHome)
 }

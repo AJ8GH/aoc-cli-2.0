@@ -1,6 +1,7 @@
 package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
+import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Writer
@@ -18,13 +19,15 @@ private const val EXAMPLE_2_PLACEHOLDER = "\${EXAMPLE_2}"
 class CodeCreator(
   private val answerCache: AnswerCache,
   private val files: FileManager,
+  private val dirCreator: DirCreator,
   private val props: PropertiesManager,
   private val writer: Writer,
   private val log: Logger,
 ) {
 
   fun create() {
-    files.createSourceDirsIfNotExists()
+    dirCreator.mkdirs(files.mainTemplateFile())
+    dirCreator.mkdirs(files.testTemplateFile())
     val answer1 = answerCache.answer1OrDefault()
     val answer2 = answerCache.answer2OrDefault()
     val default = answerCache.default()
@@ -42,6 +45,7 @@ class CodeCreator(
       log.debug("File ${file.absolutePath} already exists, skipping code generation")
       return
     }
+    dirCreator.mkdirs(file)
     writer.write(file, format(template.readText(), answers))
   }
 

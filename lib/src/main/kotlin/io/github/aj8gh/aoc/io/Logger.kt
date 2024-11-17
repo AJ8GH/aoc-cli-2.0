@@ -1,6 +1,7 @@
 package io.github.aj8gh.aoc.io
 
 import io.github.aj8gh.aoc.io.Logger.Level.*
+import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.Clock
@@ -8,7 +9,7 @@ import java.time.Instant
 
 class Logger(
   private val writer: Writer,
-  private val files: FileManager,
+  private val file: File,
   private val console: Console,
   private val clock: Clock,
   private val consoleLevel: Level = NONE,
@@ -44,7 +45,7 @@ class Logger(
 
   private fun logToFile(level: Level, message: String) {
     if (!isLevelEnabled(level = fileLevel, messageLevel = level)) return
-    writer.append(files.logFile(), message)
+    writer.append(file, message)
   }
 
   private fun format(level: Level, timestamp: Instant, message: String) =
@@ -74,7 +75,7 @@ class Logger(
 
   fun of(className: String?) = Logger(
     writer = writer,
-    files = files,
+    file = file,
     console = console,
     clock = clock,
     consoleLevel = consoleLevel,

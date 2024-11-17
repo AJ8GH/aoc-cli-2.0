@@ -22,7 +22,7 @@ class Given {
   }
 
   fun activeProfileIs(profile: String): Given {
-    PROPS.setActiveProfile(profile)
+    props.setActiveProfile(profile)
     return this
   }
 
@@ -32,101 +32,101 @@ class Given {
   }
 
   fun todaysInputFileDoesNotExist(): Given {
-    assertFalse { FILES.inputFile().exists() }
+    assertFalse { files.inputFile().exists() }
     return this
   }
 
   fun todaysInputIsCached(): Given {
-    assertEquals(testInput(), READER.read(FILES.inputCacheFile()).trim())
+    assertEquals(testInput(), reader.read(files.inputCacheFile()).trim())
     return this
   }
 
   fun todaysInputIsNotCached(): Given {
-    assertFalse(FILES.inputCacheFile().exists())
+    assertFalse(files.inputCacheFile().exists())
     return this
   }
 
   fun noReadmeExistsForToday(): Given {
-    assertFalse { FILES.readmeFile().exists() }
+    assertFalse { files.readme().exists() }
     return this
   }
 
   fun todaysReadmeIsNotCached(): Given {
-    assertFalse { FILES.readmeCacheFile().exists() }
+    assertFalse { files.readmeCacheFile().exists() }
     return this
   }
 
   fun todaysReadmeIsCached(html: String): Given {
-    CONTEXT.cache.readme.cacheReadme(html)
+    context.cache.readme.cacheReadme(html)
     return this
   }
 
   fun noExampleExistsForToday(): Given {
-    assertFalse { FILES.exampleFile().exists() }
+    assertFalse { files.exampleFile().exists() }
     return this
   }
 
   fun currentYearDayAndLevelAre(year: Int, day: Int): Given {
-    CONTEXT.handler.set.handle(year = year, day = day, level = L1, false)
+    context.handler.set.handle(year = year, day = day, level = L1, false)
     stubOutStream()
     return this
   }
 
   fun currentYearDayAndLevelAre(year: Int, day: Int, level: Int): Given {
-    CONTEXT.handler.set.handle(year = year, day = day, level = level, false)
+    context.handler.set.handle(year = year, day = day, level = level, false)
     stubOutStream()
     return this
   }
 
   fun todaysAnswerIsNotCached(answer: String): Given {
-    assertEquals(NOT_CACHED, CONTEXT.cache.answer.checkAnswer(answer))
+    assertEquals(NOT_CACHED, context.cache.answer.checkAnswer(answer))
     return this
   }
 
   fun theRuntimeIsMocked(command: Array<String>): Given {
     val process = mockk<Process>()
-    every { CONTEXT.system.runtime.exec(command) } returns process
+    every { context.system.runtime.exec(command) } returns process
     return this
   }
 
   fun theRuntimeWillThrowAnException(command: Array<String>, message: String): Given {
     val exception = RuntimeException(message)
-    every { CONTEXT.system.runtime.exec(command) } throws exception
+    every { context.system.runtime.exec(command) } throws exception
     return this
   }
 
   fun writeAnswerInCodeIsSetTo(bool: Boolean): Given {
-    WRITER.write(PROPS.activeProfile().copy(writeAnswerInCode = bool))
-    PROPS.forceLoadActiveProfile()
+    writer.write(files.activeProfileFile(), props.activeProfile().copy(writeAnswerInCode = bool))
+    props.forceLoadActiveProfile()
     return this
   }
 
   fun todaysInputFileAlreadyExists(): Given {
-    assertEquals(testInput(), READER.read(FILES.inputFile()).trim())
+    assertEquals(testInput(), reader.read(files.inputFile()).trim())
     return this
   }
 
   fun todaysReadmeExists(markdown: String): Given {
-    FILES.createResourcesDirIfNotExists()
-    WRITER.write(FILES.readmeFile(), markdown)
+    context.io.dirCreator.mkdirs(files.readme())
+    writer.write(files.readme(), markdown)
     return this
   }
 
   fun todaysCompletionLevelIs(level: Int): Given {
-    if (level == 0) CONTEXT.cache.answer.clearCacheForDay()
-    else (1..level).forEach { CONTEXT.cache.answer.cacheAnswer(it, ANSWER) }
+    if (level == 0) context.cache.answer.clearCacheForDay()
+    else (1..level).forEach { context.cache.answer.cacheAnswer(it, ANSWER) }
     return this
   }
 
   fun codeFilesDoNotExistForToday(): Given {
-    assertFalse { FILES.mainFile().exists() }
-    assertFalse { FILES.testFile().exists() }
+    assertFalse { files.mainFile().exists() }
+    assertFalse { files.testFile().exists() }
     return this
   }
 
   fun codeFilesExistForToday(): Given {
-    assertTrue { FILES.mainFile().exists() }
-    assertTrue { FILES.testFile().exists() }
+    assertTrue { files.mainFile().exists() }
+    assertTrue { files.testFile().exists() }
     return this
   }
 }

@@ -2,6 +2,7 @@ package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.cache.InputCache
 import io.github.aj8gh.aoc.http.InputClient
+import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Writer
@@ -11,6 +12,7 @@ class InputCreator(
   private val client: InputClient,
   private val writer: Writer,
   private val files: FileManager,
+  private val dirCreator: DirCreator,
   private val log: Logger,
 ) {
 
@@ -20,7 +22,7 @@ class InputCreator(
       return
     }
     val input = cache.getCachedInput()
-    files.createResourcesDirIfNotExists()
+    dirCreator.mkdirs(files.inputFile())
     writer.write(files.inputFile(), input ?: getAndCacheInput())
     log.info("Input written to file ${files.inputFile().absolutePath}")
   }

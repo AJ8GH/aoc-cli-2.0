@@ -58,9 +58,8 @@ class AnswerCache(
 ) {
 
   fun cache(): Answers {
-    val file = files.answerCacheFile()
-    if (!file.exists()) writer.write(files.answerCacheFile(), Answers())
-    return reader.readYaml(file, Answers::class.java)
+    if (!files.answerCacheFile().exists()) writer.write(files.answerCacheFile(), Answers())
+    return reader.readYaml(files.answerCacheFile(), Answers::class.java)
   }
 
   fun checkAnswer(answer: String) = handle(answer, getAnswer())
@@ -89,11 +88,6 @@ class AnswerCache(
   }
 
   fun typeForLanguage() = types[type()]!![props.activeProfile().language]!!
-
-  fun assertFuncType() = when (type()) {
-    STRING -> ""
-    else -> "Int"
-  }
 
   fun answer1OrDefault() = answer1()?.let { wrapIfString(handleLong(it)) } ?: default()
 

@@ -1,14 +1,16 @@
 package io.github.aj8gh.aoc.properties
 
+import io.github.aj8gh.aoc.context.ApplicationProperties
 import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
+import java.io.File
 
 class PropertiesManager(
   private val writer: Writer,
   private val reader: Reader,
-  private val propsFiles: PropertyFileManager,
-  private val log: Logger? = null,
+  private val files: ApplicationProperties.Files,
+  private val log: Logger,
 ) {
 
   private var aocProperties: AocProperties? = null
@@ -27,24 +29,27 @@ class PropertiesManager(
 
   fun updateProfile(newProfile: Profile) {
     profile = newProfile
-    writer.write(newProfile)
+    writer.write(File(files.activeProfile(newProfile.name)), newProfile)
   }
 
   fun setActiveProfile(profile: String) {
-    writer.write(propsFiles.aocPropertiesFile(), aocProperties().copy(active = profile))
+    writer.write(File(files.aocProperties()), aocProperties().copy(active = profile))
     readAndSetAocProperties()
     readAndSetActiveProfile()
   }
 
   private fun readAndSetAocProperties(): AocProperties {
-    aocProperties = reader.readYaml(propsFiles.aocPropertiesFile(), AocProperties::class.java)
-    log?.info("AoC properties set from ${propsFiles.aocPropertiesFile().absolutePath}")
+    aocProperties = reader.readYaml(aocPropertiesFile(), AocProperties::class.java)
+    log.info("AoC properties set from ${aocPropertiesFile().absolutePath}")
     return aocProperties!!
   }
 
   private fun readAndSetActiveProfile(): Profile {
-    profile = reader.readYaml(propsFiles.activeProfileFile(), Profile::class.java)
-    log?.info("Active profile set from ${propsFiles.activeProfileFile().absolutePath}")
+    profile = reader.readYaml(activeProfileFile(), Profile::class.java)
+    log.info("Active profile set from ${activeProfileFile().absolutePath}")
     return profile!!
   }
+
+  private fun aocPropertiesFile() = File(files.aocProperties())
+  private fun activeProfileFile() = File(files.activeProfile(aocProperties().active))
 }

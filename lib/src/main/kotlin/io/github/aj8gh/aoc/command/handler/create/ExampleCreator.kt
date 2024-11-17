@@ -1,6 +1,7 @@
 package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.io.Console
+import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Writer
 
@@ -21,6 +22,7 @@ private var identifier = EXAMPLE_IDENTIFIER
 
 class ExampleCreator(
   private val files: FileManager,
+  private val dirCreator: DirCreator,
   private val writer: Writer,
   private val console: Console,
 ) {
@@ -30,7 +32,7 @@ class ExampleCreator(
     val html = files.readmeCacheFile().readText()
     if (!findExampleIdentifier(html.lowercase())) return
     val example = sanitiseExample(buildExample(html.lines()))
-    files.createResourcesDirIfNotExists()
+    dirCreator.mkdirs(files.exampleFile())
     writer.write(files.exampleFile(), example)
   }
 

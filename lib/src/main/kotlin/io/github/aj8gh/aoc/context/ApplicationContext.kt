@@ -15,7 +15,6 @@ import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
 import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.PropertiesManager
-import io.github.aj8gh.aoc.properties.PropertyFileManager
 import java.time.Clock
 
 data class ApplicationContext(
@@ -26,6 +25,7 @@ data class ApplicationContext(
   val cache: Cache,
   val manager: Manager,
   val io: Io,
+  val app: Application,
 ) {
 
   data class Handler(
@@ -70,7 +70,6 @@ data class ApplicationContext(
   data class Manager(
     val file: FileManager,
     val props: PropertiesManager,
-    val propsFiles: PropertyFileManager,
     val date: DateManager,
   )
 
@@ -81,5 +80,11 @@ data class ApplicationContext(
     val console: Console,
     val terminal: Terminal,
     val mapper: ObjectMapper,
+    val dirCreator: DirCreator,
+  )
+
+  data class Application(
+    val properties: ApplicationProperties,
+    val propertiesLoader: PropertiesLoader,
   )
 }

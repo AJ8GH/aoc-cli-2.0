@@ -2,12 +2,13 @@ package io.github.aj8gh.aoc.test.context
 
 import io.github.aj8gh.aoc.Runner
 import io.github.aj8gh.aoc.context.ApplicationContext
+import io.github.aj8gh.aoc.context.ApplicationProperties
+import io.github.aj8gh.aoc.context.ContextBuilder
 import io.github.aj8gh.aoc.context.ContextManager
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
-import io.github.aj8gh.aoc.properties.PropertyFileManager
 import io.mockk.mockk
 import java.time.Clock
 import java.time.Instant
@@ -15,27 +16,31 @@ import java.time.Instant.parse
 import java.time.ZoneId
 import java.time.ZoneOffset.UTC
 
+private const val TEST_PROPERTIES = "application-test.yaml"
+private val contextManager = ContextManager(ContextBuilder())
+
 fun buildContext() {
-  FIXED_INSTANT = parse("2024-01-01T00:00:00Z")
-  FIXED_ZONE_ID = UTC!!
-  CONTEXT = ContextManager().context(
+  fixedInstant = parse("2024-01-01T00:00:00Z")
+  fixedZoneId = UTC!!
+  context = contextManager.context(
     runtime = mockk<Runtime>(),
-    clock = Clock.fixed(FIXED_INSTANT, FIXED_ZONE_ID)
+    clock = Clock.fixed(fixedInstant, fixedZoneId),
+    properties = TEST_PROPERTIES,
   )
-  RUNNER = Runner(context = CONTEXT)
-  FILES = CONTEXT.manager.file
-  PROPS_FILES = CONTEXT.manager.propsFiles
-  PROPS = CONTEXT.manager.props
-  READER = CONTEXT.io.reader
-  WRITER = CONTEXT.io.writer
+  runner = Runner(context = context)
+  files = context.manager.file
+  props = context.manager.props
+  reader = context.io.reader
+  writer = context.io.writer
+  appProps = context.app.properties
 }
 
-lateinit var FIXED_INSTANT: Instant
-lateinit var FIXED_ZONE_ID: ZoneId
-lateinit var CONTEXT: ApplicationContext
-lateinit var RUNNER: Runner
-lateinit var FILES: FileManager
-lateinit var PROPS_FILES: PropertyFileManager
-lateinit var PROPS: PropertiesManager
-lateinit var READER: Reader
-lateinit var WRITER: Writer
+lateinit var fixedInstant: Instant
+lateinit var fixedZoneId: ZoneId
+lateinit var context: ApplicationContext
+lateinit var runner: Runner
+lateinit var files: FileManager
+lateinit var props: PropertiesManager
+lateinit var reader: Reader
+lateinit var writer: Writer
+lateinit var appProps: ApplicationProperties

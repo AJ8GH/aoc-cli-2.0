@@ -1,0 +1,35 @@
+---
+files:
+  aocProperties: aoc.yaml
+  log: aoc.log
+  answerCache: answers.yaml
+  exampleCache: examples.yaml
+  readmeCache: README.html
+  input: input.txt
+  example: example.txt
+  readme: README.md
+  mainTemplate: main.txt
+  testTemplate: test.txt
+  dirs:
+    home: src/test/resources/home/
+    log: log/
+    cache: cache/
+    fileCache: files/
+    answerCache: answer/
+    exampleCache: answer/
+    template: template/
+
+console:
+  width: 100
+
+log:
+  level:
+    console: NONE
+    file: DEBUG
+
+http:
+  url: http://localhost
+  endpoint:
+    answer: /answer
+    input: /input
+    readme: ''

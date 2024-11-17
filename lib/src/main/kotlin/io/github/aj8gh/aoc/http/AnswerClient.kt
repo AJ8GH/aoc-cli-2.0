@@ -4,11 +4,10 @@ import io.github.aj8gh.aoc.properties.PropertiesManager
 import okhttp3.FormBody
 import okhttp3.Request
 
-private const val ANSWER_ENDPOINT = "/answer"
-
 class AnswerClient(
   private val aocClient: AocClient,
   private val props: PropertiesManager,
+  private val endpoint: String
 ) {
 
   fun postAnswer(answer: String) =
@@ -16,7 +15,7 @@ class AnswerClient(
 
   private fun postRequest(answer: String) = Request.Builder()
     .post(answerForm(answer))
-    .url(aocClient.url(ANSWER_ENDPOINT))
+    .url(aocClient.url(endpoint))
     .addHeader(COOKIE, "$SESSION_KEY=${props.aocProperties().session}")
     .build()
 

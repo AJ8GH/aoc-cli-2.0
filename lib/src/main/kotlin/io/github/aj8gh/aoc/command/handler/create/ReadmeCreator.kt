@@ -4,10 +4,7 @@ import com.vladsch.flexmark.html2md.converter.FlexmarkHtmlConverter
 import io.github.aj8gh.aoc.cache.ReadmeCache
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.http.ReadmeClient
-import io.github.aj8gh.aoc.io.FileManager
-import io.github.aj8gh.aoc.io.Logger
-import io.github.aj8gh.aoc.io.Reader
-import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.io.*
 import java.io.File
 
 private const val TAIL_COMPLETE = "At this point, you should [return to your Advent calendar]"
@@ -27,16 +24,17 @@ class ReadmeCreator(
   private val reader: Reader,
   private val writer: Writer,
   private val files: FileManager,
+  private val dirCreator: DirCreator,
   private val log: Logger,
 ) {
 
   fun create() {
-    if (!isReadmeStale(files.readmeFile())) {
+    if (!isReadmeStale(files.readme())) {
       log.debug("README file ${files.inputFile()} is up to date, skipping README generation")
       return
     }
-    files.createResourcesDirIfNotExists()
-    writer.write(files.readmeFile(), format(toMarkdown(checkCacheOrGet())))
+    dirCreator.mkdirs(files.readme())
+    writer.write(files.readme(), format(toMarkdown(checkCacheOrGet())))
   }
 
   private fun checkCacheOrGet() =
