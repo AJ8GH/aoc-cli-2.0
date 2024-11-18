@@ -29,11 +29,15 @@ class PropertiesManager(
 
   fun updateProfile(newProfile: Profile) {
     profile = newProfile
-    writer.write(File(files.activeProfile(newProfile.name)), newProfile)
+    val file = File(files.activeProfile(newProfile.name))
+    writer.write(file, newProfile)
+    log.info("Updated active properties file ${file.absolutePath}")
   }
 
   fun setActiveProfile(profile: String) {
-    writer.write(File(files.aocProperties()), aocProperties().copy(active = profile))
+    val file = File(files.aocProperties())
+    writer.write(file, aocProperties().copy(active = profile))
+    log.info("Set new active profile $profile in AoC properties file ${file.absolutePath}")
     readAndSetAocProperties()
     readAndSetActiveProfile()
   }

@@ -4,6 +4,7 @@ import io.github.aj8gh.aoc.cache.answer.AnswerType.*
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
 import io.github.aj8gh.aoc.command.handler.*
+import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
@@ -55,10 +56,14 @@ class AnswerCache(
   private val writer: Writer,
   private val reader: Reader,
   private val props: PropertiesManager,
+  private val dirCreator: DirCreator,
 ) {
 
   fun cache(): Answers {
-    if (!files.answerCacheFile().exists()) writer.write(files.answerCacheFile(), Answers())
+    if (!files.answerCacheFile().exists()) {
+      dirCreator.mkdirs(files.answerCacheFile())
+      writer.write(files.answerCacheFile(), Answers())
+    }
     return reader.readYaml(files.answerCacheFile(), Answers::class.java)
   }
 

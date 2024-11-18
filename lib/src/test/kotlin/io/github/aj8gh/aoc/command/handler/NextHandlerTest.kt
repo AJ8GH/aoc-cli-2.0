@@ -32,6 +32,7 @@ class NextHandlerTest : BaseTest() {
     expectedYear: Int,
     expectedDay: Int,
     expectedLevel: Int,
+    expectedMessage: String,
   ) {
 
     GIVEN
@@ -42,10 +43,9 @@ class NextHandlerTest : BaseTest() {
 
     THEN
       .currentYearDayAndLevelAre(expectedYear, expectedDay, expectedLevel)
-      .theFollowingMessageIsEchoed(expectedMessage(expectedYear, expectedDay, expectedLevel))
+      .theFollowingMessageIsEchoed(expectedMessage)
   }
 
-  private fun expectedMessage(year: Int, day: Int, level: Int) = getEchoMessage(year, day, level, KT_PROFILE)
 
   companion object {
 
@@ -53,20 +53,27 @@ class NextHandlerTest : BaseTest() {
     private fun inputProvider() = listOf(
       Arguments.of(
         Y15, D1, L1,
-        Y15, D1, L2
+        Y15, D1, L2,
+        expectedMessage(Y15, D1, L2),
       ),
       Arguments.of(
         Y15, D1, L2,
-        Y15, D2, L1
+        Y15, D2, L1,
+        expectedMessage(Y15, D2, L1),
       ),
       Arguments.of(
         Y15, D25, L2,
-        Y16, D1, L1
+        Y16, D1, L1,
+        expectedMessage(Y16, D1, L1)
       ),
       Arguments.of(
         LATEST_YEAR, D25, L2,
-        LATEST_YEAR, D25, L2
+        LATEST_YEAR, D25, L2,
+        "You're already as far as you can go!"
       ),
     )
+
+    private fun expectedMessage(year: Int, day: Int, level: Int) =
+      getEchoMessage(year, day, level, KT_PROFILE)
   }
 }

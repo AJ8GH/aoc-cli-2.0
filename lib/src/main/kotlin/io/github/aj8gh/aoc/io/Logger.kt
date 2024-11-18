@@ -73,7 +73,15 @@ class Logger(
     override fun toString() = "${this.name}${this.padding}"
   }
 
-  fun of(className: String?) = Logger(
+  fun of(
+    className: String? = this.className,
+    writer: Writer = this.writer,
+    file: File = this.file,
+    console: Console = this.console,
+    clock: Clock = this.clock,
+    consoleLevel: Level = this.consoleLevel,
+    fileLevel: Level = this.fileLevel,
+  ) = Logger(
     writer = writer,
     file = file,
     console = console,

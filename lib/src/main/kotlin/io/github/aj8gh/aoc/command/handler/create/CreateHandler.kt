@@ -4,7 +4,7 @@ class CreateHandler(
   private val inputCreator: InputCreator,
   private val readmeCreator: ReadmeCreator,
   private val exampleCreator: ExampleCreator,
-  private val codeCreator: CodeCreator
+  private val codeCreator: CodeCreator,
 ) {
 
   fun handle(create: Boolean) = if (create) handle() else Unit

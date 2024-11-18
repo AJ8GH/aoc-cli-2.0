@@ -11,7 +11,9 @@ import io.github.aj8gh.aoc.context.ApplicationContext
 
 private const val APP_NAME = "aoc"
 
-class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAME) {
+class Aoc(
+  private val context: ApplicationContext,
+) : CliktCommand(name = APP_NAME) {
 
   private val year by toIntOption(YEAR.names, YEAR.help, context.manager.date.yearRange())
   private val day by toIntOption(DAY.names, DAY.help, context.manager.date.dayRange())
@@ -45,15 +47,21 @@ class Aoc(private val context: ApplicationContext) : CliktCommand(name = APP_NAM
     names: Array<String>,
     help: String,
     choices: IntRange,
-  ) = toOption(names = names, help = help, completion = toCandidates(choices))
-    .choice(*toStringArray(choices))
-    .int()
+  ) = toOption(
+    names = names,
+    help = help,
+    completion = toCandidates(choices),
+  ).choice(*toStringArray(choices)).int()
 
   private fun toOption(
     names: Array<String>,
     help: String,
     completion: Fixed? = null,
-  ) = option(names = names, help = help, completionCandidates = completion)
+  ) = option(
+    names = names,
+    help = help,
+    completionCandidates = completion,
+  )
 
   private fun toStringArray(ints: IntRange) = ints
     .map { it.toString() }

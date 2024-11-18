@@ -6,7 +6,7 @@ private const val TWO_THOUSAND = 2_000
 
 class SetHandler(
   private val props: PropertiesManager,
-  private val echoHandler: EchoHandler
+  private val echoHandler: EchoHandler,
 ) {
 
   fun handle(year: Int?, day: Int?, level: Int?, verbose: Boolean = false) {

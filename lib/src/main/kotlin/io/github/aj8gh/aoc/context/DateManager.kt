@@ -8,7 +8,9 @@ private const val YEAR_2000 = 2000
 private const val DECEMBER = 12
 private const val ONE_YEAR = 1
 
-class DateManager(private val clock: Clock) {
+class DateManager(
+  private val clock: Clock,
+) {
 
   fun latestYear() = year(LocalDate.now(clock)) % YEAR_2000
   fun yearRange() = Y15..latestYear()

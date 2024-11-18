@@ -2,11 +2,11 @@ package io.github.aj8gh.aoc.io
 
 import java.io.File
 
-class DirCreator {
+class DirCreator(private val log: Logger? = null) {
 
   fun mkdirs(file: File) = file.parentFile.let {
     if (!it.exists()) {
-//      log?.warn(this, "Creating directory ${it.absolutePath}")
+      log?.warn("Creating directory ${it.absolutePath}")
       it.mkdirs()
     }
   }

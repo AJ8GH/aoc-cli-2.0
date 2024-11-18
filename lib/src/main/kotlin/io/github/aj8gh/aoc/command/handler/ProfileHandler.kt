@@ -3,7 +3,7 @@ package io.github.aj8gh.aoc.command.handler
 import io.github.aj8gh.aoc.properties.PropertiesManager
 
 class ProfileHandler(
-  private val props: PropertiesManager
+  private val props: PropertiesManager,
 ) {
 
   fun handle(profile: String?) {

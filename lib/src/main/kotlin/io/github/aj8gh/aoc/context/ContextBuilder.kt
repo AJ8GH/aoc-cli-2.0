@@ -25,8 +25,8 @@ class ContextBuilder {
 
   fun context(
     properties: String,
-    runtime: Runtime = Runtime.getRuntime(),
-    clock: Clock = Clock.systemUTC(),
+    runtime: Runtime,
+    clock: Clock,
   ): ApplicationContext {
 
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
@@ -39,13 +39,14 @@ class ContextBuilder {
     val console = Console(terminal)
     val executor = Executor(runtime)
 
+    DirCreator().mkdirs(File(props.files.log()))
     val logger = Logger(writer, File(props.files.log()), console, clock, fileLevel = props.log.level.file, consoleLevel = props.log.level.console)
     val propertiesManager = PropertiesManager(writer, reader, props.files, logger.of(PropertiesManager::class.simpleName))
     val fileManager = FileManager(propertiesManager, props.files)
     val dateManager = DateManager(clock)
 
-    val dirCreator = DirCreator()
-    val answerCache = AnswerCache(fileManager, writer, reader, propertiesManager)
+    val dirCreator = DirCreator(logger.of(DirCreator::class.simpleName))
+    val answerCache = AnswerCache(fileManager, writer, reader, propertiesManager, dirCreator)
     val inputCache = InputCache(fileManager, dirCreator, reader, writer)
     val readmeCache = ReadmeCache(fileManager, dirCreator, writer, reader)
 
@@ -65,7 +66,7 @@ class ContextBuilder {
 
     val tokenHandler = TokenHandler(propertiesManager, writer, fileManager, logger.of(TokenHandler::class.simpleName))
     val profileHandler = ProfileHandler(propertiesManager)
-    val nextHandler = NextHandler(propertiesManager, echoHandler, dateManager)
+    val nextHandler = NextHandler(propertiesManager, echoHandler, dateManager, console)
     val createHandler = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator)
 
     val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home())

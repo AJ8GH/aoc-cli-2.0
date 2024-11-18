@@ -41,8 +41,8 @@ class AocClient(
     val body = response.body
     val url = response.request.url
 
-    log.info("Received $code response from $method request to $url. Response body: $body")
-    if (!response.isSuccessful) throw RuntimeException("$code error, ${body?.string()}")
+    log.info("Received $code response from $method request to $url, ${response.message}")
+    if (!response.isSuccessful) throw RuntimeException("$code error, ${response.message}")
     return body!!.string()
   }
 }

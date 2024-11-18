@@ -13,6 +13,7 @@ class ContextManager(
     runtime: Runtime = Runtime.getRuntime(),
     clock: Clock = Clock.systemUTC(),
   ): ApplicationContext {
+
     return builder.context(
       properties = properties,
       runtime = runtime,

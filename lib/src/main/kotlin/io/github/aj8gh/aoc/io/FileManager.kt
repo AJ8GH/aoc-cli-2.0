@@ -4,8 +4,6 @@ import io.github.aj8gh.aoc.context.ApplicationProperties
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import java.io.File
 
-const val EXTENSION = ".yaml"
-
 class FileManager(
   private val props: PropertiesManager,
   private val files: ApplicationProperties.Files,

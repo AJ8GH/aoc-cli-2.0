@@ -11,17 +11,21 @@ private const val MESSAGE = "Error executing command: \"%s\""
 class Runner(
   private val contextManager: ContextManager = ContextManager(ContextBuilder()),
   private val context: ApplicationContext = contextManager.context(),
-  private val aoc: Aoc = Aoc(context)
+  private val aoc: Aoc = Aoc(context),
 ) {
+
+  private val log = context.io.log.of(this::class.simpleName)
+  private val console = context.io.console
 
   fun run(args: Array<String>) = run(args.toList())
 
   fun run(args: List<String>) {
     try {
+      log.info("Running AoC with args $args")
       aoc.main(args)
     } catch (e: Exception) {
-      context.io.console.echo(MESSAGE.format(e.message))
-      context.io.log.of(this::class.simpleName).error(e)
+      log.error(e)
+      console.echo(MESSAGE.format(e.message))
     }
   }
 }
