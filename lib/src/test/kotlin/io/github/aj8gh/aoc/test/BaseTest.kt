@@ -7,13 +7,11 @@ import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.http.Body
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.test.context.appProps
-import io.github.aj8gh.aoc.test.context.buildContext
 import io.github.aj8gh.aoc.test.context.props
 import io.github.aj8gh.aoc.test.context.reader
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 const val ANSWER = "123"
@@ -41,14 +39,9 @@ open class BaseTest {
 
   @BeforeTest
   fun setUp() {
-    buildContext()
-    stubOutStream()
-  }
-
-  @AfterTest
-  fun tearDown() {
     resetFiles()
     resetOut()
+    stubOutStream()
   }
 }
 
@@ -91,10 +84,11 @@ fun getInputMapping(year: Int, day: Int): MappingBuilder =
         .withResponseBody(Body(testInput()))
     )
 
-
 private fun resetFiles() {
   File(appProps.files.dirs.home()).deleteRecursively()
   File(TEMPLATE_HOME).copyRecursively(File(appProps.files.dirs.home()), true)
+  props.forceLoadAocProperties()
+  props.forceLoadActiveProfile()
 }
 
 private fun resetOut() = System.setOut(originalOut)
