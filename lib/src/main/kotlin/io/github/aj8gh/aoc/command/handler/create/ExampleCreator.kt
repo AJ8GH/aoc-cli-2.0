@@ -1,9 +1,6 @@
 package io.github.aj8gh.aoc.command.handler.create
 
-import io.github.aj8gh.aoc.io.Console
-import io.github.aj8gh.aoc.io.DirCreator
-import io.github.aj8gh.aoc.io.FileManager
-import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.io.*
 
 private const val EXAMPLE_IDENTIFIER = "for example"
 private const val LARGER_EXAMPLE_IDENTIFIER = "consider this larger example"
@@ -25,6 +22,7 @@ class ExampleCreator(
   private val dirCreator: DirCreator,
   private val writer: Writer,
   private val console: Console,
+  private val log: Logger,
 ) {
 
   fun create() {
@@ -33,6 +31,7 @@ class ExampleCreator(
     if (!findExampleIdentifier(html.lowercase())) return
     val example = sanitiseExample(buildExample(html.lines()))
     dirCreator.mkdirs(files.exampleFile())
+    log.info("Writing to example file ${files.exampleFile().absolutePath}")
     writer.write(files.exampleFile(), example)
   }
 

@@ -57,7 +57,7 @@ class ContextBuilder {
 
     val inputCreator = InputCreator(inputCache, inputClient, writer, fileManager, dirCreator, logger.of(InputCreator::class.simpleName))
     val readmeCreator = ReadmeCreator(readmeCache, readmeClient, answerCache, reader, writer, fileManager, dirCreator, logger.of(ReadmeCreator::class.simpleName))
-    val exampleCreator = ExampleCreator(fileManager, dirCreator, writer, console)
+    val exampleCreator = ExampleCreator(fileManager, dirCreator, writer, console, logger.of(ExampleCreator::class.simpleName))
     val codeCreator = CodeCreator(answerCache, fileManager, dirCreator, propertiesManager, writer, logger.of(CodeCreator::class.simpleName))
 
     val echoHandler = EchoHandler(propertiesManager, reader, console, fileManager)

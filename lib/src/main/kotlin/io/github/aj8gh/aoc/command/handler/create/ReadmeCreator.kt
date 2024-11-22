@@ -34,6 +34,7 @@ class ReadmeCreator(
       return
     }
     dirCreator.mkdirs(files.readme())
+    log.info("Writing to README file ${files.readme().absolutePath}")
     writer.write(files.readme(), format(toMarkdown(checkCacheOrGet())))
   }
 

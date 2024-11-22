@@ -45,6 +45,7 @@ class CodeCreator(
       log.debug("File ${file.absolutePath} already exists, skipping code generation")
       return
     }
+    log.info("Writing to code file ${file.absolutePath}")
     dirCreator.mkdirs(file)
     writer.write(file, format(template.readText(), answers))
   }
