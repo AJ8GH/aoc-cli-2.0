@@ -26,9 +26,11 @@ class ReadmeCreator(
   private val files: FileManager,
   private val dirCreator: DirCreator,
   private val log: Logger,
+  private val console: Console,
 ) {
 
   fun create() {
+    console.echo("Creating README file...")
     if (!isReadmeStale(files.readme())) {
       log.debug("README file ${files.inputFile()} is up to date, skipping README generation")
       return

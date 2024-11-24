@@ -55,22 +55,22 @@ class ContextBuilder {
     val inputClient = InputClient(aocClient, props.http.endpoint.input)
     val readmeClient = ReadmeClient(aocClient, props.http.endpoint.readme)
 
-    val inputCreator = InputCreator(inputCache, inputClient, writer, fileManager, dirCreator, logger.of(InputCreator::class.simpleName))
-    val readmeCreator = ReadmeCreator(readmeCache, readmeClient, answerCache, reader, writer, fileManager, dirCreator, logger.of(ReadmeCreator::class.simpleName))
+    val inputCreator = InputCreator(inputCache, inputClient, writer, fileManager, dirCreator, logger.of(InputCreator::class.simpleName), console)
+    val readmeCreator = ReadmeCreator(readmeCache, readmeClient, answerCache, reader, writer, fileManager, dirCreator, logger.of(ReadmeCreator::class.simpleName), console)
     val exampleCreator = ExampleCreator(fileManager, dirCreator, writer, console, logger.of(ExampleCreator::class.simpleName))
-    val codeCreator = CodeCreator(answerCache, fileManager, dirCreator, propertiesManager, writer, logger.of(CodeCreator::class.simpleName))
+    val codeCreator = CodeCreator(answerCache, fileManager, dirCreator, propertiesManager, writer, logger.of(CodeCreator::class.simpleName), console)
 
     val echoHandler = EchoHandler(propertiesManager, reader, console, fileManager)
     val setHandler = SetHandler(propertiesManager, echoHandler)
     val statHandler = StatsHandler(answerCache, console, dateManager)
 
-    val tokenHandler = TokenHandler(propertiesManager, writer, fileManager, logger.of(TokenHandler::class.simpleName))
-    val profileHandler = ProfileHandler(propertiesManager)
+    val tokenHandler = TokenHandler(propertiesManager, writer, fileManager, logger.of(TokenHandler::class.simpleName), console)
+    val profileHandler = ProfileHandler(propertiesManager, console)
     val nextHandler = NextHandler(propertiesManager, echoHandler, dateManager, console)
     val createHandler = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator)
 
-    val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home())
-    val openHandler = OpenHandler(propertiesManager, executor)
+    val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home(), console)
+    val openHandler = OpenHandler(propertiesManager, executor, console)
     val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console)
 
     val context = ApplicationContext(

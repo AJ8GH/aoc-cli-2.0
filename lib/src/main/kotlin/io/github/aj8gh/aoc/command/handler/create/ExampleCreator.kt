@@ -26,6 +26,7 @@ class ExampleCreator(
 ) {
 
   fun create() {
+    console.echo("Creating example file...")
     if (!files.readmeCacheFile().exists()) return
     val html = files.readmeCacheFile().readText()
     if (!findExampleIdentifier(html.lowercase())) return

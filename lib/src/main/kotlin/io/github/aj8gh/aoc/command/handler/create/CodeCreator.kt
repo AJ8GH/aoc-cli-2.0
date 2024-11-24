@@ -1,10 +1,7 @@
 package io.github.aj8gh.aoc.command.handler.create
 
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
-import io.github.aj8gh.aoc.io.DirCreator
-import io.github.aj8gh.aoc.io.FileManager
-import io.github.aj8gh.aoc.io.Logger
-import io.github.aj8gh.aoc.io.Writer
+import io.github.aj8gh.aoc.io.*
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import java.io.File
 
@@ -23,9 +20,11 @@ class CodeCreator(
   private val props: PropertiesManager,
   private val writer: Writer,
   private val log: Logger,
+  private val console: Console,
 ) {
 
   fun create() {
+    console.echo("Creating code files...")
     dirCreator.mkdirs(files.mainTemplateFile())
     dirCreator.mkdirs(files.testTemplateFile())
     val answer1 = answerCache.answer1OrDefault()
