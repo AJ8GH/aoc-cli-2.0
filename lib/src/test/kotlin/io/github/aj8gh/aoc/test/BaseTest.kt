@@ -12,6 +12,7 @@ import io.github.aj8gh.aoc.test.context.reader
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 const val ANSWER = "123"
@@ -43,6 +44,12 @@ open class BaseTest {
     resetOut()
     stubOutStream()
   }
+
+  @AfterTest
+  fun tearDown() {
+    resetFiles()
+    resetOut()
+  }
 }
 
 fun getEchoMessage(year: Int, day: Int, level: Int, profile: String) =
@@ -55,27 +62,26 @@ fun stubOutStream() {
 
 fun outContent() = outContent.toString().trim()
 fun testInput() = INPUT.trimIndent().trim()
-fun html() = html(props.year(), props.day())
-fun html(year: Int, day: Int) = reader.read("${HTML_DIR}y$year/d$day.html")
-fun readmeUrl() = readmeUrl(props.year(), props.day())
-fun readmeUrl(year: Int, day: Int) = "/20$year/day/$day"
-fun inputUrl() = "/20${props.year()}/day/${props.day()}/input"
-fun inputUrl(year: Int, day: Int) = "/20$year/day/$day/input"
-fun markdown() = reader.read("${MARKDOWN_DIR}y${props.year()}/d${props.day()}.md")
+fun html(year: Int = props.year(), day: Int = props.day()) = reader.read("${HTML_DIR}y$year/d$day.html")
+fun readmeUrl(year: Int = props.year(), day: Int = props.day()) = "/20$year/day/$day"
+fun inputUrl(year: Int = props.year(), day: Int = props.day()) = "/20$year/day/$day/input"
+fun markdown(year: Int = props.year(), day: Int = props.day()) = reader.read("${MARKDOWN_DIR}y$year/d$day.md")
 fun expectedCodeDir() = "$EXPECTED_CODE_DIR/${props.activeProfile().language}"
-fun expectedMainFile() = reader.read("${expectedCodeDir()}/y${props.year()}/d${props.day()}/${appProps.files.mainTemplate}")
-fun expectedTestFile() = reader.read("${expectedCodeDir()}/y${props.year()}/d${props.day()}/${appProps.files.testTemplate}")
+fun expectedMainFile(year: Int = props.year(), day: Int = props.day()) = reader.read("${expectedCodeDir()}/y$year/d$day/${appProps.files.mainTemplate}")
+fun expectedTestFile(year: Int = props.year(), day: Int = props.day()) = reader.read("${expectedCodeDir()}/y$year/d$day/${appProps.files.testTemplate}")
 
-fun getInputMapping(): MappingBuilder = getInputMapping(props.year(), props.day())
-fun readmeRequestMapping(response: String) = readmeRequestMapping(response, props.year(), props.day())
-fun readmeRequestMapping(response: String, year: Int, day: Int) = get(readmeUrl(year, day))
+fun readmeRequestMapping(
+  response: String,
+  year: Int = props.year(),
+  day: Int = props.day()
+) = get(readmeUrl(year, day))
   .withCookie(SESSION_KEY, matching(SESSION))
   .willReturn(
     ResponseDefinitionBuilder.responseDefinition()
       .withResponseBody(Body(response))
   )
 
-fun getInputMapping(year: Int, day: Int): MappingBuilder =
+fun getInputMapping(year: Int = props.year(), day: Int = props.day()): MappingBuilder =
   get(inputUrl(year, day))
     .withCookie(SESSION_KEY, matching(SESSION))
     .willReturn(

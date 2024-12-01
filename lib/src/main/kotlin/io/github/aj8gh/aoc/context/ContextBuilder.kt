@@ -72,7 +72,7 @@ class ContextBuilder {
 
     val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home(), console)
     val openHandler = OpenHandler(propertiesManager, executor, console)
-    val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console)
+    val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console, propertiesManager, readmeCreator)
     val webHandler = WebHandler(propertiesManager, executor, console)
 
     val context = ApplicationContext(

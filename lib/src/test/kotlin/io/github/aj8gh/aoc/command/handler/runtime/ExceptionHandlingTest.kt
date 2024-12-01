@@ -20,11 +20,12 @@ class ExceptionHandlingTest : BaseTest() {
 
     THEN
       .theFollowingCommandWasExecuted(command())
-      .theFollowingMessageIsEchoed(logMessage())
+      .theFollowingMessagesAreEchoed(echoMessage(), logMessage())
       .theStackTraceIsLogged()
   }
 
   private fun logMessage() = "Error executing command: \"This is a test exception!\""
+  private fun echoMessage() = "Opening project ${props.files().projectHome} with program ${props.activeProfile().ide}"
   private fun message() = "This is a test exception!"
   private fun command() = arrayOf(props.activeProfile().ide, props.files().projectHome)
 }

@@ -12,7 +12,7 @@ class OpenHandler(
   fun handle(flag: Boolean) {
     if (!flag) return
 
-    console.echo("Opening project $${props.files().projectHome} with program ${props.activeProfile().ide}")
+    console.echo("Opening project ${props.files().projectHome} with program ${props.activeProfile().ide}")
     executor.exec(arrayOf(props.activeProfile().ide, props.files().projectHome))
   }
 }

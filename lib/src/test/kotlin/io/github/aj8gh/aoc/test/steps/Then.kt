@@ -132,6 +132,25 @@ class Then {
     return this
   }
 
+  fun theAnswerIsCachedFor(expected: String, year: Int, day: Int, level: Int): Then {
+    val actual = context.cache.answer.cache().get(year, day, level)
+    assertEquals(expected, actual)
+    return this
+  }
+
+  fun theCurrentDayReadmeLevelIs(expected: Int): Then {
+    val actual = context.cache.readme.readmeLevel(files.readmeCacheFile())
+    assertEquals(expected, actual)
+    return this
+  }
+
+  fun theReadmeLevelForDayIs(year: Int = props.year(), day: Int = props.day(), expected: Int): Then {
+    val file = File(context.app.properties.files.readmeCache(year, day))
+    val actual = context.cache.readme.readmeLevel(file)
+    assertEquals(expected, actual)
+    return this
+  }
+
   private fun trimLines(file: File) = file
     .readLines().joinToString { it.trimEnd() }
 }
