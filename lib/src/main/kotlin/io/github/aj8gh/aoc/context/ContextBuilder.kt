@@ -12,6 +12,7 @@ import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
 import io.github.aj8gh.aoc.command.handler.runtime.FilesHandler
 import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
+import io.github.aj8gh.aoc.command.handler.runtime.WebHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
@@ -72,6 +73,7 @@ class ContextBuilder {
     val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home(), console)
     val openHandler = OpenHandler(propertiesManager, executor, console)
     val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console)
+    val webHandler = WebHandler(propertiesManager, executor, console)
 
     val context = ApplicationContext(
       handler = ApplicationContext.Handler(
@@ -85,6 +87,7 @@ class ContextBuilder {
         next = nextHandler,
         open = openHandler,
         stats = statHandler,
+        web = webHandler,
       ),
       system = ApplicationContext.System(
         runtime = runtime,

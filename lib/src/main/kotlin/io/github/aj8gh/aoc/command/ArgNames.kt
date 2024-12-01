@@ -51,3 +51,7 @@ const val VERBOSE_DESCRIPTION = "Make output more verbose."
 const val STATS_SHORT = "-s"
 const val STATS_LONG = "--stats"
 const val STATS_DESCRIPTION = "Show AoC completion stats."
+
+const val WEB_SHORT = "-w"
+const val WEB_LONG = "--web"
+const val WEB_DESCRIPTION = "Open the AoC web url."

@@ -10,6 +10,7 @@ import io.github.aj8gh.aoc.command.handler.create.*
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
 import io.github.aj8gh.aoc.command.handler.runtime.FilesHandler
 import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
+import io.github.aj8gh.aoc.command.handler.runtime.WebHandler
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
@@ -39,6 +40,7 @@ data class ApplicationContext(
     val files: FilesHandler,
     val open: OpenHandler,
     val answer: AnswerHandler,
+    val web: WebHandler,
   )
 
   data class System(

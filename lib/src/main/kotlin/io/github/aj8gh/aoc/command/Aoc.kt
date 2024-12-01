@@ -28,6 +28,7 @@ class Aoc(
   private val stats by toOption(STATS.names, STATS.help).flag()
   private val create by toOption(CREATE.names, CREATE.help).flag()
   private val verbose by toOption(VERBOSE.names, VERBOSE.help).flag()
+  private val web by toOption(WEB.names, WEB.help).flag()
 
   override fun run() {
     val h = context.handler
@@ -41,6 +42,7 @@ class Aoc(
     h.echo.handle(flag = echo, verbose = verbose)
     h.stats.handle(stats)
     h.open.handle(open)
+    h.web.handle(web)
   }
 
   private fun toIntOption(

@@ -55,5 +55,9 @@ enum class Command(
   STATS(
     arrayOf(STATS_SHORT, STATS_LONG),
     STATS_DESCRIPTION,
-  )
+  ),
+  WEB(
+    arrayOf(WEB_SHORT, WEB_LONG),
+    WEB_DESCRIPTION,
+  ),
 }
