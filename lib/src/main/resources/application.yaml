@@ -11,7 +11,7 @@ files:
   mainTemplate: main.txt
   testTemplate: test.txt
   dirs:
-    home: '{HOME}/.config/.aoc/'
+    home: "{HOME}/.config/.aoc/"
     log: log/
     cache: cache/
     fileCache: files/
@@ -32,4 +32,4 @@ http:
   endpoint:
     answer: /answer
     input: /input
-    readme: ''
+    readme: ""
