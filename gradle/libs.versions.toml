@@ -14,7 +14,6 @@ markdown = "0.6.1"
 mockk = "1.13.13"
 mockito = "3.2.0"
 mordant = "3.0.1"
-slf4j = "2.0.9"
 
 #*# Test #*#
 junit = "6.0.0"
@@ -36,8 +35,6 @@ jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackso
 jna = { group = "net.java.dev.jna", name = "jna", version.ref = "jna" }
 jna-platform = { group = "net.java.dev.jna", name = "jna-platform", version.ref = "jna" }
 markdown = { group = "org.jetbrains", name = "markdown", version.ref = "markdown" }
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 mordant = { group = "com.github.ajalt.mordant", name = "mordant", version.ref = "mordant" }
 
 #*# Test #*#
@@ -57,8 +54,6 @@ implementation = [
   "jna",
   "jna-platform",
   "markdown",
-  "slf4j-api",
-  "slf4j-simple",
 ]
 
 runtimeOnly = [

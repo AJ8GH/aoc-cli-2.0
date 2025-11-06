@@ -1,10 +1,11 @@
 plugins {
   alias libs.plugins.kotlin.jvm
-//  alias libs.plugins.kover
+  alias libs.plugins.kover
 }
 
 allprojects {
   apply plugin: libs.plugins.kotlin.jvm.get().pluginId
+  apply plugin: libs.plugins.kover.get().pluginId
 
   repositories {
     mavenCentral()
@@ -20,10 +21,10 @@ allprojects {
 
   test {
     useJUnitPlatform()
-//    finalizedBy(
-//        koverXmlReport,
-//        koverHtmlReport,
-//    )
+    finalizedBy(
+        koverXmlReport,
+        koverHtmlReport,
+    )
   }
 }
 
@@ -37,6 +38,6 @@ subprojects {
   }
 }
 
-//dependencies {
-//  kover(project(libModule))
-//}
+dependencies {
+  kover(project(libModule))
+}
