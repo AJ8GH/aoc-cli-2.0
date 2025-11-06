@@ -7,8 +7,18 @@ import com.github.ajalt.mordant.terminal.Terminal
 import io.github.aj8gh.aoc.cache.InputCache
 import io.github.aj8gh.aoc.cache.ReadmeCache
 import io.github.aj8gh.aoc.cache.answer.AnswerCache
-import io.github.aj8gh.aoc.command.handler.*
-import io.github.aj8gh.aoc.command.handler.create.*
+import io.github.aj8gh.aoc.command.handler.AnswerHandler
+import io.github.aj8gh.aoc.command.handler.EchoHandler
+import io.github.aj8gh.aoc.command.handler.NextHandler
+import io.github.aj8gh.aoc.command.handler.ProfileHandler
+import io.github.aj8gh.aoc.command.handler.SetHandler
+import io.github.aj8gh.aoc.command.handler.StatsHandler
+import io.github.aj8gh.aoc.command.handler.TokenHandler
+import io.github.aj8gh.aoc.command.handler.create.CodeCreator
+import io.github.aj8gh.aoc.command.handler.create.CreateHandler
+import io.github.aj8gh.aoc.command.handler.create.ExampleCreator
+import io.github.aj8gh.aoc.command.handler.create.InputCreator
+import io.github.aj8gh.aoc.command.handler.create.ReadmeCreator
 import io.github.aj8gh.aoc.command.handler.runtime.Executor
 import io.github.aj8gh.aoc.command.handler.runtime.FilesHandler
 import io.github.aj8gh.aoc.command.handler.runtime.OpenHandler
@@ -17,7 +27,12 @@ import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.http.AocClient
 import io.github.aj8gh.aoc.http.InputClient
 import io.github.aj8gh.aoc.http.ReadmeClient
-import io.github.aj8gh.aoc.io.*
+import io.github.aj8gh.aoc.io.Console
+import io.github.aj8gh.aoc.io.DirCreator
+import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
+import io.github.aj8gh.aoc.io.Reader
+import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
 import java.io.File
 import java.time.Clock
@@ -28,6 +43,7 @@ class ContextBuilder {
     properties: String,
     runtime: Runtime,
     clock: Clock,
+    port: Int? = null,
   ): ApplicationContext {
 
     val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
@@ -51,7 +67,7 @@ class ContextBuilder {
     val inputCache = InputCache(fileManager, dirCreator, reader, writer)
     val readmeCache = ReadmeCache(fileManager, dirCreator, writer, reader)
 
-    val aocClient = AocClient(propertiesManager, logger.of(AocClient::class.simpleName))
+    val aocClient = AocClient(propertiesManager, logger.of(AocClient::class.simpleName), port)
     val answerClient = AnswerClient(aocClient, propertiesManager, props.http.endpoint.answer)
     val inputClient = InputClient(aocClient, props.http.endpoint.input)
     val readmeClient = ReadmeClient(aocClient, props.http.endpoint.readme)

@@ -16,7 +16,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 const val ANSWER = "123"
-const val HTTP_PORT = 80
+const val HTTP_PORT = 8888
 const val EMPTY_MESSAGE = ""
 const val SESSION = "session"
 const val TEST_RESOURCES_ROOT = "src/test/resources/"

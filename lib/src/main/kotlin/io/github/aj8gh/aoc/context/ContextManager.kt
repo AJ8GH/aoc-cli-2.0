@@ -12,12 +12,14 @@ class ContextManager(
     properties: String = PROPERTIES,
     runtime: Runtime = Runtime.getRuntime(),
     clock: Clock = Clock.systemUTC(),
+    port: Int? = null,
   ): ApplicationContext {
 
     return builder.context(
       properties = properties,
       runtime = runtime,
-      clock = clock
+      clock = clock,
+      port = port,
     )
   }
 }

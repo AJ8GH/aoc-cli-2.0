@@ -3,6 +3,7 @@ package io.github.aj8gh.aoc.test.context
 import io.github.aj8gh.aoc.Runner
 import io.github.aj8gh.aoc.context.ContextBuilder
 import io.github.aj8gh.aoc.context.ContextManager
+import io.github.aj8gh.aoc.test.HTTP_PORT
 import io.mockk.mockk
 import java.time.Clock
 import java.time.Instant.parse
@@ -18,6 +19,7 @@ val context = contextManager.context(
   runtime = mockk<Runtime>(),
   clock = Clock.fixed(fixedInstant, fixedZoneId),
   properties = TEST_PROPERTIES,
+  port = HTTP_PORT,
 )
 
 val runner = Runner(context = context)

@@ -17,8 +17,6 @@ class Runner(
   private val log = context.io.log.of(this::class.simpleName)
   private val console = context.io.console
 
-  fun run(args: Array<String>) = run(args.toList())
-
   fun run(args: List<String>) {
     try {
       log.info("Running AoC with args $args")

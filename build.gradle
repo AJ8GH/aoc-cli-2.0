@@ -26,6 +26,16 @@ allprojects {
         koverHtmlReport,
     )
   }
+
+  kover {
+    reports {
+      filters {
+        excludes {
+          classes(mainClassName)
+        }
+      }
+    }
+  }
 }
 
 subprojects {
