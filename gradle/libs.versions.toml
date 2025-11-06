@@ -1,0 +1,74 @@
+[versions]
+#*# Project #*#
+java = "21"
+kotlin = "2.2.21"
+project = "0.0.1-SNAPSHOT"
+
+#*# Main #*#
+clikt = "5.0.1"
+flexmark = "0.64.8"
+http4k = "4.0.0.0"
+jackson = "2.16.+"
+jna = "5.14.0"
+markdown = "0.6.1"
+mockk = "1.13.13"
+mockito = "3.2.0"
+mordant = "3.0.1"
+slf4j = "2.0.9"
+
+#*# Test #*#
+junit = "6.0.0"
+kover = "0.9.1"
+wiremock = "2.1.1"
+
+[plugins]
+application = { id = "application" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+
+[libraries]
+#*# Main #*#
+clikt = { group = "com.github.ajalt.clikt", name = "clikt", version.ref = "clikt" }
+flexmark-html2md-converter = { group = "com.vladsch.flexmark", name = "flexmark-html2md-converter", version.ref = "flexmark" }
+http4k-client-okhttp = { group = "org.http4k", name = "http4k-client-okhttp", version.ref = "http4k" }
+jackson-dataformat-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+jna = { group = "net.java.dev.jna", name = "jna", version.ref = "jna" }
+jna-platform = { group = "net.java.dev.jna", name = "jna-platform", version.ref = "jna" }
+markdown = { group = "org.jetbrains", name = "markdown", version.ref = "markdown" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
+mordant = { group = "com.github.ajalt.mordant", name = "mordant", version.ref = "mordant" }
+
+#*# Test #*#
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test" }
+junit = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+wiremock = { group = "com.marcinziolo", name = "kotlin-wiremock", version.ref = "wiremock" }
+
+[bundles]
+implementation = [
+  "clikt",
+  "flexmark-html2md-converter",
+  "http4k-client-okhttp",
+  "jackson-dataformat-yaml",
+  "jackson-module-kotlin",
+  "jna",
+  "jna-platform",
+  "markdown",
+  "slf4j-api",
+  "slf4j-simple",
+]
+
+runtimeOnly = [
+  "mordant",
+]
+
+test-implementation = [
+  "kotlin-test",
+  "junit",
+  "mockito",
+  "mockk",
+  "wiremock",
+]
