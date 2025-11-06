@@ -1,5 +1,8 @@
 # AOC 2.0
 
+[![build](https://github.com/AJ8GH/aoc-cli-2.0/actions/workflows/build.yaml/badge.svg)](https://github.com/AJ8GH/aoc-cli-2.0/actions/workflows/build.yaml)
+[![codecov](https://codecov.io/gh/AJ8GH/aoc-cli-2.0/graph/badge.svg?token=8CN25NLTGV)](https://codecov.io/gh/AJ8GH/aoc-cli-2.0)
+
 2nd iteration of AOC CLI tool. Initial implementation was a collection of shell
 and python scripts: https://github.com/AJ8GH/aoc-cli. This project adds more
 features, is fully tested, and implements caching to reduce unnecessary HTTP
