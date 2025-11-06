@@ -3,30 +3,40 @@
 [![build](https://github.com/AJ8GH/aoc-cli-2.0/actions/workflows/build.yaml/badge.svg)](https://github.com/AJ8GH/aoc-cli-2.0/actions/workflows/build.yaml)
 [![codecov](https://codecov.io/gh/AJ8GH/aoc-cli-2.0/graph/badge.svg?token=8CN25NLTGV)](https://codecov.io/gh/AJ8GH/aoc-cli-2.0)
 
-2nd iteration of AOC CLI tool. Initial implementation was a collection of shell
-and python scripts: https://github.com/AJ8GH/aoc-cli. This project adds more
-features, is fully tested, and implements caching to reduce unnecessary HTTP
-requests to the aoc website.
+Advent of Code CLI tool.
 
-Utility application to manage advent of code projects.
+This project was created to provide an automated way of interacting with the AoC webapp, 
+reducing manual tasks, and allowing users to navigate through AoC problems without needing to leave their terminal / IDE.
+
+Users can do the following and more from the terminal:
+- Download the problem brief, converted to markdown and stored as a README
+- Download the input file for a problem
+- Submit answers to the website
+- Create skeleton code and test files automatically from a template
+
+This is the second iteration of this project. The initial implementation was a collection of shell and python scripts: https://github.com/AJ8GH/aoc-cli.
+This was limited in its extensibility and testability.
+
+This project adds additional features, full test coverage, and implements caching to prevent unnecessary HTTP requests.
 
 ## Tech
 
-- Kotlin 2.0.0
+- Kotlin 2.2.21
+- Gradle 9.1.0
 - Java 21
-- J-Unit
+- JUnit 6
 - Clikt (Kotlin CLI library)
 - Http4k
 
 ## Getting started
 
-- Build and install by running the install script:
-  _Note: the script assumes that the install location should be
+- Build and install by running the installation script:
+  _Note: the script assumes that the installation location should be
   `$XDG_CONFIG_HOME/.aoc` and that the location of this project once cloned will
   be `$HOME/Projects/aoc-2.0`_
 
 ```sh
-sh install.sh
+sh scripts/install.sh
 ```
 
 - Create config folder
@@ -39,7 +49,7 @@ mkdir $XDG_CONFIG_HOME/.aoc/
   https://github.com/AJ8GH/aoc-config-backup/tree/main/template.
   No need to copy the cache folders, they will be created by the application
   when needed.
-- Add an addtional file `aoc.yaml` at the root of that folder, with:
+- Add an additional file `aoc.yaml` at the root of that folder, with:
 
 ```yaml
 ---
