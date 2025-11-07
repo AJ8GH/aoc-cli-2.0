@@ -10,6 +10,7 @@ import io.github.aj8gh.aoc.test.stubOutStream
 import io.github.aj8gh.aoc.test.testInput
 import io.mockk.every
 import io.mockk.mockk
+import java.time.Instant.parse
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -75,6 +76,11 @@ class Given {
   fun currentYearDayAndLevelAre(year: Int, day: Int, level: Int): Given {
     context.handler.set.handle(year = year, day = day, level = level, false)
     stubOutStream()
+    return this
+  }
+
+  fun currentDateTimeIs(value: String): Given {
+    every { context.system.clock.instant() } returns parse(value)
     return this
   }
 

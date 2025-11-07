@@ -1,9 +1,11 @@
 package io.github.aj8gh.aoc.command.handler
 
 import io.github.aj8gh.aoc.command.D1
+import io.github.aj8gh.aoc.command.D12
 import io.github.aj8gh.aoc.command.D25
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
+import io.github.aj8gh.aoc.command.Y25
 import io.github.aj8gh.aoc.context.DateManager
 import io.github.aj8gh.aoc.io.Console
 import io.github.aj8gh.aoc.properties.Profile
@@ -33,7 +35,10 @@ class NextHandler(
       return props.activeProfile()
     }
 
-    if (props.day() != D25) {
+    if (
+      (props.year() >= Y25 && props.day() < D12)
+      || (props.year() < Y25 && props.day() < D25)
+    ) {
       props.activeProfile().current.day++
       props.activeProfile().current.level--
       return props.activeProfile()

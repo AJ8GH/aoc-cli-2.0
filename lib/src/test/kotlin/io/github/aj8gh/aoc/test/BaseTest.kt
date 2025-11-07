@@ -7,11 +7,15 @@ import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.http.Body
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.test.context.appProps
+import io.github.aj8gh.aoc.test.context.context
 import io.github.aj8gh.aoc.test.context.props
 import io.github.aj8gh.aoc.test.context.reader
+import io.mockk.every
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
+import java.time.Instant.parse
+import java.time.ZoneOffset.UTC
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
@@ -40,6 +44,8 @@ open class BaseTest {
 
   @BeforeTest
   fun setUp() {
+    every { context.system.clock.instant() } returns parse("2024-01-01T00:00:00Z")
+    every { context.system.clock.zone } returns UTC
     resetFiles()
     resetOut()
     stubOutStream()

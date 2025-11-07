@@ -6,18 +6,14 @@ import io.github.aj8gh.aoc.context.ContextManager
 import io.github.aj8gh.aoc.test.HTTP_PORT
 import io.mockk.mockk
 import java.time.Clock
-import java.time.Instant.parse
-import java.time.ZoneOffset.UTC
 
 private const val TEST_PROPERTIES = "application-test.yaml"
 
 private val contextManager = ContextManager(ContextBuilder())
-private val fixedInstant = parse("2024-01-01T00:00:00Z")
-private val fixedZoneId = UTC!!
 
 val context = contextManager.context(
   runtime = mockk<Runtime>(),
-  clock = Clock.fixed(fixedInstant, fixedZoneId),
+  clock = mockk<Clock>(),
   properties = TEST_PROPERTIES,
   port = HTTP_PORT,
 )

@@ -7,6 +7,9 @@ const val Y18 = 18
 const val Y21 = 21
 const val Y22 = 22
 const val Y23 = 23
+const val Y24 = 24
+const val Y25 = 25
+const val Y26 = 26
 
 const val D1 = 1
 const val D2 = 2
