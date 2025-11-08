@@ -2,6 +2,7 @@ package io.github.aj8gh.aoc.cache
 
 import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import java.io.File
@@ -14,11 +15,14 @@ class ReadmeCache(
   private val dirCreator: DirCreator,
   private val writer: Writer,
   private val reader: Reader,
+  private val log: Logger,
 ) {
 
   fun cacheReadme(html: String) {
+    log.info("Caching README to file ${files.readmeCacheFile().absolutePath}...")
     dirCreator.mkdirs(files.readmeCacheFile())
     writer.write(files.readmeCacheFile(), html)
+    log.info("README cached to file ${files.readmeCacheFile().absolutePath}")
   }
 
   fun readmeLevel(file: File): Int {

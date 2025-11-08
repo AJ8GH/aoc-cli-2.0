@@ -1,11 +1,18 @@
 package io.github.aj8gh.aoc.cache.answer
 
-import io.github.aj8gh.aoc.cache.answer.AnswerType.*
+import io.github.aj8gh.aoc.cache.answer.AnswerType.INT
+import io.github.aj8gh.aoc.cache.answer.AnswerType.LONG
+import io.github.aj8gh.aoc.cache.answer.AnswerType.STRING
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.L2
-import io.github.aj8gh.aoc.command.handler.*
+import io.github.aj8gh.aoc.command.handler.CORRECT
+import io.github.aj8gh.aoc.command.handler.INCORRECT
+import io.github.aj8gh.aoc.command.handler.NOT_CACHED
+import io.github.aj8gh.aoc.command.handler.TOO_HIGH
+import io.github.aj8gh.aoc.command.handler.TOO_LOW
 import io.github.aj8gh.aoc.io.DirCreator
 import io.github.aj8gh.aoc.io.FileManager
+import io.github.aj8gh.aoc.io.Logger
 import io.github.aj8gh.aoc.io.Reader
 import io.github.aj8gh.aoc.io.Writer
 import io.github.aj8gh.aoc.properties.PropertiesManager
@@ -57,6 +64,7 @@ class AnswerCache(
   private val reader: Reader,
   private val props: PropertiesManager,
   private val dirCreator: DirCreator,
+  private val log: Logger,
 ) {
 
   fun cache(): Answers {
@@ -79,12 +87,17 @@ class AnswerCache(
   }
 
   fun cacheAnswer(level: Int, answer: String) {
+    log.info("Caching answer $answer for ${props.year()} day ${props.day()} level $level...")
     val answers = cache()
     answers.save(props.year(), props.day(), level, answer)
     writeAnswers(answers)
+    log.info("Answer $answer cached for ${props.year()} day ${props.day()} level $level")
   }
 
-  fun clearCacheForDay() = cache().clear(props.year(), props.day())
+  fun clearCacheForDay() {
+    log.warn("Clearing cache for ${props.year()} day ${props.day()}")
+    cache().clear(props.year(), props.day())
+  }
 
   fun type() = when {
     isIntOrNull(answer1()) && isIntOrNull(answer2()) -> INT
@@ -134,9 +147,20 @@ class AnswerCache(
   private fun handle(answer: String, cachedAnswer: String?) =
     with(cachedAnswer) {
       when {
-        isNullOrEmpty() -> NOT_CACHED
-        equals(answer) -> CORRECT
-        else -> handleWrongAnswer(answer, cachedAnswer!!)
+        isNullOrEmpty() -> {
+          log.info("No cached answer found for ${props.year()} day ${props.day()} level ${props.level()}, submitting answer $answer to AoC...")
+          NOT_CACHED
+        }
+
+        equals(answer) -> {
+          log.info("Cached answer $cachedAnswer found for ${props.year()} day ${props.day()} level ${props.level()}, correct answer submitted")
+          CORRECT
+        }
+
+        else -> {
+          log.info("Cached answer $cachedAnswer found for ${props.year()} day ${props.day()} level ${props.level()}, incorrect answer $answer submitted")
+          handleWrongAnswer(answer, cachedAnswer!!)
+        }
       }
     }
 

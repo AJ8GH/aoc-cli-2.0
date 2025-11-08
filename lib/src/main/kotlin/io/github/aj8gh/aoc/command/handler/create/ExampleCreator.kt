@@ -29,10 +29,13 @@ class ExampleCreator(
     console.echo("Creating example file...")
     if (!files.readmeCacheFile().exists()) return
     val html = files.readmeCacheFile().readText()
-    if (!findExampleIdentifier(html.lowercase())) return
+    if (!findExampleIdentifier(html.lowercase())) {
+      log.warn("Could not extract example input from README")
+      return
+    }
     val example = sanitiseExample(buildExample(html.lines()))
     dirCreator.mkdirs(files.exampleFile())
-    log.info("Writing to example file ${files.exampleFile().absolutePath}")
+    log.info("Writing to example file ${files.exampleFile().absolutePath}...")
     writer.write(files.exampleFile(), example)
   }
 

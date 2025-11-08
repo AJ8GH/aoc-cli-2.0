@@ -23,7 +23,7 @@ class InputCreator(
     }
     val input = cache.getCachedInput()
     dirCreator.mkdirs(files.inputFile())
-    log.info("Writing to input file ${files.inputFile().absolutePath}")
+    log.info("Writing to input file ${files.inputFile().absolutePath}...")
     writer.write(files.inputFile(), input ?: getAndCacheInput())
   }
 
