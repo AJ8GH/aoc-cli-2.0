@@ -28,7 +28,7 @@ class AocClient(
   }
 
   fun url(endpoint: String) =
-    "${props.aocProperties().url}${port.let { ":$it" }}/20${props.year()}/day/${props.day()}$endpoint"
+    "${props.aocProperties().url}${port?.let { ":$it" } ?: ""}/20${props.year()}/day/${props.day()}$endpoint"
 
   private fun getRequest(endpoint: String) = Request.Builder()
     .get()
