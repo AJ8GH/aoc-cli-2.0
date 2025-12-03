@@ -84,11 +84,11 @@ class ContextBuilder {
     val tokenHandler = TokenHandler(propertiesManager, writer, fileManager, logger.of(TokenHandler::class.simpleName), console)
     val profileHandler = ProfileHandler(propertiesManager, console, logger.of(ProfileHandler::class.simpleName))
     val nextHandler = NextHandler(propertiesManager, echoHandler, dateManager, console, logger.of(NextHandler::class.simpleName))
-    val createHandler = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator, logger.of(CreateHandler::class.simpleName))
+    val createHandler = CreateHandler(inputCreator, readmeCreator, exampleCreator, codeCreator, logger.of(CreateHandler::class.simpleName), propertiesManager, dateManager, console)
 
     val filesHandler = FilesHandler(propertiesManager, executor, props.files.dirs.home(), console)
     val openHandler = OpenHandler(propertiesManager, executor, console)
-    val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console, propertiesManager, readmeCreator)
+    val answerHandler = AnswerHandler(answerCache, answerClient, createHandler, nextHandler, console, propertiesManager, readmeCreator, dateManager)
     val webHandler = WebHandler(propertiesManager, executor, console)
 
     val context = ApplicationContext(

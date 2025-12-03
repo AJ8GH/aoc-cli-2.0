@@ -1,11 +1,35 @@
 package io.github.aj8gh.aoc.command.handler
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder.responseDefinition
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
+import com.github.tomakehurst.wiremock.client.WireMock.matching
+import com.github.tomakehurst.wiremock.client.WireMock.post
+import com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor
+import com.github.tomakehurst.wiremock.client.WireMock.resetAllRequests
+import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.http.Body
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
-import io.github.aj8gh.aoc.command.*
-import io.github.aj8gh.aoc.test.*
+import io.github.aj8gh.aoc.command.ANSWER_SHORT
+import io.github.aj8gh.aoc.command.D1
+import io.github.aj8gh.aoc.command.D2
+import io.github.aj8gh.aoc.command.D3
+import io.github.aj8gh.aoc.command.D4
+import io.github.aj8gh.aoc.command.L1
+import io.github.aj8gh.aoc.command.L2
+import io.github.aj8gh.aoc.command.Y15
+import io.github.aj8gh.aoc.command.Y25
+import io.github.aj8gh.aoc.test.ANSWER
+import io.github.aj8gh.aoc.test.BaseTest
+import io.github.aj8gh.aoc.test.HTTP_PORT
+import io.github.aj8gh.aoc.test.KT_PROFILE
+import io.github.aj8gh.aoc.test.SESSION
+import io.github.aj8gh.aoc.test.getEchoMessage
+import io.github.aj8gh.aoc.test.getInputMapping
+import io.github.aj8gh.aoc.test.html
+import io.github.aj8gh.aoc.test.inputUrl
+import io.github.aj8gh.aoc.test.markdown
+import io.github.aj8gh.aoc.test.readmeRequestMapping
+import io.github.aj8gh.aoc.test.readmeUrl
 import io.github.aj8gh.aoc.test.steps.GIVEN
 import io.github.aj8gh.aoc.test.steps.THEN
 import io.github.aj8gh.aoc.test.steps.WHEN
@@ -19,7 +43,6 @@ private const val LEVEL_KEY = "level"
 private const val ANSWER_KEY = "answer"
 private const val SESSION_KEY = "session"
 private const val UNKNOWN = "UNKNOWN"
-private const val DEFAULT_ANSWER_URL = "/20$Y15/day/$D1/answer"
 
 @WireMockTest(httpPort = HTTP_PORT)
 class AnswerHandlerTest : BaseTest() {
@@ -27,7 +50,7 @@ class AnswerHandlerTest : BaseTest() {
   @Test
   fun answer_HappyPath_NoCache() {
     GIVEN
-      .theFollowingRequestStub(postMapping(CORRECT_RESPONSE))
+      .theFollowingRequestStub(answerPostMapping(CORRECT_RESPONSE))
       .theFollowingRequestStub(readmeRequestMapping(html()))
       .theFollowingRequestStub(getInputMapping())
 
@@ -35,7 +58,7 @@ class AnswerHandlerTest : BaseTest() {
       .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
-      .theFollowingRequestWasMade(postPattern())
+      .theFollowingRequestWasMade(answerPostPattern())
       .currentYearDayAndLevelAre(Y15, D1, L2)
       .theAnswerIsCachedFor(expected = ANSWER, year = Y15, day = D1, level = L2)
       .theCurrentDayReadmeLevelIs(L2)
@@ -55,7 +78,7 @@ class AnswerHandlerTest : BaseTest() {
       .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
-      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .noRequestsWereMadeForUrl(answerUrl(Y15, D1))
       .currentYearDayAndLevelAre(Y15, D1, L2)
       .theFollowingMessagesAreEchoed(
         CORRECT,
@@ -67,7 +90,7 @@ class AnswerHandlerTest : BaseTest() {
   @Test
   fun answer_HappyPath_NoCacheLevel2() {
     GIVEN
-      .theFollowingRequestStub(postMapping(CORRECT_RESPONSE))
+      .theFollowingRequestStub(answerPostMapping(CORRECT_RESPONSE))
       .theFollowingRequestStub(
         readmeRequestMapping(
           html().lines()
@@ -83,13 +106,13 @@ class AnswerHandlerTest : BaseTest() {
     THEN
       .currentYearDayAndLevelAre(Y15, D1, L2)
       .theCurrentDayReadmeLevelIs(expected = L1)
-      .theFollowingRequestWasMade(postPattern())
+      .theFollowingRequestWasMade(answerPostPattern())
 
     resetAllRequests()
 
     GIVEN
       .currentYearDayAndLevelAre(Y15, D1, L2)
-      .theFollowingRequestStub(postMapping(CORRECT_RESPONSE, L2))
+      .theFollowingRequestStub(answerPostMapping(CORRECT_RESPONSE, L2))
       .theFollowingRequestStub(readmeRequestMapping(html()))
       .theFollowingRequestStub(readmeRequestMapping(html(day = D2), day = D2))
       .theFollowingRequestStub(getInputMapping(day = D2))
@@ -105,6 +128,25 @@ class AnswerHandlerTest : BaseTest() {
   }
 
   @Test
+  fun answer_HappyPath_NoCacheLevel2_MaxYearAndDay() {
+    GIVEN
+      .currentDateTimeIs("2025-12-03T12:00:00.000Z")
+      .currentYearDayAndLevelAre(Y25, D3, L2)
+      .theFollowingRequestStub(answerPostMapping(CORRECT_RESPONSE, Y25, D3, L2))
+      .theFollowingRequestStub(readmeRequestMapping(html()))
+
+    WHEN
+      .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
+
+    THEN
+      .theFollowingRequestWasMade(answerPostPattern(Y25, D3, L2))
+      .currentYearDayAndLevelAre(Y25, D4, L1)
+      .noRequestsWereMadeForUrl(readmeUrl(Y25, D4))
+      .noRequestsWereMadeForUrl(inputUrl(Y25, D4))
+      .noRequestsWereMadeForUrl(answerUrl(Y25, D4))
+  }
+
+  @Test
   fun answer_HappyPath_Cached() {
     GIVEN
       .currentYearDayAndLevelAre(year = Y15, day = D1, level = L2)
@@ -116,7 +158,7 @@ class AnswerHandlerTest : BaseTest() {
       .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
-      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .noRequestsWereMadeForUrl(answerUrl(Y15, D1))
       .currentYearDayAndLevelAre(Y15, D2, L1)
       .todaysReadmeIsCreatedCorrectly(markdown())
       .todaysReadmeHasBeenCached(html())
@@ -133,7 +175,7 @@ class AnswerHandlerTest : BaseTest() {
       .theAppIsRunWithArgs(listOf(ANSWER_SHORT, answer))
 
     THEN
-      .noRequestsWereMadeForUrl(DEFAULT_ANSWER_URL)
+      .noRequestsWereMadeForUrl(answerUrl(Y15, D1))
       .currentYearDayAndLevelAre(Y15, D1, L2)
       .theFollowingMessageIsEchoed(expectedResponse)
   }
@@ -142,18 +184,23 @@ class AnswerHandlerTest : BaseTest() {
   @ValueSource(strings = [TOO_LOW, TOO_HIGH, INCORRECT, WRONG_LEVEL, UNKNOWN])
   fun answer_SadPath_NoCache(expectedResponse: String) {
     GIVEN
-      .theFollowingRequestStub(postMapping(expectedResponse))
+      .theFollowingRequestStub(answerPostMapping(expectedResponse))
 
     WHEN
       .theAppIsRunWithArgs(listOf(ANSWER_SHORT, ANSWER))
 
     THEN
-      .theFollowingRequestWasMade(postPattern())
+      .theFollowingRequestWasMade(answerPostPattern())
       .currentYearDayAndLevelAre(Y15, D1, L1)
       .theFollowingMessageIsEchoed(expectedResponse)
   }
 
-  private fun postMapping(response: String, level: Int = L1) = post(urlPathEqualTo(DEFAULT_ANSWER_URL))
+  private fun answerPostMapping(
+    response: String,
+    year: Int = Y15,
+    day: Int = D1,
+    level: Int = L1
+  ) = post(urlPathEqualTo(answerUrl(year, day)))
     .withCookie(SESSION_KEY, matching(SESSION))
     .withFormParam(LEVEL_KEY, equalTo(level.toString()))
     .withFormParam(ANSWER_KEY, equalTo(ANSWER))
@@ -163,10 +210,16 @@ class AnswerHandlerTest : BaseTest() {
         .withResponseBody(Body(response))
     )
 
-  private fun postPattern(level: Int = L1) = postRequestedFor(urlPathEqualTo(DEFAULT_ANSWER_URL))
+  private fun answerPostPattern(
+    year: Int = Y15,
+    day: Int = D1,
+    level: Int = L1,
+  ) = postRequestedFor(urlPathEqualTo(answerUrl(year, day)))
     .withCookie(SESSION_KEY, matching(SESSION))
     .withFormParam(LEVEL_KEY, equalTo(level.toString()))
     .withFormParam(ANSWER_KEY, equalTo(ANSWER))
+
+  private fun answerUrl(year: Int, day: Int) = "/20$year/day/$day/answer"
 
   companion object {
 

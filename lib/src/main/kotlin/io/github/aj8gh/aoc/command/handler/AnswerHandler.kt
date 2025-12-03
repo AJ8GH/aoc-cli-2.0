@@ -4,6 +4,7 @@ import io.github.aj8gh.aoc.cache.answer.AnswerCache
 import io.github.aj8gh.aoc.command.L1
 import io.github.aj8gh.aoc.command.handler.create.CreateHandler
 import io.github.aj8gh.aoc.command.handler.create.ReadmeCreator
+import io.github.aj8gh.aoc.context.DateManager
 import io.github.aj8gh.aoc.http.AnswerClient
 import io.github.aj8gh.aoc.io.Console
 import io.github.aj8gh.aoc.properties.PropertiesManager
@@ -24,6 +25,7 @@ class AnswerHandler(
   private val console: Console,
   private val props: PropertiesManager,
   private val readmeCreator: ReadmeCreator,
+  private val dateManager: DateManager,
 ) {
 
   fun handle(answer: String?, verbose: Boolean) =
@@ -55,6 +57,10 @@ class AnswerHandler(
     cache.cacheAnswer(answer)
     readmeCreator.create()
     nextHandler.handle(verbose)
+    if (!dateManager.isPuzzleAvailable(props.year(), props.day())) {
+      console.echo("Next puzzle not yet available! Skipping file creation.")
+      return
+    }
     if (props.level() == L1) createHandler.handle()
   }
 }
