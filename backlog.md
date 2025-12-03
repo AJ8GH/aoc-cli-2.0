@@ -1,5 +1,14 @@
 # TODO
 
+## Improvements
+
+* [ ] Don't GET new files when at max day
+* [ ] Echo year, day, level when submitting
+* [ ] Echo more feedback when submitting e.g. time restrictions
+* [ ] Log more of response when submitting
+
+## Features
+
 * [ ] add styling to output
 * [ ] output message after success / failure of each action
 * [ ] add application properties yaml

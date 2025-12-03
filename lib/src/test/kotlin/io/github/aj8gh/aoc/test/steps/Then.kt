@@ -1,7 +1,11 @@
 package io.github.aj8gh.aoc.test.steps
 
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.anyRequestedFor
+import com.github.tomakehurst.wiremock.client.WireMock.exactly
+import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
+import com.github.tomakehurst.wiremock.client.WireMock.verify
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
+import io.github.aj8gh.aoc.command.handler.stars
 import io.github.aj8gh.aoc.properties.Profile
 import io.github.aj8gh.aoc.test.context.context
 import io.github.aj8gh.aoc.test.context.files
@@ -123,11 +127,17 @@ class Then {
   }
 
   fun theStatsAreOutputToTheTerminal(): Then {
-    val out = outContent()
-    for (year in context.manager.date.yearRange()) {
+    val out = outContent().split("\n")
+    val headers = out[1].split("│").let { it.slice(1..<it.lastIndex) }
+    val content = out[3].split("│").let { it.slice(1..<it.lastIndex) }
+    val yearRange = context.manager.date.yearRange()
+    assertEquals(15..25, yearRange)
+    assertEquals(yearRange.count(), headers.size)
+    assertEquals(yearRange.count(), content.size)
+    yearRange.forEachIndexed { i, year ->
       val completion = context.cache.answer.cache().year(year).completion()
-      assertTrue { out.contains(year.toString()) }
-      assertTrue { out.contains(completion.toString()) }
+      assertEquals("Yr $year", headers[i].trim())
+      assertEquals("$completion/${stars(year)}", content[i].trim())
     }
     return this
   }
