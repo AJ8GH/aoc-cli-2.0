@@ -32,22 +32,27 @@ class DateManagerKtTest {
   companion object {
     @JvmStatic
     private fun latestYearSource() = listOf(
-      Arguments.of("2086-12-01T00:00:00Z", 86),
-      Arguments.of("2086-11-30T23:59:59Z", 85),
-      Arguments.of("2023-07-30T23:59:59Z", 22),
-      Arguments.of("2023-12-26T23:59:59Z", 23),
+      Arguments.of("2086-12-01T05:00:00Z", 86),
+      Arguments.of("2086-11-30T04:59:59Z", 85),
+      Arguments.of("2023-07-30T04:59:59Z", 22),
+      Arguments.of("2023-12-26T04:59:59Z", 23),
       Arguments.of("2024-01-01T00:00:00Z", 23),
     )
 
     @JvmStatic
     private fun isPuzzleAvailableSource() = listOf(
-      Arguments.of("2086-12-01T00:00:00Z", 86, 1, true),
+      Arguments.of("2086-12-01T00:00:00Z", 86, 1, false),
+      Arguments.of("2086-12-01T04:59:59Z", 86, 1, false),
+      Arguments.of("2086-12-01T05:00:00Z", 86, 1, true),
       Arguments.of("2086-11-30T23:59:59Z", 85, 12, true),
-      Arguments.of("2086-11-30T23:59:59Z", 85, 13, false),
-      Arguments.of("2023-07-30T23:59:59Z", 22, 25, true),
-      Arguments.of("2023-12-10T23:59:59Z", 23, 11, false),
-      Arguments.of("2023-12-26T23:59:59Z", 23, 25, true),
-      Arguments.of("2024-01-01T00:00:00Z", 23, 25, true),
+      Arguments.of("2086-11-30T23:59:59Z", 86, 1, false),
+      Arguments.of("2086-12-01T04:59:59Z", 86, 1, false),
+      Arguments.of("2086-12-01T05:00:00Z", 86, 1, true),
+      Arguments.of("2086-11-30T04:59:59Z", 85, 13, false),
+      Arguments.of("2023-07-30T04:59:59Z", 22, 25, true),
+      Arguments.of("2023-12-10T04:59:59Z", 23, 11, false),
+      Arguments.of("2023-12-26T04:59:59Z", 23, 25, true),
+      Arguments.of("2024-01-01T05:00:00Z", 23, 25, true),
       Arguments.of("2025-12-03T08:00:00Z", 25, 3, true),
       Arguments.of("2025-12-03T08:00:00Z", 25, 4, false),
       Arguments.of("2025-12-13T08:00:00Z", 25, 12, true),

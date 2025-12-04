@@ -2,7 +2,7 @@
 
 ## Improvements
 
-* [ ] Don't GET new files when at max day
+* [ ] Use EST for file availability
 * [ ] Echo year, day, level when submitting
 * [ ] Echo more feedback when submitting e.g. time restrictions
 * [ ] Log more of response when submitting

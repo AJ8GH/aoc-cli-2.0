@@ -15,7 +15,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.PrintStream
 import java.time.Instant.parse
-import java.time.ZoneOffset.UTC
+import java.time.ZoneId
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
@@ -45,7 +45,7 @@ open class BaseTest {
   @BeforeTest
   fun setUp() {
     every { context.system.clock.instant() } returns parse("2024-01-01T00:00:00Z")
-    every { context.system.clock.zone } returns UTC
+    every { context.system.clock.zone } returns ZoneId.of("America/New_York")
     resetFiles()
     resetOut()
     stubOutStream()

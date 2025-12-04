@@ -9,6 +9,7 @@ import io.github.aj8gh.aoc.command.Y15
 import io.github.aj8gh.aoc.command.Y25
 import java.time.Clock
 import java.time.LocalDate
+import java.time.ZoneId
 import kotlin.math.min
 
 private const val YEAR_2000 = 2000
@@ -19,16 +20,18 @@ class DateManager(
   private val clock: Clock,
 ) {
 
-  fun isPuzzleAvailable(year: Int, day: Int) = year < latestYear()
-      || (year == latestYear() && day <= latestDay())
+  fun isPuzzleAvailable(year: Int, day: Int) = latestYearEst().let {
+    year < it || (year == it && day <= latestDay())
+  }
 
+  fun latestYearEst() = year(todayEst()) % YEAR_2000
   fun latestYear() = year(LocalDate.now(clock)) % YEAR_2000
   fun yearRange() = Y15..latestYear()
   fun dayRange() = D1..D25
   fun levelRange() = L1..L2
 
   private fun latestDay(): Int {
-    val now = LocalDate.now(clock)
+    val now = todayEst()
     val maxDay = if (now.year % YEAR_2000 < Y25) D25 else D12
     if (now.monthValue == DECEMBER) {
       return min(now.dayOfMonth, maxDay)
@@ -36,6 +39,10 @@ class DateManager(
     return maxDay
   }
 
-  private fun year(today: LocalDate) =
-    today.year.takeIf { today.monthValue == DECEMBER } ?: (today.year - ONE_YEAR)
+  private fun todayEst() = clock.instant()
+    .atZone(ZoneId.of("America/New_York"))
+    .toLocalDate()
+
+  private fun year(today: LocalDate) = today.year
+    .takeIf { today.monthValue == DECEMBER } ?: (today.year - ONE_YEAR)
 }

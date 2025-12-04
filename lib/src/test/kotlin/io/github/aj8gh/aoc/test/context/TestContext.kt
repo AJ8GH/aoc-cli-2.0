@@ -12,8 +12,8 @@ private const val TEST_PROPERTIES = "application-test.yaml"
 private val contextManager = ContextManager(ContextBuilder())
 
 val context = contextManager.context(
-  runtime = mockk<Runtime>(),
-  clock = mockk<Clock>(),
+  runtime = mockk<Runtime>(relaxed = true),
+  clock = mockk<Clock>(relaxed = true),
   properties = TEST_PROPERTIES,
   port = HTTP_PORT,
 )

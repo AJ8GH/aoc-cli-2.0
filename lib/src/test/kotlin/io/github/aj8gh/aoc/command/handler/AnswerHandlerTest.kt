@@ -130,7 +130,7 @@ class AnswerHandlerTest : BaseTest() {
   @Test
   fun answer_HappyPath_NoCacheLevel2_MaxYearAndDay() {
     GIVEN
-      .currentDateTimeIs("2025-12-03T12:00:00.000Z")
+      .currentDateTimeIs("2025-12-04T04:00:00.000Z")
       .currentYearDayAndLevelAre(Y25, D3, L2)
       .theFollowingRequestStub(answerPostMapping(CORRECT_RESPONSE, Y25, D3, L2))
       .theFollowingRequestStub(readmeRequestMapping(html()))

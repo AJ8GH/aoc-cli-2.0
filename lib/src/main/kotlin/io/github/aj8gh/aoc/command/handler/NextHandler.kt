@@ -51,7 +51,7 @@ class NextHandler(
       return props.activeProfile()
     }
 
-    return if (props.year() == dateManager.latestYear()) {
+    return if (props.year() == dateManager.latestYearEst()) {
       console.echo("You're already as far as you can go!")
       log.warn("Unable to process 'next' command as already at maximum year, day and level")
       null
