@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.matching
 import com.github.tomakehurst.wiremock.http.Body
+import io.github.aj8gh.aoc.command.Y25
 import io.github.aj8gh.aoc.http.SESSION_KEY
 import io.github.aj8gh.aoc.test.context.appProps
 import io.github.aj8gh.aoc.test.context.context
@@ -60,6 +61,9 @@ open class BaseTest {
 
 fun getEchoMessage(year: Int, day: Int, level: Int, profile: String) =
   "You are on year $year day $day level $level. Active profile: $profile"
+
+fun getInvalidDayEchoMessage(year: Int, day: Int) =
+  "Invalid day $day for year $year - years $Y25 onwards have 12 days"
 
 fun stubOutStream() {
   outContent = ByteArrayOutputStream()

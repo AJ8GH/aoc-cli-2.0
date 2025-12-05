@@ -2,7 +2,7 @@
 
 ## Improvements
 
-* [ ] Use EST for file availability
+* [ ] Validate max day 12 from year 2025 
 * [ ] Echo year, day, level when submitting
 * [ ] Echo more feedback when submitting e.g. time restrictions
 * [ ] Log more of response when submitting

@@ -78,7 +78,7 @@ class ContextBuilder {
     val codeCreator = CodeCreator(answerCache, fileManager, dirCreator, propertiesManager, writer, logger.of(CodeCreator::class.simpleName), console)
 
     val echoHandler = EchoHandler(propertiesManager, reader, console, fileManager)
-    val setHandler = SetHandler(propertiesManager, echoHandler, logger.of(SetHandler::class.simpleName))
+    val setHandler = SetHandler(propertiesManager, echoHandler, console, logger.of(SetHandler::class.simpleName))
     val statHandler = StatsHandler(answerCache, console, dateManager)
 
     val tokenHandler = TokenHandler(propertiesManager, writer, fileManager, logger.of(TokenHandler::class.simpleName), console)
